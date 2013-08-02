@@ -294,5 +294,11 @@ namespace RepetierHost.model
                 }
             }
         }
+
+        public LinkedList<GCodeCompressed> GetPendingJobCommands()
+        {
+            return new LinkedList<GCodeCompressed>(jobList);
+        }
+
     }
 }

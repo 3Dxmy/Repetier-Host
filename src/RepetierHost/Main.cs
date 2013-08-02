@@ -30,6 +30,7 @@ using RepetierHost.model.geom;
 using Microsoft.Win32;
 using System.Threading;
 using System.Diagnostics;
+using RepetierHost.model;
 
 namespace RepetierHost
 {
@@ -632,6 +633,7 @@ namespace RepetierHost
             sendScript3ToolStripMenuItem.Enabled = connected;
             sendScript4ToolStripMenuItem.Enabled = connected;
             sendScript5ToolStripMenuItem.Enabled = connected;
+            saveStateToolStripMenuItem.Enabled = connected;
             if (connected)
             {
                 toolConnect.Image = imageList.Images[0];
@@ -1617,6 +1619,152 @@ namespace RepetierHost
         {
             threedview.FitObjects();
         }
+
+        private void loadStateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //ValidatePreconditionsToLoadStateSnapshot(Main.conn);
+
+                PendingPrintJobsDialog dialog = new PendingPrintJobsDialog();
+                dialog.ShowDialog();
+
+                PendingPrintJob job = dialog.GetSelectedJob();
+                if (job == null)
+                {
+                    // User cancelled
+                    return;
+                }
+                PrintingStateSnapshot state = job.GetSnapshot(); //LoadStateFile();
+
+                //RequestUserToMarkXCoordinates(Main.conn); <----- esto es un state machine, modelalo asi
+                //                                             |-- a su vez, esto puede ser un tipo de calibracion solamente. plantealo en forma generica luego.
+                //                                             |-- incluso el metodo de calibracion puede depender del tipo de file, con lo que quizas convenga meter la logica en el restaurador de estado.
+                GCodeExecutor executor = new PrinterConnectionGCodeExecutor(conn, false);
+                state.RestoreState(executor);
+                Main.main.Invoke(Main.main.UpdateJobButtons);
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show("An error occurred while loading state file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show("An error occurred while loading state file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private OnPosChange SaveStateOnNewLayerDelegate;
+        private void saveStateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // XXXX FIXME TODO
+            //ValidatePreconditionsToSaveStateSnapshot(Main.conn);
+
+            double lastZ = Main.conn.analyzer.z;
+            SaveStateOnNewLayerDelegate = new OnPosChange(delegate(GCode gc, float x , float y, float z){
+                if (z != lastZ)
+                {
+                    // New Layer, ready to save state.
+                    OnReadyToSaveStateCallback(gc);
+                }
+            });
+            Main.conn.analyzer.eventPosChanged += SaveStateOnNewLayerDelegate;
+        }
+
+        private void OnReadyToSaveStateCallback(GCode gcode)
+        {
+            // We want the event to execute only once, so, we must remove it
+            // after the condition was met.
+            Main.conn.analyzer.eventPosChanged -= SaveStateOnNewLayerDelegate;
+
+            // Capture state, so that any movement we do later is not affected.
+            PrintingStateSnapshot state = SnapshotFactory.TakeSnapshot(Main.conn);
+
+            // Move extruder to prevent melting the object
+            // First move it 5 up and then go home x y
+            // XXX FIXME: CONFIRM ITS POSSIBLE TO MOVE UP
+            /*conn.connector.InjectManualCommand("G91");
+            conn.connector.InjectManualCommand("G1 Z5");
+            conn.connector.InjectManualCommand("G90");
+            conn.connector.InjectManualCommand("G1 X0 Y0");*/
+            conn.connector.KillJob();
+
+            try
+            {
+                SaveStateFile(state);
+                MessageBox.Show("State was saved successfully.");
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show("An error occurred while saving state file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MessageBox.Show("An error occurred while saving state file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SaveStateFile(PrintingStateSnapshot state)
+        {
+            PendingPrintJobs.Add(state, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+        }
+        
+/*        private void SaveStateFile(PrintingStateSnapshot state)
+        {
+            SnapshotContainer container = new SnapshotContainer();
+
+            container.type = "Layer";
+            container.version = "1.0";
+            container.snapshot = state;
+            
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "Repetier Host State (*." + PendingPrintJobs.RepetierExtension + ")|*." + PendingPrintJobs.RepetierExtension + "|All files (*.*)|*.*";
+            dialog.Title = "Save State";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(container.GetType());
+                Stream fileStream = dialog.OpenFile();
+                try
+                {
+                    x.Serialize(fileStream, container);
+                }
+                finally
+                {
+                    fileStream.Close();
+                }
+            }
+        }
+
+        private PrintingStateSnapshot LoadStateFile()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Repetier Host State (*." + PendingPrintJobs.RepetierExtension + ")|*." + PendingPrintJobs.RepetierExtension + "|All files (*.*)|*.*";
+            dialog.Title = "Open State";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(typeof(SnapshotContainer));
+                Stream fileStream = dialog.OpenFile();
+                try
+                {
+                    SnapshotContainer container = (SnapshotContainer)x.Deserialize(fileStream);
+                    //FIXME 
+                    //ValidateSDnapshot(container)
+                    return container.snapshot;
+                }
+                catch (InvalidOperationException e)
+                {
+                    throw new IOException("Invalid state file.", e);
+                }
+                finally
+                {
+                    fileStream.Close();
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }*/
 
 
     }

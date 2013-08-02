@@ -73,9 +73,15 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
-    <Reference Include="OpenTK.Compatibility, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
-    <Reference Include="OpenTK.GLControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
+    <Reference Include="OpenTK">
+      <HintPath>..\..\..\Libs\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.Compatibility">
+      <HintPath>..\..\..\Libs\OpenTK.Compatibility.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK.GLControl">
+      <HintPath>..\..\..\Libs\OpenTK.GLControl.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -124,6 +130,8 @@
     </Compile>
     <Compile Include="model\BasicConfiguration.cs" />
     <Compile Include="model\BeltCalculator.cs" />
+    <Compile Include="model\PendingPrintJobs.cs" />
+    <Compile Include="model\GCodeExecutor.cs" />
     <Compile Include="model\Commands.cs" />
     <Compile Include="model\Custom.cs" />
     <Compile Include="model\EEPROMMarlinParameter.cs" />
@@ -151,6 +159,7 @@
     <Compile Include="model\ModelAnimation.cs" />
     <Compile Include="model\PrinterConnection.cs" />
     <Compile Include="model\PrinterModel.cs" />
+    <Compile Include="model\PrintingStateSnapshot.cs" />
     <Compile Include="model\Printjob.cs" />
     <Compile Include="model\ProtectedSerialPort.cs">
       <SubType>Component</SubType>
@@ -229,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="view\ObjectInformation.resx">
       <DependentUpon>ObjectInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\PendingPrintJobsDialog.resx">
+      <DependentUpon>PendingPrintJobsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="view\Preferences.resx">
       <DependentUpon>Preferences.cs</DependentUpon>
@@ -433,6 +445,12 @@
     </Compile>
     <Compile Include="view\ObjectInformation.Designer.cs">
       <DependentUpon>ObjectInformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="view\PendingPrintJobsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\PendingPrintJobsDialog.Designer.cs">
+      <DependentUpon>PendingPrintJobsDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="view\Preferences.cs">
       <SubType>Form</SubType>

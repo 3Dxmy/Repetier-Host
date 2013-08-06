@@ -31,6 +31,7 @@ using Microsoft.Win32;
 using System.Threading;
 using System.Diagnostics;
 using RepetierHost.model;
+using RepetierHost.connector;
 
 namespace RepetierHost
 {
@@ -1658,6 +1659,7 @@ namespace RepetierHost
         }
 
         private OnPosChange SaveStateOnNewLayerDelegate;
+        private PrinterConnectorBase.OnPauseChanged SaveStateOnPauseDelegate;
         // NOTE: Used an array for the lock object because strings could be
         // immutable.
         private string[] lockObject = new string[0];
@@ -1677,32 +1679,53 @@ namespace RepetierHost
             double lastZ = Main.conn.analyzer.z;
             lock (lockObject)
             {
+                // We save the state when the first of these three events happen:
+                // - Print job is paused (if it's paused at the moment the user
+                // tries to take the snapshot, then it's taken at that moment)
+                // - A new layer is reached.
                 SaveStateOnNewLayerDelegate = new OnPosChange(delegate(GCode gc, float x, float y, float z)
                 {
                     if (z != lastZ)
                     {
                         // New Layer, ready to save state.
-                        OnReadyToSaveStateCallback(gc);
+                        OnReadyToSaveStateCallback();
+                    }
+                });
+                SaveStateOnPauseDelegate = new PrinterConnectorBase.OnPauseChanged(delegate(bool paused)
+                {
+                    if (paused)
+                    {
+                        OnReadyToSaveStateCallback();
                     }
                 });
                 snapshotNameOnNextSaveState = snapshotName;
                 Main.conn.analyzer.eventPosChanged += SaveStateOnNewLayerDelegate;
+                Main.conn.connector.eventPauseChanged += SaveStateOnPauseDelegate;
+
+                if (Main.conn.connector.IsPaused)
+                {
+                    // In this case we mustn't wait until the new layer is
+                    // reached, but instead we must take the snapshot now.
+                    OnReadyToSaveStateCallback();
+                }
             }
         }
 
-        private void CancelSaveState()
+        /*private void CancelSaveState()
         {
             lock (lockObject)
             {
                 if (SaveStateOnNewLayerDelegate != null)
                 {
                     Main.conn.analyzer.eventPosChanged -= SaveStateOnNewLayerDelegate;
+                    Main.conn.connector.eventPauseChanged -= SaveStateOnPauseDelegate;
                     SaveStateOnNewLayerDelegate = null;
+                    SaveStateOnPauseDelegate = null;
                 }
             }
-        }
+        }*/
 
-        private void OnReadyToSaveStateCallback(GCode gcode)
+        private void OnReadyToSaveStateCallback()
         {
             string snapshotName;
             lock (lockObject)
@@ -1719,7 +1742,9 @@ namespace RepetierHost
                 // We want the event to execute only once, so, we must remove it
                 // after the condition was met.
                 Main.conn.analyzer.eventPosChanged -= SaveStateOnNewLayerDelegate;
+                Main.conn.connector.eventPauseChanged -= SaveStateOnPauseDelegate;
                 SaveStateOnNewLayerDelegate = null;
+                SaveStateOnPauseDelegate = null;
                 snapshotNameOnNextSaveState = null;
             }
 

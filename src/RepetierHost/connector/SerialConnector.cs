@@ -600,6 +600,10 @@ namespace RepetierHost.connector
                 InjectManualCommand(code.text);
             }
             Main.main.Invoke(Main.main.UpdateJobButtons);
+            if (eventPauseChanged != null)
+            {
+                eventPauseChanged(true);
+            }
         }
         public override void ContinueJob()
         {
@@ -615,6 +619,10 @@ namespace RepetierHost.connector
             InjectManualCommand("G1 F" + pauseF.ToString(GCode.format)); // Reset old speed
             paused = false;
             Main.main.Invoke(Main.main.UpdateJobButtons);
+            if (eventPauseChanged != null)
+            {
+                eventPauseChanged(false);
+            }
         }
         public override Printjob Job { get { return job; } }
 

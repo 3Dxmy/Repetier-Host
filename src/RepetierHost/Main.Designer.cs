@@ -33,6 +33,7 @@
             this.menu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadGCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.snapshotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showWorkdirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -163,15 +164,17 @@
             this.tab = new System.Windows.Forms.TabControl();
             this.tabModel = new System.Windows.Forms.TabPage();
             this.tabSlicer = new System.Windows.Forms.TabPage();
-            this.slicerPanel = new RepetierHost.view.SlicerPanel();
             this.tabGCode = new System.Windows.Forms.TabPage();
             this.tabPrint = new System.Windows.Forms.TabPage();
+            this.slicerPanel = new RepetierHost.view.SlicerPanel();
             this.tdSettings = new System.Windows.Forms.BindingSource(this.components);
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.toolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitLog)).BeginInit();
             this.splitLog.Panel1.SuspendLayout();
             this.splitLog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitInfoEdit)).BeginInit();
             this.splitInfoEdit.Panel1.SuspendLayout();
             this.splitInfoEdit.Panel2.SuspendLayout();
             this.splitInfoEdit.SuspendLayout();
@@ -202,8 +205,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadGCodeToolStripMenuItem,
-            this.loadStateToolStripMenuItem,
-            this.saveStateToolStripMenuItem,
+            this.snapshotToolStripMenuItem,
             this.showWorkdirectoryToolStripMenuItem,
             this.toolStripStartHistory,
             this.toolStripEndHistory,
@@ -220,19 +222,28 @@
             this.loadGCodeToolStripMenuItem.Text = "&Load G-Code";
             this.loadGCodeToolStripMenuItem.Click += new System.EventHandler(this.toolGCodeLoad_Click);
             // 
+            // snapshotToolStripMenuItem
+            // 
+            this.snapshotToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadStateToolStripMenuItem,
+            this.saveStateToolStripMenuItem});
+            this.snapshotToolStripMenuItem.Name = "snapshotToolStripMenuItem";
+            this.snapshotToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.snapshotToolStripMenuItem.Text = "Snapshot";
+            // 
             // loadStateToolStripMenuItem
             // 
             this.loadStateToolStripMenuItem.Name = "loadStateToolStripMenuItem";
-            this.loadStateToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.loadStateToolStripMenuItem.Text = "Load State";
+            this.loadStateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadStateToolStripMenuItem.Text = "Load";
             this.loadStateToolStripMenuItem.Click += new System.EventHandler(this.loadStateToolStripMenuItem_Click);
             // 
             // saveStateToolStripMenuItem
             // 
             this.saveStateToolStripMenuItem.Enabled = false;
             this.saveStateToolStripMenuItem.Name = "saveStateToolStripMenuItem";
-            this.saveStateToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
-            this.saveStateToolStripMenuItem.Text = "Save State";
+            this.saveStateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveStateToolStripMenuItem.Text = "Save";
             this.saveStateToolStripMenuItem.Click += new System.EventHandler(this.saveStateToolStripMenuItem_Click);
             // 
             // showWorkdirectoryToolStripMenuItem
@@ -1365,15 +1376,6 @@
             this.tabSlicer.Text = "Slicer";
             this.tabSlicer.UseVisualStyleBackColor = true;
             // 
-            // slicerPanel
-            // 
-            this.slicerPanel.AutoScroll = true;
-            this.slicerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.slicerPanel.Location = new System.Drawing.Point(0, 0);
-            this.slicerPanel.Name = "slicerPanel";
-            this.slicerPanel.Size = new System.Drawing.Size(467, 304);
-            this.slicerPanel.TabIndex = 0;
-            // 
             // tabGCode
             // 
             this.tabGCode.AutoScroll = true;
@@ -1396,6 +1398,15 @@
             this.tabPrint.TabIndex = 0;
             this.tabPrint.Text = "Manual control";
             this.tabPrint.UseVisualStyleBackColor = true;
+            // 
+            // slicerPanel
+            // 
+            this.slicerPanel.AutoScroll = true;
+            this.slicerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.slicerPanel.Location = new System.Drawing.Point(0, 0);
+            this.slicerPanel.Name = "slicerPanel";
+            this.slicerPanel.Size = new System.Drawing.Size(467, 304);
+            this.slicerPanel.TabIndex = 0;
             // 
             // tdSettings
             // 
@@ -1432,9 +1443,11 @@
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.splitLog.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitLog)).EndInit();
             this.splitLog.ResumeLayout(false);
             this.splitInfoEdit.Panel1.ResumeLayout(false);
             this.splitInfoEdit.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitInfoEdit)).EndInit();
             this.splitInfoEdit.ResumeLayout(false);
             this.tabControlView.ResumeLayout(false);
             this.tab.ResumeLayout(false);
@@ -1582,6 +1595,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem8;
         private System.Windows.Forms.ToolStripMenuItem fitPrinterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fitObjectsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem snapshotToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadStateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveStateToolStripMenuItem;
     }

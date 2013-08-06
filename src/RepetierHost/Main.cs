@@ -508,6 +508,9 @@ namespace RepetierHost
             leadscrewCalculatorToolStripMenuItem.Text = Trans.T("M_LEADSCREW_CALCULATOR");
             fitPrinterToolStripMenuItem.Text = Trans.T("M_FIT_PRINTER");
             fitObjectsToolStripMenuItem.Text = Trans.T("M_FIT_OBJECTS");
+            snapshotToolStripMenuItem.Text = Trans.T("M_SNAPSHOT");
+            loadStateToolStripMenuItem.Text = Trans.T("M_LOAD_STATE");
+            saveStateToolStripMenuItem.Text = Trans.T("M_SAVE_STATE");
             updateTravelMoves();
             updateShowFilament();
             foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
@@ -1646,11 +1649,11 @@ namespace RepetierHost
             }
             catch (IOException ex)
             {
-                MessageBox.Show("An error occurred while loading state file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.ToString(), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (UnauthorizedAccessException ex)
             {
-                MessageBox.Show("An error occurred while loading state file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.ToString(), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1730,15 +1733,15 @@ namespace RepetierHost
             try
             {
                 SaveStateFile(state, snapshotName);
-                MessageBox.Show("State was saved successfully.");
+                MessageBox.Show(Trans.T("L_SNAPSHOT_SAVED_SUCCESSFULLY"));
             }
             catch (IOException ex)
             {
-                MessageBox.Show("An error occurred while saving state file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.ToString(), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (UnauthorizedAccessException ex)
             {
-                MessageBox.Show("An error occurred while saving state file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.ToString(), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1761,7 +1764,7 @@ namespace RepetierHost
             string snapshotName = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             do
             {
-                snapshotName = StringInput.GetString("Snapshot Name", "Please, write a snapshot name:", snapshotName, true);
+                snapshotName = StringInput.GetString(Trans.T("L_SNAPSHOT_NAME"), Trans.T("L_WRITE_SNAPSHOT_NAME"), snapshotName, true);
                 if (snapshotName == null)
                 {
                     // User cancelled.

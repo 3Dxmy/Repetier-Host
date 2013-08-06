@@ -98,6 +98,20 @@ namespace RepetierHost.model
                 g.NewLine();
             }
             g.ResetE();
+            // First set temperature without blocking.
+            // Marlin doesn't have M116, so, we must use M190 and M109 to wait
+            // to reach the temperature.
+            // Set bed temperature. Force use of "." as decimal separator.
+            g.Add("M140 S" + bedTemp.ToString(CultureInfo.InvariantCulture));
+            g.NewLine();
+            for (int i = 0; i < extrudersTemp.Length; i++)
+            {
+                // Set extruders temperature. Force use of "." as decimal separator.
+                g.Add("M104 S" + extrudersTemp[i].ToString(CultureInfo.InvariantCulture) + " T" + i);
+                g.NewLine();
+            }
+
+            // Then wait until all temperatures have been reached.
             // Marlin doesn't have M116, so, we must use M190 and M109 to wait
             // to reach the temperature.
             // Set bed temperature. Force use of "." as decimal separator.
@@ -123,9 +137,10 @@ namespace RepetierHost.model
 
             // We first must move vertically, so that it doesn't collide with the object.
             g.MoveZ(z + 5, layer);
-            g.Move(x, y, speed);
+            g.Move(x, y, g.TravelFeedRate);
             g.MoveZ(z, layer);
-            g.Move(x, y, speed); // Reset old speed
+            g.Add("G1 F" + speed.ToString(GCode.format)); // Reset old speed
+            g.NewLine();
             
             if (relative)
             {

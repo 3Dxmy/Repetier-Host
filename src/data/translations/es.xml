@@ -483,5 +483,16 @@ Los cambios en el registro estarán activos despues del siguiente reinicio.</t>
 <t id="L_FILAMENT_NONE" ver="3">Ninguno/El mismo como Extrusor 1</t>
 <t id="L_REALLY_QUIT" ver="3">Impresión no terminada. ¿Salir de todos modos?</t>
 <t id="M_DONATE" ver="3">Donar o Colaborar</t>
+<t id="L_CONFIRM_DELETE_JOB" ver="1">¿Está seguro que desea eliminar el trabajo de impresión $1?</t>
+<t id="L_SNAPSHOT_SAVED_SUCCESSFULLY" ver="1">El estado fue guardado satisfactoriamente</t>
+<t id="M_SNAPSHOT" ver="1">Instantánea</t>
+<t id="M_LOAD_STATE" ver="1">Cargar</t>
+<t id="M_SAVE_STATE" ver="1">Guardar</t>
+<t id="W_PENDING_PRINT_JOBS" ver="1">Trabajos de impresión pendientes</t>
+<t id="M_PENDING_JOB_SELECT_JOB" ver="1">Restaurar trabajo</t>
+<t id="M_PENDING_JOB_KILL_JOB" ver="1">Eliminar trabajo</t>
+<t id="M_PENDING_JOB_RENAME_JOB" ver="1">Renombrar trabajo</t>
+<t id="L_SNAPSHOT_NAME" ver="1">Nombre de instantánea</t>
+<t id="L_WRITE_SNAPSHOT_NAME" ver="1">Por favor, ingrese el nombre de la instantánea</t>
 </translation>
 

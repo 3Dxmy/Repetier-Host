@@ -20,6 +20,23 @@ namespace RepetierHost.view
             InitializeComponent();
 
             LoadPendingJobs();
+
+            translate();
+            Main.main.languageChanged += translate;
+        }
+
+        private void translate()
+        {
+            Text = Trans.T("W_PENDING_PRINT_JOBS");
+            toolStripButtonSelectJob.ToolTipText = Trans.T("M_PENDING_JOB_SELECT_JOB");
+            toolStripButtonKillJob.ToolTipText = Trans.T("M_PENDING_JOB_KILL_JOB");
+            toolStripButtonRename.ToolTipText = Trans.T("M_PENDING_JOB_RENAME_JOB");
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            Main.main.languageChanged -= translate;
+            base.OnClosing(e);
         }
 
         private void LoadPendingJobs()
@@ -52,7 +69,7 @@ namespace RepetierHost.view
             PendingPrintJob job = (PendingPrintJob)pendingJobsListbox.SelectedItem;
             if (job != null)
             {
-                if (MessageBox.Show("Are you sure you want to delete job " + job.Name + "?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show(Trans.T1("L_CONFIRM_DELETE_JOB", job.Name), Trans.T("L_SECURITY_QUESTION"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     try
                     {
@@ -61,7 +78,7 @@ namespace RepetierHost.view
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("An error occurred while deleting state file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(ex.ToString(), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -88,7 +105,7 @@ namespace RepetierHost.view
                     }
                     catch(Exception ex)
                     {
-                        MessageBox.Show("An error occurred while renaming state file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(ex.ToString(), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -105,7 +122,7 @@ namespace RepetierHost.view
             string snapshotName = currentSnapshotName;
             do
             {
-                snapshotName = StringInput.GetString("Snapshot Name", "Please, write a snapshot name:", snapshotName, true);
+                snapshotName = StringInput.GetString(Trans.T("L_SNAPSHOT_NAME"), Trans.T("L_WRITE_SNAPSHOT_NAME"), snapshotName, true);
                 if (snapshotName == null)
                 {
                     // User cancelled.

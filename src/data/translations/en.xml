@@ -615,5 +615,16 @@ Write Changes to EEPROM?</t>
 <t id="L_OBJECT_IS_MANIFOLD" ver="9">Object is manifold.</t>
 <t id="L_OBJECT_IS_NON_MANIFOLD" ver="9">Object is non-manifold. Slicing may produce wrong results. Please repair object file first.</t>
 <t id="L_" ver="9"></t>
+<t id="L_CONFIRM_DELETE_JOB" ver="1">Are you sure you want to delete job $1?</t>
+<t id="L_SNAPSHOT_SAVED_SUCCESSFULLY" ver="1">State was saved successfully</t>
+<t id="M_SNAPSHOT" ver="1">Snapshot</t>
+<t id="M_LOAD_STATE" ver="1">Load</t>
+<t id="M_SAVE_STATE" ver="1">Save</t>
+<t id="W_PENDING_PRINT_JOBS" ver="1">Pending Print Jobs</t>
+<t id="M_PENDING_JOB_SELECT_JOB" ver="1">Restore Job</t>
+<t id="M_PENDING_JOB_KILL_JOB" ver="1">Kill Job</t>
+<t id="M_PENDING_JOB_RENAME_JOB" ver="1">Rename Job</t>
+<t id="L_SNAPSHOT_NAME" ver="1">Snapshot name</t>
+<t id="L_WRITE_SNAPSHOT_NAME" ver="1">Please, write a snapshot name</t>
 </translation>
 

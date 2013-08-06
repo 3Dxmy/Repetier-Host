@@ -58,6 +58,31 @@ namespace RepetierHost.model
             }
         }
 
+        public static PendingPrintJob GetPendingJobWithName(string snapshotName)
+        {
+            try
+            {
+                if (!Directory.Exists(PendingJobsDir))
+                {
+                    Directory.CreateDirectory(PendingJobsDir);
+                }
+
+                string pendingJobFilePath = PendingJobsDir + Path.DirectorySeparatorChar + snapshotName + "." + RepetierExtension;
+                if (File.Exists(pendingJobFilePath))
+                {
+                    return new PendingPrintJob(pendingJobFilePath);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new PendingPrintJobsException("Can't read or create pending jobs directory.", e);
+            }
+        }
+
         public static string PendingJobsDir
         {
             get { return Main.globalSettings.Workdir + Path.DirectorySeparatorChar + PendingJobsDirName; }
@@ -85,7 +110,7 @@ namespace RepetierHost.model
 
         public string Name
         {
-            get { string fileName = Path.GetFileName(path); return fileName.Substring(0, fileName.LastIndexOf(".")); }
+            get { return Path.GetFileNameWithoutExtension(path); }
         }
 
         public PrintingStateSnapshot GetSnapshot()
@@ -111,6 +136,35 @@ namespace RepetierHost.model
             }
         }
 
+        public void Rename(string newName)
+        {
+            if (IsInvalidSnapshotName(newName))
+            {
+                throw new IOException("Invalid job name");
+            }
+            string oldPath = this.path;
+            string newPath = Path.GetDirectoryName(oldPath) + Path.DirectorySeparatorChar + newName + "." + PendingPrintJobs.RepetierExtension;
+            File.Move(oldPath, newPath);
+            this.path = newPath;
+        }
+
+        /// <summary>
+        /// Returns true if and only if the snapshot name is valid.
+        /// This method doesn't accept null values.
+        /// </summary>
+        /// <param name="snapshotName"></param>
+        /// <returns></returns>
+        public static bool IsInvalidSnapshotName(string snapshotName)
+        {
+            foreach (char invalidChar in Path.GetInvalidFileNameChars())
+            {
+                if (snapshotName.Contains(invalidChar))
+                {
+                    return false;
+                }
+            }
+            return snapshotName.StartsWith(" ") || snapshotName.EndsWith(" ") || snapshotName.Length == 0 || snapshotName.Length >= 128;
+        }
 
         public override string ToString()
         {

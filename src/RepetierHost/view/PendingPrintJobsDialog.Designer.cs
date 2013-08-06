@@ -32,8 +32,9 @@
             this.pendingJobsListbox = new System.Windows.Forms.ListBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonKillJob = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSelectJob = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonKillJob = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonRename = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,21 +65,13 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonSelectJob,
-            this.toolStripButtonKillJob});
+            this.toolStripButtonKillJob,
+            this.toolStripButtonRename});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(552, 39);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripButtonKillJob
-            // 
-            this.toolStripButtonKillJob.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonKillJob.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonKillJob.Image")));
-            this.toolStripButtonKillJob.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonKillJob.Name = "toolStripButtonKillJob";
-            this.toolStripButtonKillJob.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonKillJob.Click += new System.EventHandler(this.toolStripButtonKillJob_Click);
             // 
             // toolStripButtonSelectJob
             // 
@@ -88,7 +81,29 @@
             this.toolStripButtonSelectJob.Name = "toolStripButtonSelectJob";
             this.toolStripButtonSelectJob.Size = new System.Drawing.Size(36, 36);
             this.toolStripButtonSelectJob.Text = "toolStripButton2";
+            this.toolStripButtonSelectJob.ToolTipText = "Restore Job";
             this.toolStripButtonSelectJob.Click += new System.EventHandler(this.toolStripButtonSelectJob_Click);
+            // 
+            // toolStripButtonKillJob
+            // 
+            this.toolStripButtonKillJob.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonKillJob.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonKillJob.Image")));
+            this.toolStripButtonKillJob.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonKillJob.Name = "toolStripButtonKillJob";
+            this.toolStripButtonKillJob.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonKillJob.ToolTipText = "Kill Job";
+            this.toolStripButtonKillJob.Click += new System.EventHandler(this.toolStripButtonKillJob_Click);
+            // 
+            // toolStripButtonRename
+            // 
+            this.toolStripButtonRename.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRename.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRename.Image")));
+            this.toolStripButtonRename.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRename.Name = "toolStripButtonRename";
+            this.toolStripButtonRename.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonRename.Text = "toolStripButtonRename";
+            this.toolStripButtonRename.ToolTipText = "Rename";
+            this.toolStripButtonRename.Click += new System.EventHandler(this.toolStripButtonRename_Click);
             // 
             // PendingPrintJobsDialog
             // 
@@ -114,5 +129,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButtonKillJob;
         private System.Windows.Forms.ToolStripButton toolStripButtonSelectJob;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRename;
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using RepetierHost.model;
+using RepetierHost.view.utils;
 
 namespace RepetierHost.view
 {
@@ -53,10 +54,66 @@ namespace RepetierHost.view
             {
                 if (MessageBox.Show("Are you sure you want to delete job " + job.Name + "?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    job.Delete();
-                    pendingJobsListbox.Items.Remove(job);
+                    try
+                    {
+                        job.Delete();
+                        pendingJobsListbox.Items.Remove(job);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("An error occurred while deleting state file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
+        }
+
+        private void toolStripButtonRename_Click(object sender, EventArgs e)
+        {
+            PendingPrintJob job = (PendingPrintJob)pendingJobsListbox.SelectedItem;
+            if (job != null)
+            {
+                string currentSnapshotName = job.Name;
+                string newSnapshotName = ReadSnapshotName(currentSnapshotName);
+                if (newSnapshotName == null)
+                {
+                    // User cancelled
+                    return;
+                }
+                if (!newSnapshotName.Equals(currentSnapshotName))
+                {
+                    try
+                    {
+                        job.Rename(newSnapshotName);
+                        pendingJobsListbox.Items[pendingJobsListbox.SelectedIndex] = job;
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show("An error occurred while renaming state file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Show the user a dialog requesting a snapshot name.
+        /// If the name is iinvalid, ask him again until he sets a right name.
+        /// If the user cancels, returns null.
+        /// </summary>
+        /// <returns></returns>
+        private static string ReadSnapshotName(string currentSnapshotName)
+        {
+            string snapshotName = currentSnapshotName;
+            do
+            {
+                snapshotName = StringInput.GetString("Snapshot Name", "Please, write a snapshot name:", snapshotName, true);
+                if (snapshotName == null)
+                {
+                    // User cancelled.
+                    return null;
+                }
+            } while (PendingPrintJob.IsInvalidSnapshotName(snapshotName));
+
+            return snapshotName;
         }
      
     }

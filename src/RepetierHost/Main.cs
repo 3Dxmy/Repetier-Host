@@ -1655,43 +1655,81 @@ namespace RepetierHost
         }
 
         private OnPosChange SaveStateOnNewLayerDelegate;
+        // NOTE: Used an array for the lock object because strings could be
+        // immutable.
+        private string[] lockObject = new string[0];
+        private string snapshotNameOnNextSaveState;
         private void saveStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // XXXX FIXME TODO
             //ValidatePreconditionsToSaveStateSnapshot(Main.conn);
 
+            string snapshotName = ReadSnapshotName();
+            if (snapshotName == null)
+            {
+                // User cancelled
+                return;
+            }
+
             double lastZ = Main.conn.analyzer.z;
-            SaveStateOnNewLayerDelegate = new OnPosChange(delegate(GCode gc, float x , float y, float z){
-                if (z != lastZ)
+            lock (lockObject)
+            {
+                SaveStateOnNewLayerDelegate = new OnPosChange(delegate(GCode gc, float x, float y, float z)
                 {
-                    // New Layer, ready to save state.
-                    OnReadyToSaveStateCallback(gc);
+                    if (z != lastZ)
+                    {
+                        // New Layer, ready to save state.
+                        OnReadyToSaveStateCallback(gc);
+                    }
+                });
+                snapshotNameOnNextSaveState = snapshotName;
+                Main.conn.analyzer.eventPosChanged += SaveStateOnNewLayerDelegate;
+            }
+        }
+
+        private void CancelSaveState()
+        {
+            lock (lockObject)
+            {
+                if (SaveStateOnNewLayerDelegate != null)
+                {
+                    Main.conn.analyzer.eventPosChanged -= SaveStateOnNewLayerDelegate;
+                    SaveStateOnNewLayerDelegate = null;
                 }
-            });
-            Main.conn.analyzer.eventPosChanged += SaveStateOnNewLayerDelegate;
+            }
         }
 
         private void OnReadyToSaveStateCallback(GCode gcode)
         {
-            // We want the event to execute only once, so, we must remove it
-            // after the condition was met.
-            Main.conn.analyzer.eventPosChanged -= SaveStateOnNewLayerDelegate;
+            string snapshotName;
+            lock (lockObject)
+            {
+                if (SaveStateOnNewLayerDelegate == null)
+                {
+                    // Already cancelled.
+                    return;
+                }
+
+                // keep snapshot name
+                snapshotName = snapshotNameOnNextSaveState;
+
+                // We want the event to execute only once, so, we must remove it
+                // after the condition was met.
+                Main.conn.analyzer.eventPosChanged -= SaveStateOnNewLayerDelegate;
+                SaveStateOnNewLayerDelegate = null;
+                snapshotNameOnNextSaveState = null;
+            }
 
             // Capture state, so that any movement we do later is not affected.
             PrintingStateSnapshot state = SnapshotFactory.TakeSnapshot(Main.conn);
 
-            // Move extruder to prevent melting the object
-            // First move it 5 up and then go home x y
-            // XXX FIXME: CONFIRM ITS POSSIBLE TO MOVE UP
-            /*conn.connector.InjectManualCommand("G91");
-            conn.connector.InjectManualCommand("G1 Z5");
-            conn.connector.InjectManualCommand("G90");
-            conn.connector.InjectManualCommand("G1 X0 Y0");*/
+            // Kill job. This will move the extruder to prevent melting the
+            // object.
             conn.connector.KillJob();
 
             try
             {
-                SaveStateFile(state);
+                SaveStateFile(state, snapshotName);
                 MessageBox.Show("State was saved successfully.");
             }
             catch (IOException ex)
@@ -1704,68 +1742,35 @@ namespace RepetierHost
             }
         }
 
-        private void SaveStateFile(PrintingStateSnapshot state)
+        private void SaveStateFile(PrintingStateSnapshot state, string snapshotName)
         {
-            PendingPrintJobs.Add(state, DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
-        }
-        
-/*        private void SaveStateFile(PrintingStateSnapshot state)
-        {
-            SnapshotContainer container = new SnapshotContainer();
-
-            container.type = "Layer";
-            container.version = "1.0";
-            container.snapshot = state;
-            
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "Repetier Host State (*." + PendingPrintJobs.RepetierExtension + ")|*." + PendingPrintJobs.RepetierExtension + "|All files (*.*)|*.*";
-            dialog.Title = "Save State";
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(container.GetType());
-                Stream fileStream = dialog.OpenFile();
-                try
-                {
-                    x.Serialize(fileStream, container);
-                }
-                finally
-                {
-                    fileStream.Close();
-                }
-            }
+            // Check if there's already a file with that name. The file would be overwritten.
+            //bool fileExists = (PendingPrintJobs.GetPendingJobWithName(snapshotName) != null);
+            PendingPrintJobs.Add(state, snapshotName);
         }
 
-        private PrintingStateSnapshot LoadStateFile()
+        /// <summary>
+        /// Show the user a dialog requesting a snapshot name.
+        /// If the name is iinvalid, ask him again until he sets a right name.
+        /// If the user cancels, returns null.
+        /// </summary>
+        /// <returns></returns>
+        private static string ReadSnapshotName()
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Repetier Host State (*." + PendingPrintJobs.RepetierExtension + ")|*." + PendingPrintJobs.RepetierExtension + "|All files (*.*)|*.*";
-            dialog.Title = "Open State";
-            if (dialog.ShowDialog() == DialogResult.OK)
+            // Propose as snapshot name, one that contains a timestamp.
+            string snapshotName = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            do
             {
-                System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(typeof(SnapshotContainer));
-                Stream fileStream = dialog.OpenFile();
-                try
+                snapshotName = StringInput.GetString("Snapshot Name", "Please, write a snapshot name:", snapshotName, true);
+                if (snapshotName == null)
                 {
-                    SnapshotContainer container = (SnapshotContainer)x.Deserialize(fileStream);
-                    //FIXME 
-                    //ValidateSDnapshot(container)
-                    return container.snapshot;
+                    // User cancelled.
+                    return null;
                 }
-                catch (InvalidOperationException e)
-                {
-                    throw new IOException("Invalid state file.", e);
-                }
-                finally
-                {
-                    fileStream.Close();
-                }
-            }
-            else
-            {
-                return null;
-            }
-        }*/
+            } while (PendingPrintJob.IsInvalidSnapshotName(snapshotName));
 
+            return snapshotName;
+        }
 
     }
 }

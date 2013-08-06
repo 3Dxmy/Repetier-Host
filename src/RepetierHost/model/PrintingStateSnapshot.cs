@@ -6,6 +6,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Windows.Forms;
 using System.IO;
+using System.Globalization;
 
 namespace RepetierHost.model
 {
@@ -13,7 +14,9 @@ namespace RepetierHost.model
     {
         public float x, y, z;
         public float speed; //speed
-        public Boolean relative;
+        public float fanVoltage;    //fan speed
+        public bool fanOn;
+        public bool relative;
         public float[] extrudersTemp;
         public float bedTemp;
         public int layer;
@@ -30,13 +33,16 @@ namespace RepetierHost.model
             s.x = analyzer.RealX;
             s.y = analyzer.RealY;
             s.z = analyzer.RealZ;
+            s.fanVoltage = analyzer.fanVoltage;
+            s.fanOn = analyzer.fanOn;
             s.speed = analyzer.f;
             s.layer = analyzer.layer;
-            s.extrudersTemp = new float[analyzer.extruder.Count];
-            foreach (int extr in analyzer.extruder.Keys) {
-                s.extrudersTemp[extr] = analyzer.getTemperature(extr);
+            s.extrudersTemp = new float[conn.extruderTemp.Count];
+            for (int extr = 0; extr < conn.extruderTemp.Count; extr++ )
+            {
+                s.extrudersTemp[extr] = conn.extruderTemp[extr];
             }
-            s.bedTemp = analyzer.bedTemp;
+            s.bedTemp = conn.bedTemp;
             s.activeExtruderId = analyzer.activeExtruderId;
             s.relative = analyzer.relative;
             s.activeExtruderValue = analyzer.activeExtruder.e - analyzer.activeExtruder.eOffset;
@@ -79,21 +85,48 @@ namespace RepetierHost.model
             g.Reset();
             g.Load();
             // Based on ContinueJob from PauseInfo.
+            // Start code, generic
+            // XXX FIXME uso las de Repetier???????)
             g.SetPositionMode(true);
             g.HomeAllAxis();
+            g.MoveZ(10.0, 0);    //Move up so as to let the plastic flow.
+            // XXXX FIXME GET FAN SPEED FROM DEVICE
+            if (fanOn)
+            {
+                // Set fan speed
+                g.Add("M106 S" + (int)fanVoltage); //Fan
+                g.NewLine();
+            }
             g.ResetE();
+            // Marlin doesn't have M116, so, we must use M190 and M109 to wait
+            // to reach the temperature.
+            // Set bed temperature. Force use of "." as decimal separator.
+            g.Add("M190 S" + bedTemp.ToString(CultureInfo.InvariantCulture));
+            g.NewLine();
+            for (int i = 0; i < extrudersTemp.Length; i++)
+            {
+                // Set extruders temperature. Force use of "." as decimal separator.
+                g.Add("M109 S" + extrudersTemp[i].ToString(CultureInfo.InvariantCulture) + " T" + i);
+                g.NewLine();
+            }
+            // Select extruder
+            g.Add("T" + activeExtruderId);
+            g.NewLine();
+
+            g.SetE(activeExtruderValue);
+
+            g.Add("@pause Please extrude some plastic to have a better flow and resume after removing the exceeding plastic"); // Let the user extrude some plastic.
+            g.NewLine();
+
+            g.Add("G28 X0 Y0"); // Go to home x y in case you moved the bed accidentally.
+            g.NewLine();
+
             // We first must move vertically, so that it doesn't collide with the object.
             g.MoveZ(z + 5, layer);
-            g.Move(x, y, 0.0);
+            g.Move(x, y, speed);
             g.MoveZ(z, layer);
             g.Move(x, y, speed); // Reset old speed
-
-            // XXX FIXME: Debo setear la temperatura? O eso debe hacerlo el usuario?
-            //g.SetTemperatureFast((int)extrudersTemp[activeExtruderId]);
-            // XXX FIXME: Como seteo el bed temperature????
-            // XXX FIXME: Como seteo el active extruder????
             
-            g.SetE(activeExtruderValue);
             if (relative)
             {
                 // We know the coordinates will be absolute because we set it at first.

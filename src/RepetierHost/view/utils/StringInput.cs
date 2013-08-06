@@ -12,13 +12,21 @@ namespace RepetierHost.view.utils
 {
     public partial class StringInput : Form
     {
+        private bool cancelled = false;
         public static string GetString(string head, string info)
         {
+            return GetString(head, info, "", false);
+        }
+        public static string GetString(string head, string info, string defaultValue, bool allowCancel)
+        {
             StringInput ip = new StringInput();
+            ip.buttonCancel.Visible = allowCancel;
+            ip.buttonOK.Left = ip.buttonCancel.Left - (allowCancel ? ip.buttonOK.Width : 0);
             ip.Text = head;
+            ip.textBox1.Text = defaultValue;
             ip.labelInfo.Text = info;
             ip.ShowDialog();
-            string r = ip.textBox1.Text;
+            string r = ip.cancelled?null:ip.textBox1.Text;
             ip.Dispose(true);
             return r;
         }
@@ -26,6 +34,13 @@ namespace RepetierHost.view.utils
         {
             InitializeComponent();
             buttonOK.Text = Trans.T("B_OK");
+            buttonCancel.Text = Trans.T("B_CANCEL");
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            cancelled = true;
+            this.Close();
         }
     }
 }

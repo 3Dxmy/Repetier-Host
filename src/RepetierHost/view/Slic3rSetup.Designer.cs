@@ -30,9 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Slic3rSetup));
             this.groupSlic3rSetup = new System.Windows.Forms.GroupBox();
+            this.comboVersion = new System.Windows.Forms.ComboBox();
             this.labelSlic3rInfo = new System.Windows.Forms.Label();
             this.labelLeaveBlankBundle = new System.Windows.Forms.Label();
             this.labelSlic3rLeaveBlankConfig = new System.Windows.Forms.Label();
+            this.labelSlic3rVersion = new System.Windows.Forms.Label();
             this.labelSlic3rExecutable = new System.Windows.Forms.Label();
             this.labelSlic3rConfigDir = new System.Windows.Forms.Label();
             this.buttonBrowseExecutable = new System.Windows.Forms.Button();
@@ -43,8 +45,6 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.labelSlic3rVersion = new System.Windows.Forms.Label();
-            this.comboVersion = new System.Windows.Forms.ComboBox();
             this.groupSlic3rSetup.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,6 +67,18 @@
             this.groupSlic3rSetup.TabIndex = 0;
             this.groupSlic3rSetup.TabStop = false;
             this.groupSlic3rSetup.Text = "Slic3r setup";
+            // 
+            // comboVersion
+            // 
+            this.comboVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboVersion.FormattingEnabled = true;
+            this.comboVersion.Items.AddRange(new object[] {
+            "0.9.9 or higher",
+            "0.9.0 - 0.9.8"});
+            this.comboVersion.Location = new System.Drawing.Point(7, 166);
+            this.comboVersion.Name = "comboVersion";
+            this.comboVersion.Size = new System.Drawing.Size(314, 21);
+            this.comboVersion.TabIndex = 9;
             // 
             // labelSlic3rInfo
             // 
@@ -93,6 +105,16 @@
             this.labelSlic3rLeaveBlankConfig.Size = new System.Drawing.Size(184, 13);
             this.labelSlic3rLeaveBlankConfig.TabIndex = 7;
             this.labelSlic3rLeaveBlankConfig.Text = "Leave blank to use guessed location.";
+            // 
+            // labelSlic3rVersion
+            // 
+            this.labelSlic3rVersion.AutoSize = true;
+            this.labelSlic3rVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSlic3rVersion.Location = new System.Drawing.Point(3, 149);
+            this.labelSlic3rVersion.Name = "labelSlic3rVersion";
+            this.labelSlic3rVersion.Size = new System.Drawing.Size(85, 13);
+            this.labelSlic3rVersion.TabIndex = 0;
+            this.labelSlic3rVersion.Text = "Slic3r Version";
             // 
             // labelSlic3rExecutable
             // 
@@ -171,32 +193,6 @@
             // openFileDialog
             // 
             this.openFileDialog.Title = "Slic3r setup";
-            // 
-            // folderBrowser
-            // 
-            this.folderBrowser.RootFolder = System.Environment.SpecialFolder.ApplicationData;
-            // 
-            // labelSlic3rVersion
-            // 
-            this.labelSlic3rVersion.AutoSize = true;
-            this.labelSlic3rVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSlic3rVersion.Location = new System.Drawing.Point(3, 149);
-            this.labelSlic3rVersion.Name = "labelSlic3rVersion";
-            this.labelSlic3rVersion.Size = new System.Drawing.Size(85, 13);
-            this.labelSlic3rVersion.TabIndex = 0;
-            this.labelSlic3rVersion.Text = "Slic3r Version";
-            // 
-            // comboVersion
-            // 
-            this.comboVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboVersion.FormattingEnabled = true;
-            this.comboVersion.Items.AddRange(new object[] {
-            "0.9.9 or higher",
-            "0.9.0 - 0.9.8"});
-            this.comboVersion.Location = new System.Drawing.Point(7, 166);
-            this.comboVersion.Name = "comboVersion";
-            this.comboVersion.Size = new System.Drawing.Size(314, 21);
-            this.comboVersion.TabIndex = 9;
             // 
             // Slic3rSetup
             // 

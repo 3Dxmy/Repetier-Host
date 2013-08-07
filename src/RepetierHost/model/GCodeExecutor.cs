@@ -52,7 +52,8 @@ namespace RepetierHost.model
 
 
             // Load Generated GCode as current job.
-            Main.main.editor.Text = gcodeToExecute;
+            //Main.main.editor.Text = gcodeToExecute;
+            Main.main.editor.setContent(0, gcodeToExecute);
 
             if (startImmediatelly)
             {

@@ -221,7 +221,7 @@ namespace RepetierHost.model
                 Z = layer * LayerHeight;
             code.Append("G1 Z");
             WriteDouble(Z);
-            WriteFeedrateExact(0);
+            WriteFeedrateExact(ZFeedRate);
             NewLine();
             return Z;
         }
@@ -246,7 +246,7 @@ namespace RepetierHost.model
             Z = z;
             code.Append("G1 Z");
             WriteDouble(Z);
-            WriteFeedrateExact(0);
+            WriteFeedrateExact(ZFeedRate);
             NewLine();
             return Z;
         }

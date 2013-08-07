@@ -1641,9 +1641,6 @@ namespace RepetierHost
                 }
                 PrintingStateSnapshot state = job.GetSnapshot(); //LoadStateFile();
 
-                //RequestUserToMarkXCoordinates(Main.conn); <----- esto es un state machine, modelalo asi
-                //                                             |-- a su vez, esto puede ser un tipo de calibracion solamente. plantealo en forma generica luego.
-                //                                             |-- incluso el metodo de calibracion puede depender del tipo de file, con lo que quizas convenga meter la logica en el restaurador de estado.
                 GCodeExecutor executor = new PrinterConnectionGCodeExecutor(conn, false);
                 state.RestoreState(executor);
                 Main.main.Invoke(Main.main.UpdateJobButtons);
@@ -1660,6 +1657,7 @@ namespace RepetierHost
 
         private OnPosChange SaveStateOnNewLayerDelegate;
         private PrinterConnectorBase.OnPauseChanged SaveStateOnPauseDelegate;
+        private SnapshotDialog snapshotDialog;
         // NOTE: Used an array for the lock object because strings could be
         // immutable.
         private string[] lockObject = new string[0];
@@ -1683,6 +1681,7 @@ namespace RepetierHost
                 // - Print job is paused (if it's paused at the moment the user
                 // tries to take the snapshot, then it's taken at that moment)
                 // - A new layer is reached.
+                // - The user forces the snapshot from the snapshot dialog.
                 SaveStateOnNewLayerDelegate = new OnPosChange(delegate(GCode gc, float x, float y, float z)
                 {
                     if (z != lastZ)
@@ -1701,6 +1700,11 @@ namespace RepetierHost
                 snapshotNameOnNextSaveState = snapshotName;
                 Main.conn.analyzer.eventPosChanged += SaveStateOnNewLayerDelegate;
                 Main.conn.connector.eventPauseChanged += SaveStateOnPauseDelegate;
+                if (snapshotDialog == null)
+                {
+                    // FIXME this can lead to a race condition
+                    snapshotDialog = new SnapshotDialog();
+                }
 
                 if (Main.conn.connector.IsPaused)
                 {
@@ -1709,9 +1713,11 @@ namespace RepetierHost
                     OnReadyToSaveStateCallback();
                 }
             }
+
+            snapshotDialog.Show();
         }
 
-        /*private void CancelSaveState()
+        internal void CancelSaveState()
         {
             lock (lockObject)
             {
@@ -1721,11 +1727,17 @@ namespace RepetierHost
                     Main.conn.connector.eventPauseChanged -= SaveStateOnPauseDelegate;
                     SaveStateOnNewLayerDelegate = null;
                     SaveStateOnPauseDelegate = null;
+                    if (snapshotDialog != null)
+                    {
+                        // FIXME this can lead to a race condition
+                        snapshotDialog.Close();
+                        snapshotDialog = null;
+                    }
                 }
             }
-        }*/
+        }
 
-        private void OnReadyToSaveStateCallback()
+        public void OnReadyToSaveStateCallback()
         {
             string snapshotName;
             lock (lockObject)
@@ -1746,6 +1758,12 @@ namespace RepetierHost
                 SaveStateOnNewLayerDelegate = null;
                 SaveStateOnPauseDelegate = null;
                 snapshotNameOnNextSaveState = null;
+                if (snapshotDialog != null)
+                {
+                    // FIXME this can lead to a race condition
+                    snapshotDialog.Close();
+                    snapshotDialog = null;
+                }
             }
 
             // Capture state, so that any movement we do later is not affected.

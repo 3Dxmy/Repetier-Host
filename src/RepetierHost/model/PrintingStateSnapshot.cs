@@ -57,9 +57,14 @@ namespace RepetierHost.model
             s.extrudersTemp = new float[conn.extruderTemp.Count];
             for (int extr = 0; extr < conn.extruderTemp.Count; extr++ )
             {
-                s.extrudersTemp[extr] = conn.extruderTemp[extr];
+                // Use the configured temperature, not the measured
+                // temperature.
+                s.extrudersTemp[extr] = conn.analyzer.getTemperature(extr);
+                //s.extrudersTemp[extr] = conn.extruderTemp[extr];
             }
-            s.bedTemp = conn.bedTemp;
+            // Use the configured temperature, not the measured temperature.
+            s.bedTemp = conn.analyzer.bedTemp;
+            //s.bedTemp = conn.bedTemp;
             s.activeExtruderId = analyzer.activeExtruderId;
             s.relative = analyzer.relative;
             s.activeExtruderValue = analyzer.activeExtruder.e - analyzer.activeExtruder.eOffset;
@@ -115,30 +120,43 @@ namespace RepetierHost.model
                 g.NewLine();
             }
             g.ResetE();
+
             // First set temperature without blocking.
             // Marlin doesn't have M116, so, we must use M190 and M109 to wait
             // to reach the temperature.
             // Set bed temperature. Force use of "." as decimal separator.
-            g.Add("M140 S" + bedTemp.ToString(CultureInfo.InvariantCulture));
-            g.NewLine();
+            if (bedTemp != 0.0)
+            {
+                g.Add("M140 S" + bedTemp.ToString(CultureInfo.InvariantCulture));
+                g.NewLine();
+            }
             for (int i = 0; i < extrudersTemp.Length; i++)
             {
-                // Set extruders temperature. Force use of "." as decimal separator.
-                g.Add("M104 S" + extrudersTemp[i].ToString(CultureInfo.InvariantCulture) + " T" + i);
-                g.NewLine();
+                if (extrudersTemp[i] != 0.0)
+                {
+                    // Set extruders temperature. Force use of "." as decimal separator.
+                    g.Add("M104 S" + extrudersTemp[i].ToString(CultureInfo.InvariantCulture) + " T" + i);
+                    g.NewLine();
+                }
             }
 
             // Then wait until all temperatures have been reached.
             // Marlin doesn't have M116, so, we must use M190 and M109 to wait
             // to reach the temperature.
             // Set bed temperature. Force use of "." as decimal separator.
-            g.Add("M190 S" + bedTemp.ToString(CultureInfo.InvariantCulture));
-            g.NewLine();
+            if (bedTemp != 0.0)
+            {
+                g.Add("M190 S" + bedTemp.ToString(CultureInfo.InvariantCulture));
+                g.NewLine();
+            }
             for (int i = 0; i < extrudersTemp.Length; i++)
             {
-                // Set extruders temperature. Force use of "." as decimal separator.
-                g.Add("M109 S" + extrudersTemp[i].ToString(CultureInfo.InvariantCulture) + " T" + i);
-                g.NewLine();
+                if (extrudersTemp[i] != 0.0)
+                {
+                    // Set extruders temperature. Force use of "." as decimal separator.
+                    g.Add("M109 S" + extrudersTemp[i].ToString(CultureInfo.InvariantCulture) + " T" + i);
+                    g.NewLine();
+                }
             }
             // Select extruder
             g.Add("T" + activeExtruderId);

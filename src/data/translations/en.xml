@@ -626,5 +626,9 @@ Write Changes to EEPROM?</t>
 <t id="M_PENDING_JOB_RENAME_JOB" ver="1">Rename Job</t>
 <t id="L_SNAPSHOT_NAME" ver="1">Snapshot name</t>
 <t id="L_WRITE_SNAPSHOT_NAME" ver="1">Please, write a snapshot name</t>
+<t id="L_SNAPSHOT_DIALOG_DESCRIPTION" ver="1">The snapshot will be taken once the next layer is reached.
+You can force taking the snapshot now or cancel if needed.</t>
+<t id="B_FORCE_SNAPSHOT" ver="1">&amp;Force</t>
+<t id="W_SNAPSHOT_DIALOG" ver="1">Save Snapshot</t>
 </translation>
 

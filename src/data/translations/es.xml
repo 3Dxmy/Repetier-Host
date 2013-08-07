@@ -494,5 +494,9 @@ Los cambios en el registro estarán activos despues del siguiente reinicio.</t>
 <t id="M_PENDING_JOB_RENAME_JOB" ver="1">Renombrar trabajo</t>
 <t id="L_SNAPSHOT_NAME" ver="1">Nombre de instantánea</t>
 <t id="L_WRITE_SNAPSHOT_NAME" ver="1">Por favor, ingrese el nombre de la instantánea</t>
+<t id="L_SNAPSHOT_DIALOG_DESCRIPTION" ver="1">La instantánea será tomada una vez que se llegue a la próxima capa.
+Si lo necesita, puede forzar la instantánea ahora o cancelar.</t>
+<t id="B_FORCE_SNAPSHOT" ver="1">&amp;Force</t>
+<t id="W_SNAPSHOT_DIALOG" ver="1">Guardar instantánea</t>
 </translation>
 

@@ -1664,8 +1664,11 @@ namespace RepetierHost
         private string snapshotNameOnNextSaveState;
         private void saveStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // XXXX FIXME TODO
-            //ValidatePreconditionsToSaveStateSnapshot(Main.conn);
+            if (!ValidatePreconditionsToSaveStateSnapshot(Main.conn))
+            {
+                // conditions not met
+                return;
+            }
 
             string snapshotName = ReadSnapshotName();
             if (snapshotName == null)
@@ -1715,6 +1718,11 @@ namespace RepetierHost
             }
 
             snapshotDialog.Show();
+        }
+
+        private bool ValidatePreconditionsToSaveStateSnapshot(PrinterConnection conn)
+        {
+            return conn.connector.IsJobRunning();
         }
 
         internal void CancelSaveState()

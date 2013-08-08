@@ -37,10 +37,29 @@ namespace RepetierHost.view.utils
             buttonCancel.Text = Trans.T("B_CANCEL");
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case (Keys.Escape):
+                    Cancel();
+                    break;
+                case (Keys.Return):
+                    this.DialogResult = DialogResult.OK;
+                    break;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            Cancel();
+        }
+
+        private void Cancel()
+        {
             cancelled = true;
-            this.Close();
+            this.DialogResult = DialogResult.Cancel;
         }
     }
 }

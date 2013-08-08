@@ -106,13 +106,10 @@ namespace RepetierHost.model
             GCodeGenerator g = Main.generator;
             g.Reset();
             g.Load();
-            // Based on ContinueJob from PauseInfo.
-            // Start code, generic
-            // XXX FIXME uso las de Repetier???????)
+
             g.SetPositionMode(true);
             g.HomeAllAxis();
             g.MoveZ(10.0, 0);    //Move up so as to let the plastic flow.
-            // XXXX FIXME GET FAN SPEED FROM DEVICE
             if (fanOn)
             {
                 // Set fan speed

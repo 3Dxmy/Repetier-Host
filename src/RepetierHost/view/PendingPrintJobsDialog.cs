@@ -56,6 +56,26 @@ namespace RepetierHost.view
             base.OnClosing(e);
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case (Keys.Escape):
+                    Cancel();
+                break;
+                case (Keys.Delete):
+                    KillSelectedJob();
+                break;
+                case (Keys.Return):
+                    RestoreSelectedJob();
+                break;
+                case (Keys.F2):
+                    RenameSelectedJob();
+                break;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void LoadPendingJobs()
         {
             List<PendingPrintJob> list = PendingPrintJobs.GetPendingJobs();
@@ -72,16 +92,32 @@ namespace RepetierHost.view
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Cancel();
         }
 
         private void toolStripButtonSelectJob_Click(object sender, EventArgs e)
+        {
+            RestoreSelectedJob();
+        }
+
+        private void toolStripButtonKillJob_Click(object sender, EventArgs e)
+        {
+            KillSelectedJob();
+        }
+
+        private void toolStripButtonRename_Click(object sender, EventArgs e)
+        {
+            RenameSelectedJob();
+        }
+
+        
+        private void RestoreSelectedJob()
         {
             this.selectedJob = (PendingPrintJob)pendingJobsListbox.SelectedItem;
             this.Close();
         }
 
-        private void toolStripButtonKillJob_Click(object sender, EventArgs e)
+        private void KillSelectedJob()
         {
             PendingPrintJob job = (PendingPrintJob)pendingJobsListbox.SelectedItem;
             if (job != null)
@@ -101,7 +137,7 @@ namespace RepetierHost.view
             }
         }
 
-        private void toolStripButtonRename_Click(object sender, EventArgs e)
+        private void RenameSelectedJob()
         {
             PendingPrintJob job = (PendingPrintJob)pendingJobsListbox.SelectedItem;
             if (job != null)
@@ -120,12 +156,17 @@ namespace RepetierHost.view
                         job.Rename(newSnapshotName);
                         pendingJobsListbox.Items[pendingJobsListbox.SelectedIndex] = job;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show(ex.ToString(), Trans.T("L_ERROR"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
+        }
+
+        private void Cancel()
+        {
+            this.DialogResult = DialogResult.Cancel;
         }
 
         /// <summary>
@@ -151,4 +192,5 @@ namespace RepetierHost.view
         }
      
     }
+
 }

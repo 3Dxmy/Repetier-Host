@@ -242,7 +242,7 @@ namespace RepetierHost.model
         public double MoveZ(double z, int lay)
         {
             layer = lay;
-            SetRetract(true);// <-- XXX FIXME es necesario?
+            SetRetract(true);
             Z = z;
             code.Append("G1 Z");
             WriteDouble(Z);

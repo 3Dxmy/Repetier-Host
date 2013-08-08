@@ -234,6 +234,7 @@ namespace RepetierHost
             }
             slicerToolStripMenuItem.Visible = false;
             splitLog.Panel2Collapsed = !RegMemory.GetBool("logShow", true);
+            splitPrinterId.Panel1Collapsed = !RegMemory.GetBool("printerIdShow", false);
             conn.eventConnectionChange += OnPrinterConnectionChange;
             conn.eventPrinterAction += OnPrinterAction;
             conn.eventJobProgress += OnJobProgress;
@@ -512,6 +513,7 @@ namespace RepetierHost
             snapshotToolStripMenuItem.Text = Trans.T("M_SNAPSHOT");
             loadStateToolStripMenuItem.Text = Trans.T("M_LOAD_STATE");
             saveStateToolStripMenuItem.Text = Trans.T("M_SAVE_STATE");
+            togglePrinterIdToolStripMenuItem.Text = Trans.T("M_TOGGLE_PRINTER_ID");
             updateTravelMoves();
             updateShowFilament();
             foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
@@ -887,6 +889,7 @@ namespace RepetierHost
             RegMemory.SetInt("infoEditSplitterDistance", splitInfoEdit.SplitterDistance);
 
             RegMemory.SetBool("logShow", !splitLog.Panel2Collapsed);
+            RegMemory.SetBool("printerIdShow", !splitPrinterId.Panel1Collapsed);
 
             if (previewThread != null)
                 previewThread.Join();
@@ -1826,5 +1829,25 @@ namespace RepetierHost
             return snapshotName;
         }
 
+        private void printerIdLabel_DoubleClick(object sender, EventArgs e)
+        {
+            string printerId = StringInput.GetString(Trans.T("L_PRINTER_ID"), Trans.T("L_SET_PRINTER_ID"), printerIdLabel.Text, true);
+            if (printerId != null)
+            {
+                printerIdLabel.Text = printerId;
+
+                ColorDialog picker = new ColorDialog();
+                picker.Color = printerIdLabel.BackColor;
+                if (picker.ShowDialog() == DialogResult.OK)
+                {
+                    printerIdLabel.BackColor = picker.Color;
+                }
+            }
+        }
+
+        private void togglePrinterIdToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            splitPrinterId.Panel1Collapsed = !splitPrinterId.Panel1Collapsed;
+        }
     }
 }

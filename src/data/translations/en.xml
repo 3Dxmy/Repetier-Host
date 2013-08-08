@@ -630,5 +630,8 @@ Write Changes to EEPROM?</t>
 You can force taking the snapshot now or cancel if needed.</t>
 <t id="B_FORCE_SNAPSHOT" ver="1">&amp;Force</t>
 <t id="W_SNAPSHOT_DIALOG" ver="1">Save Snapshot</t>
+<t id="M_TOGGLE_PRINTER_ID" ver="1">Toggle Printer Id View</t>
+<t id="L_PRINTER_ID" ver="1">Printer Id</t>
+<t id="L_SET_PRINTER_ID" ver="1">Please, set a Printer Id</t>
 </translation>
 

@@ -498,5 +498,8 @@ Los cambios en el registro estarán activos despues del siguiente reinicio.</t>
 Si lo necesita, puede forzar la instantánea ahora o cancelar.</t>
 <t id="B_FORCE_SNAPSHOT" ver="1">&amp;Force</t>
 <t id="W_SNAPSHOT_DIALOG" ver="1">Guardar instantánea</t>
+<t id="M_TOGGLE_PRINTER_ID" ver="1">Alternar vista de Id de impresora</t>
+<t id="L_PRINTER_ID" ver="1">Id de impresora</t>
+<t id="L_SET_PRINTER_ID" ver="1">Por favor, escriba un Id de impresora</t>
 </translation>
 

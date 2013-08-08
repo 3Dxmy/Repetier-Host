@@ -510,9 +510,9 @@ namespace RepetierHost
             leadscrewCalculatorToolStripMenuItem.Text = Trans.T("M_LEADSCREW_CALCULATOR");
             fitPrinterToolStripMenuItem.Text = Trans.T("M_FIT_PRINTER");
             fitObjectsToolStripMenuItem.Text = Trans.T("M_FIT_OBJECTS");
-            snapshotToolStripMenuItem.Text = Trans.T("M_SNAPSHOT");
-            loadStateToolStripMenuItem.Text = Trans.T("M_LOAD_STATE");
-            saveStateToolStripMenuItem.Text = Trans.T("M_SAVE_STATE");
+            snapshotToolStripMenuItem.Text = Trans.T("M_POSPONED_JOBS");
+            loadStateToolStripMenuItem.Text = Trans.T("M_RESUME_JOB");
+            saveStateToolStripMenuItem.Text = Trans.T("M_POSTPONE_JOB");
             togglePrinterIdToolStripMenuItem.Text = Trans.T("M_TOGGLE_PRINTER_ID");
             updateTravelMoves();
             updateShowFilament();
@@ -1787,7 +1787,7 @@ namespace RepetierHost
             try
             {
                 SaveStateFile(state, snapshotName);
-                MessageBox.Show(Trans.T("L_SNAPSHOT_SAVED_SUCCESSFULLY"));
+                MessageBox.Show(Trans.T("L_PRINT_STATE_SAVED_SUCCESSFULLY"));
             }
             catch (IOException ex)
             {
@@ -1818,7 +1818,7 @@ namespace RepetierHost
             string snapshotName = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             do
             {
-                snapshotName = StringInput.GetString(Trans.T("L_SNAPSHOT_NAME"), Trans.T("L_WRITE_SNAPSHOT_NAME"), snapshotName, true);
+                snapshotName = StringInput.GetString(Trans.T("L_POSTPONED_JOB_NAME"), Trans.T("L_NAME_POSTPONED_JOB"), snapshotName, true);
                 if (snapshotName == null)
                 {
                     // User cancelled.

@@ -38,16 +38,16 @@ namespace RepetierHost.view.utils
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            Main.main.languageChanged -= translate;
-            base.OnClosing(e);
+            e.Cancel = true;
+            this.Hide();
         }
 
         private void translate()
         {
-            this.Text = Trans.T("W_SNAPSHOT_DIALOG");
-            descriptionLabel.Text = Trans.T("L_SNAPSHOT_DIALOG_DESCRIPTION");
-            buttonForceSnapshot.Text = Trans.T("B_FORCE_SNAPSHOT");
-            buttonCancel.Text = Trans.T("B_CANCEL");
+            this.Text = Trans.T("W_POSTPONED_JOB_DIALOG");
+            descriptionLabel.Text = Trans.T("L_POSTPONED_JOB_DIALOG_DESCRIPTION");
+            buttonForceSnapshot.Text = Trans.T("B_FORCE_SAVE_POSTPONED_JOB");
+            buttonResumeJob.Text = Trans.T("B_RESUME_PRINTING_JOB");
         }
 
         private void buttonForceSnapshot_Click(object sender, EventArgs e)

@@ -44,10 +44,10 @@ namespace RepetierHost.view
 
         private void translate()
         {
-            Text = Trans.T("W_PENDING_PRINT_JOBS");
-            toolStripButtonSelectJob.ToolTipText = Trans.T("M_PENDING_JOB_SELECT_JOB");
-            toolStripButtonKillJob.ToolTipText = Trans.T("M_PENDING_JOB_KILL_JOB");
-            toolStripButtonRename.ToolTipText = Trans.T("M_PENDING_JOB_RENAME_JOB");
+            Text = Trans.T("W_POSTPONED_PRINT_JOBS");
+            toolStripButtonSelectJob.ToolTipText = Trans.T("M_POSTPONED_JOB_SELECT_JOB");
+            toolStripButtonKillJob.ToolTipText = Trans.T("M_POSTPONED_JOB_KILL_JOB");
+            toolStripButtonRename.ToolTipText = Trans.T("M_POSTPONED_JOB_RENAME_JOB");
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -180,7 +180,7 @@ namespace RepetierHost.view
             string snapshotName = currentSnapshotName;
             do
             {
-                snapshotName = StringInput.GetString(Trans.T("L_SNAPSHOT_NAME"), Trans.T("L_WRITE_SNAPSHOT_NAME"), snapshotName, true);
+                snapshotName = StringInput.GetString(Trans.T("L_POSTPONED_JOB_NAME"), Trans.T("L_NAME_POSTPONED_JOB"), snapshotName, true);
                 if (snapshotName == null)
                 {
                     // User cancelled.

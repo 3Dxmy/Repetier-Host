@@ -39,6 +39,11 @@ namespace RepetierHost.view.utils
             translate();
             Main.main.languageChanged += translate;
         }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            ContinueJob();
+        }
         public void translate()
         {
             Text = Trans.T("W_PRINT_PAUSED");
@@ -46,6 +51,11 @@ namespace RepetierHost.view.utils
             buttonContinuePrinting.Text = Trans.T("B_CONTINUE_PRINTING");
         }
         private void buttonContinuePrinting_Click(object sender, EventArgs e)
+        {
+            ContinueJob();
+        }
+
+        private void ContinueJob()
         {
             Main.conn.connector.ContinueJob();
             /*

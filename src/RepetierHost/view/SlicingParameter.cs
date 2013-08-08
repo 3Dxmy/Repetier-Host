@@ -28,6 +28,11 @@ namespace RepetierHost.view
             InitializeComponent();
             RegMemory.RestoreWindowPos("slicingParameterWindow", this);
         }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
         private String ReadD(double d)
         {
             return d.ToString("0.0", GCode.format);

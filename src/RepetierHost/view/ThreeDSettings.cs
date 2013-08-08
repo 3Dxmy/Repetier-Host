@@ -129,6 +129,11 @@ Immediate (slow)*/
             buttonGeneralColorDefaults.Text = Trans.T("L_RESET_DEFAULTS");
             buttonModelColorsDefaults.Text = Trans.T("L_RESET_DEFAULTS");
         }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
         public bool ShowEdges
         {
             get { return _showEdges; }

@@ -45,6 +45,11 @@ namespace RepetierHost.view
             labelLicenceAndLibraries.Text = Trans.T("L_LICENCE_AND_LIBRARIES");
             labelRepetierInfo.Text = Trans.T("L_REPETIER_INFO");
         }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
         private void buttonOK_Click(object sender, EventArgs e)
         {
             Hide();

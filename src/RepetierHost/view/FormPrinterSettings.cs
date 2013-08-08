@@ -163,6 +163,11 @@ namespace RepetierHost.view
             comboBoxPrinterType.Items[3] = Trans.T("L_CNC_ROUTER");
 
         }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
         public void save(string printername)
         {
             if (printername.Length == 0) return;

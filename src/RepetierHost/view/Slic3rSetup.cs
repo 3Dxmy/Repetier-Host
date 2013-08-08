@@ -15,7 +15,7 @@ namespace RepetierHost.view
         static Slic3rSetup form = null;
         public static void Execute()
         {
-            if (form == null || form.IsDisposed)
+            if (form == null)
             {
                 form = new Slic3rSetup();
             }
@@ -33,8 +33,8 @@ namespace RepetierHost.view
         }
         protected override void OnClosing(CancelEventArgs e)
         {
-            Main.main.languageChanged -= translate;
-            base.OnClosing(e);
+            e.Cancel = true;
+            this.Hide();
         }
         private void translate()
         {

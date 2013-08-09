@@ -1457,6 +1457,11 @@ namespace RepetierHost.view
             }
             else
             {
+                if (Main.main.lastFileLoadedName != null && Main.main.lastFileLoadedName.Length > 0)
+                {
+                    // Propose default name
+                    Main.main.saveJobDialog.FileName = Main.main.lastFileLoadedName + ".gcode";
+                }
                 if (Main.main.saveJobDialog.ShowDialog() == DialogResult.OK)
                 {
                     System.IO.File.WriteAllText(Main.main.saveJobDialog.FileName, Text, Encoding.Default);

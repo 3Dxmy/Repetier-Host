@@ -110,6 +110,14 @@ namespace RepetierHost.view
             RenameSelectedJob();
         }
 
+        private void pendingJobsListbox_DoubleClick(object sender, EventArgs e)
+        {
+            if (pendingJobsListbox.SelectedIndex > -1)
+            {
+                RestoreSelectedJob();
+            }
+        }
+
         
         private void RestoreSelectedJob()
         {
@@ -190,7 +198,7 @@ namespace RepetierHost.view
 
             return snapshotName;
         }
-     
+    
     }
 
 }

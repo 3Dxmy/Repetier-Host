@@ -80,6 +80,7 @@ namespace RepetierHost
         public Trans trans = null;
         public RepetierHost.view.RepetierEditor editor;
         public double gcodePrintingTime = 0;
+        public string lastFileLoadedName;
         public class JobUpdater
         {
             GCodeVisual visual = null;
@@ -744,6 +745,7 @@ namespace RepetierHost
             if (!File.Exists(file)) return;
             FileInfo f = new FileInfo(file);
             Title = f.Name;
+            lastFileLoadedName = Path.GetFileNameWithoutExtension(f.Name);
             fileHistory.Save(file);
             UpdateHistory();
             string fileLow = file.ToLower();
@@ -1643,6 +1645,8 @@ namespace RepetierHost
                     return;
                 }
                 PrintingStateSnapshot state = job.GetSnapshot(); //LoadStateFile();
+                lastFileLoadedName = job.Name;
+                this.Title = job.Name;
 
                 GCodeExecutor executor = new PrinterConnectionGCodeExecutor(conn, false);
                 state.RestoreState(executor);

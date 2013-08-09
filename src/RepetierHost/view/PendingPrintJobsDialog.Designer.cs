@@ -48,6 +48,7 @@
             this.pendingJobsListbox.Name = "pendingJobsListbox";
             this.pendingJobsListbox.Size = new System.Drawing.Size(550, 329);
             this.pendingJobsListbox.TabIndex = 0;
+            this.pendingJobsListbox.DoubleClick += new System.EventHandler(this.pendingJobsListbox_DoubleClick);
             // 
             // buttonCancel
             // 

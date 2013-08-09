@@ -24,11 +24,14 @@ using System.Xml.Serialization;
 using System.Windows.Forms;
 using System.IO;
 using System.Globalization;
+using RepetierHost.view.utils;
 
 namespace RepetierHost.model
 {
     public class PrintingStateSnapshot
     {
+        public static double RestoreStateZMargin = RegMemory.GetDouble("restoreStateZMargin", 5.0);   //5 mm by default
+
         public float x, y, z;
         public float speed; //speed
         public float fanVoltage;    //fan speed
@@ -168,7 +171,16 @@ namespace RepetierHost.model
             g.NewLine();
 
             // We first must move vertically, so that it doesn't collide with the object.
-            g.MoveZ(z + 5, layer);
+            if (z < Main.printerSettings.PrintAreaHeight && z + RestoreStateZMargin > Main.printerSettings.PrintAreaHeight)
+            {
+                // The object is too tall, we must restrict the z to the
+                // printer height.
+                g.MoveZ(Main.printerSettings.PrintAreaHeight, layer);
+            }
+            else
+            {
+                g.MoveZ(z + RestoreStateZMargin, layer);
+            }
             g.Move(x, y, g.TravelFeedRate);
             g.MoveZ(z, layer);
             g.Add("G1 F" + speed.ToString(GCode.format)); // Reset old speed

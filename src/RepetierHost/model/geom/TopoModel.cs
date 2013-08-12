@@ -528,8 +528,11 @@ namespace RepetierHost.model.geom
                 foreach (TopoEdge edge in list)
                 {
                     cnt++;
-                    if((cnt % 10)==0)
+                    if ((cnt % 10) == 0)
+                    {
                         Application.DoEvents();
+                        if (IsActionStopped()) return true;
+                    }
                     foreach (TopoEdge test in list)
                     {
                         for (int i = 0; i < 2; i++)
@@ -1001,6 +1004,14 @@ namespace RepetierHost.model.geom
                     if (t.edges[2].connectedFaces != 2)
                         mesh.AddEdge(t.vertices[2].pos, t.vertices[0].pos, Submesh.MESHCOLOR_ERROREDGE);
                 }
+            }
+        }
+        public void FillMeshTrianglesOnly(Submesh mesh, int defaultColor)
+        {
+            bool drawEdges = Main.threeDSettings.ShowEdges;
+            foreach (TopoTriangle t in triangles)
+            {
+                mesh.AddTriangle(t.vertices[0].pos, t.vertices[1].pos, t.vertices[2].pos, (t.bad ? Submesh.MESHCOLOR_ERRORFACE : defaultColor));
             }
         }
 

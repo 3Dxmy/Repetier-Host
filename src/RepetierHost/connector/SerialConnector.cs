@@ -215,9 +215,15 @@ namespace RepetierHost.connector
                 serial.ErrorReceived += error;
                 //serial.RtsEnable = false;
                 if (resetOnConnect == 1)
+                {
                     serial.DtrEnable = true;
+                    serial.RtsEnable = true;
+                }
                 else if (resetOnConnect == 2)
+                {
                     serial.DtrEnable = false;
+                    serial.RtsEnable = false;
+                }
                 serial.Open();
                 if (writeThread == null)
                 {
@@ -229,20 +235,24 @@ namespace RepetierHost.connector
                 {
                     //Thread.Sleep(200);
                     serial.DtrEnable = true;
+                    serial.RtsEnable = true;
                 }
                 if (resetOnConnect == 1)
                 {
                     Thread.Sleep(1000);
                     serial.DtrEnable = false;
+                    serial.RtsEnable = false;
                 }
                 if (resetOnConnect == 2)
                 {
                     Thread.Sleep(1000);
                     serial.DtrEnable = false;
+                    serial.RtsEnable = false;
                 }
                 if (resetOnConnect == 3)
                 {
                     serial.DtrEnable = !serial.DtrEnable;
+                    serial.RtsEnable = !serial.RtsEnable;
                     Thread.Sleep(1000);
                 }
                 // If we didn't restart the connection we need to eat

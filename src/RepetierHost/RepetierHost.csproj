@@ -133,6 +133,7 @@
     <Compile Include="model\PendingPrintJobs.cs" />
     <Compile Include="model\GCodeExecutor.cs" />
     <Compile Include="model\Commands.cs" />
+    <Compile Include="model\Coordinate.cs" />
     <Compile Include="model\Custom.cs" />
     <Compile Include="model\EEPROMMarlinParameter.cs" />
     <Compile Include="model\EEPROMParameter.cs" />

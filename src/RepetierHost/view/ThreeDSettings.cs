@@ -40,6 +40,7 @@ namespace RepetierHost.view
         public float openGLVersion = 1.0f; // Version for feature detection
         private bool _showEdges = false;
         private bool _showFaces = true;
+        private bool _showCompass = true;
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
@@ -112,6 +113,7 @@ namespace RepetierHost.view
             radioDiameter.Text = Trans.T("L_FILAMENT_DIAMETER");
             labelModelError.Text = Trans.T("L_MODEL_ERRORS");
             labelInsideFaces.Text = Trans.T("L_INNER_FACES");
+            showCoordinate.Text = Trans.T("L_SHOW_COMPASS");
             /* Autodetect best
 VBOs (fastest)
 Arrays (medium)
@@ -129,11 +131,13 @@ Immediate (slow)*/
             buttonGeneralColorDefaults.Text = Trans.T("L_RESET_DEFAULTS");
             buttonModelColorsDefaults.Text = Trans.T("L_RESET_DEFAULTS");
         }
+
         protected override void OnClosing(CancelEventArgs e)
         {
             e.Cancel = true;
             this.Hide();
         }
+		
         public bool ShowEdges
         {
             get { return _showEdges; }
@@ -146,6 +150,7 @@ Immediate (slow)*/
                 Main.main.Update3D();
             }
         }
+
         public bool ShowFaces
         {
             get { return _showFaces; }
@@ -155,6 +160,19 @@ Immediate (slow)*/
                 _showFaces = value;
                 threedKey.SetValue("showFaces", _showFaces ? 1 : 0);
                 OnPropertyChanged(new PropertyChangedEventArgs("ShowFaces"));
+                Main.main.Update3D();
+            }
+        }
+
+        public bool ShowCompass
+        {
+            get { return _showCompass; }
+            set
+            {
+                if (value == _showCompass) return;
+                _showCompass = value;
+                threedKey.SetValue("showCompass", _showCompass ? 1 : 0);
+                OnPropertyChanged(new PropertyChangedEventArgs("ShowCompass"));
                 Main.main.Update3D();
             }
         }
@@ -202,6 +220,7 @@ Immediate (slow)*/
                 threedKey.SetValue("outsidePrintbedColor", outsidePrintbed.BackColor.ToArgb());
                 threedKey.SetValue("showEdges", _showEdges ? 1 : 0);
                 threedKey.SetValue("showFaces", _showFaces ? 1 : 0);
+                threedKey.SetValue("showCompass", _showCompass ? 1 : 0);
                 threedKey.SetValue("pulseOutside", pulseOutside.Checked ? 1 : 0);
                 threedKey.SetValue("showPrintbed", showPrintbed.Checked ? 1 : 0);
                 threedKey.SetValue("disableFilamentVisualization", checkDisableFilamentVisualization.Checked ? 1 : 0);
@@ -273,6 +292,7 @@ Immediate (slow)*/
                 outsidePrintbed.BackColor = Color.FromArgb((int)threedKey.GetValue("outsidePrintbedColor", outsidePrintbed.BackColor.ToArgb()));
                 _showEdges = 0 != (int)threedKey.GetValue("showEdges", _showEdges ? 1 : 0);
                 _showFaces = 0 != (int)threedKey.GetValue("showFaces", _showFaces ? 1 : 0);
+                _showCompass = 0 != (int)threedKey.GetValue("showCompass", _showCompass ? 1 : 0);
                 pulseOutside.Checked = 0 != (int)threedKey.GetValue("pulseOutside", pulseOutside.Checked ? 1 : 0);
                 showPrintbed.Checked = 0 != (int)threedKey.GetValue("showPrintbed", showPrintbed.Checked ? 1 : 0);
                 checkDisableFilamentVisualization.Checked = 0 != (int)threedKey.GetValue("disableFilamentVisualization", checkDisableFilamentVisualization.Checked ? 1 : 0);
@@ -531,6 +551,11 @@ Immediate (slow)*/
             outsidePrintbed.BackColor = Color.Aquamarine;
             cutFaces.BackColor = Color.RoyalBlue;
             insideFaces.BackColor = Color.Lime;
+        }
+
+        private void showCoordinate_CheckedChanged(object sender, EventArgs e)
+        {
+            Main.main.Update3D();
         }
     }
 }

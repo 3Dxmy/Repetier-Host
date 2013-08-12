@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<translation revision="9" language="English" languageInEnglish="English" author="Repetier">
+<translation revision="10" language="English" languageInEnglish="English" author="Repetier">
 <t id="M_FILE" ver="1">File</t>
 <t id="M_CONFIG" ver="1">Config</t>
 <t id="M_SLICER" ver="1">Slicer</t>
@@ -532,7 +532,8 @@ Write Changes to EEPROM?</t>
 <t id="L_SPLIT" ver="9">Split</t>
 <t id="L_YES" ver="9">Yes</t>
 <t id="L_NO" ver="9">No</t>
-<t id="L_MODEL_CHANGED_RELOAD" ver="9">One or more objects files are changed.\r\nReload objects?</t>
+<t id="L_MODEL_CHANGED_RELOAD" ver="9"><![CDATA[One or more objects files are changed.
+Reload objects?]]></t>
 <t id="L_FILES_CHANGED" ver="9">Files changed</t>
 <t id="L_INNER_FACES" ver="9">Inner faces:</t>
 <t id="L_BACKGROUND_TOP" ver="9">Background Top:</t>
@@ -614,6 +615,7 @@ Write Changes to EEPROM?</t>
 <t id="L_ANA_CORRECTED_NORMAL_ORIENTATIONS" ver="9">Corrected normal orientations:</t>
 <t id="L_OBJECT_IS_MANIFOLD" ver="9">Object is manifold.</t>
 <t id="L_OBJECT_IS_NON_MANIFOLD" ver="9">Object is non-manifold. Slicing may produce wrong results. Please repair object file first.</t>
+<t id="L_SHOW_COMPASS" ver="9">Show Compass</t>
 <t id="L_" ver="9"></t>
 <t id="L_CONFIRM_DELETE_JOB" ver="1">Are you sure you want to delete job $1?</t>
 <t id="L_PRINT_STATE_SAVED_SUCCESSFULLY" ver="1">State was saved successfully</t>

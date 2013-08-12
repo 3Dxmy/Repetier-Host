@@ -300,10 +300,11 @@ namespace RepetierHost
                 testCaseGeneratorToolStripMenuItem.Visible = false;
             }
             string titleAdd = Custom.GetString("titleAddition", "");
-            if (titleAdd.Length > 0)
+            string titlePrefix = Custom.GetString("titlePrefix", "");
+            if (titleAdd.Length > 0 || titlePrefix.Length>0)
             {
                 int p = basicTitle.IndexOf(' ');
-                basicTitle = basicTitle.Substring(0, p) + titleAdd + basicTitle.Substring(p);
+                basicTitle = titlePrefix+basicTitle.Substring(0, p) + titleAdd + basicTitle.Substring(p);
                 Text = basicTitle;
             }
             slicerPanel.UpdateSelection();
@@ -325,9 +326,45 @@ namespace RepetierHost
             {
                 Main.slicer.ActiveSlicer = Slicer.SlicerID.Slic3r;
             }
-            if(Custom.GetBool("extraSupportButton",false)) {
-                supportToolStripMenuItem.Text = Custom.GetString("extraSupportText","Support");
-            } else supportToolStripMenuItem.Visible = false;
+            if (Custom.GetBool("extraSupportButton", false))
+            {
+                supportToolStripMenuItem.Text = Custom.GetString("extraSupportText", "Support");
+            }
+            else
+            {
+                toolStripAskSeperator.Visible = false;
+                supportToolStripMenuItem.Visible = false;
+            }
+            if (Custom.GetString("extraLink1Title", "").Length>0)
+            {
+                extraUrl1ToolStripMenuItem.Text = Custom.GetString("extraLink1Title", "");
+                toolStripAskSeperator.Visible = true;
+            }
+            else extraUrl1ToolStripMenuItem.Visible = false;
+            if (Custom.GetString("extraLink2Title", "").Length > 0)
+            {
+                extraUrl2ToolStripMenuItem.Text = Custom.GetString("extraLink2Title", "");
+                toolStripAskSeperator.Visible = true;
+            }
+            else extraUrl2ToolStripMenuItem.Visible = false;
+            if (Custom.GetString("extraLink3Title", "").Length > 0)
+            {
+                extraUrl3ToolStripMenuItem.Text = Custom.GetString("extraLink3Title", "");
+                toolStripAskSeperator.Visible = true;
+            }
+            else extraUrl3ToolStripMenuItem.Visible = false;
+            if (Custom.GetString("extraLink4Title", "").Length > 0)
+            {
+                extraUrl4ToolStripMenuItem.Text = Custom.GetString("extraLink4Title", "");
+                toolStripAskSeperator.Visible = true;
+            }
+            else extraUrl4ToolStripMenuItem.Visible = false;
+            if (Custom.GetString("extraLink5Title", "").Length > 0)
+            {
+                extraUrl5ToolStripMenuItem.Text = Custom.GetString("extraLink5Title", "");
+                toolStripAskSeperator.Visible = true;
+            }
+            else extraUrl5ToolStripMenuItem.Visible = false;
             string supportImage = Custom.GetString("extraSupportToolbarImage", "");
             if (supportImage.Length > 0 && File.Exists(Application.StartupPath + Path.DirectorySeparatorChar + supportImage))
             {
@@ -506,6 +543,7 @@ namespace RepetierHost
             viewToolStripMenuItem.Text = Trans.T("M_VIEW");
             showEdgesToolStripMenuItem.Text = Trans.T("M_SHOW_EDGES");
             showFacesToolStripMenuItem.Text = Trans.T("M_SHOW_FACES");
+            showCompassToolStripMenuItem.Text = Trans.T("L_SHOW_COMPASS");
             toolsToolStripMenuItem.Text = Trans.T("M_TOOLS");
             beltCalculatorToolStripMenuItem.Text = Trans.T("M_BELT_CALCULATOR");
             leadscrewCalculatorToolStripMenuItem.Text = Trans.T("M_LEADSCREW_CALCULATOR");
@@ -763,9 +801,15 @@ namespace RepetierHost
             }
             else
             {
-                tab.SelectTab(tabGCode);
-                editor.selectContent(0);
-                editor.setContent(0, System.IO.File.ReadAllText(file));
+                try {
+                    tab.SelectTab(tabGCode);
+                    editor.selectContent(0);
+                    editor.setContent(0, System.IO.File.ReadAllText(file));
+                }
+                catch (System.IO.IOException ex)
+                {
+                    MessageBox.Show("Error encountered while processing file. " + ex.Message);
+                }
             }
         }
         public void LoadGCode(string file)
@@ -1589,6 +1633,7 @@ namespace RepetierHost
         {
             showEdgesToolStripMenuItem.Checked = threeDSettings.ShowEdges;
             showFacesToolStripMenuItem.Checked = threeDSettings.ShowFaces;
+            showCompassToolStripMenuItem.Checked = threeDSettings.ShowCompass;
         }
 
         private void showEdgesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1605,6 +1650,7 @@ namespace RepetierHost
         {
             showEdgesToolStripMenuItem.Checked = threeDSettings.ShowEdges;
             showFacesToolStripMenuItem.Checked = threeDSettings.ShowFaces;
+            showCompassToolStripMenuItem.Checked = threeDSettings.ShowCompass;
         }
 
         private void beltCalculatorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1730,6 +1776,36 @@ namespace RepetierHost
         private bool ValidatePreconditionsToSaveStateSnapshot(PrinterConnection conn)
         {
             return conn.connector.IsJobRunning();
+        }
+		
+        private void extraUrl1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openLink(Custom.GetString("extraLink1URL", ""));
+        }
+
+        private void extraUrl2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openLink(Custom.GetString("extraLink2URL", ""));
+        }
+
+        private void extraUrl3ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openLink(Custom.GetString("extraLink3URL", ""));
+        }
+
+        private void extraUrl4ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openLink(Custom.GetString("extraLink4URL", ""));
+        }
+
+        private void extraUrl5ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openLink(Custom.GetString("extraLink5URL", ""));
+        }
+
+        private void showCompassToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            threeDSettings.ShowCompass = !threeDSettings.ShowCompass;
         }
 
         internal void CancelSaveState()

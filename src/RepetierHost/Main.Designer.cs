@@ -133,7 +133,13 @@
             this.aboutRepetierHostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.donateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripAskSeperator = new System.Windows.Forms.ToolStripSeparator();
             this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extraUrl1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extraUrl2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extraUrl3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extraUrl4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extraUrl5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.status = new System.Windows.Forms.StatusStrip();
             this.toolConnection = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTempReading = new System.Windows.Forms.ToolStripStatusLabel();
@@ -171,6 +177,7 @@
             this.tabPrint = new System.Windows.Forms.TabPage();
             this.slicerPanel = new RepetierHost.view.SlicerPanel();
             this.tdSettings = new System.Windows.Forms.BindingSource(this.components);
+            this.showCompassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -296,7 +303,8 @@
             this.toolStripMenuItem7,
             this.showEdgesToolStripMenuItem,
             this.showFacesToolStripMenuItem,
-            this.togglePrinterIdToolStripMenuItem});
+            this.togglePrinterIdToolStripMenuItem,
+            this.showCompassToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -305,7 +313,7 @@
             // 
             this.isometricToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("isometricToolStripMenuItem.Image")));
             this.isometricToolStripMenuItem.Name = "isometricToolStripMenuItem";
-            this.isometricToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.isometricToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.isometricToolStripMenuItem.Text = "Isometric";
             this.isometricToolStripMenuItem.Click += new System.EventHandler(this.isometricToolStripMenuItem_Click);
             // 
@@ -944,7 +952,13 @@
             this.aboutRepetierHostToolStripMenuItem,
             this.donateToolStripMenuItem,
             this.checkForUpdatesToolStripMenuItem,
-            this.supportToolStripMenuItem});
+            this.toolStripAskSeperator,
+            this.supportToolStripMenuItem,
+            this.extraUrl1ToolStripMenuItem,
+            this.extraUrl2ToolStripMenuItem,
+            this.extraUrl3ToolStripMenuItem,
+            this.extraUrl4ToolStripMenuItem,
+            this.extraUrl5ToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.helpToolStripMenuItem.Text = "&Help";
@@ -1048,12 +1062,52 @@
             this.checkForUpdatesToolStripMenuItem.Text = "Check for updates";
             this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
             // 
+            // toolStripAskSeperator
+            // 
+            this.toolStripAskSeperator.Name = "toolStripAskSeperator";
+            this.toolStripAskSeperator.Size = new System.Drawing.Size(229, 6);
+            // 
             // supportToolStripMenuItem
             // 
             this.supportToolStripMenuItem.Name = "supportToolStripMenuItem";
             this.supportToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.supportToolStripMenuItem.Text = "Support";
             this.supportToolStripMenuItem.Click += new System.EventHandler(this.supportToolStripMenuItem_Click);
+            // 
+            // extraUrl1ToolStripMenuItem
+            // 
+            this.extraUrl1ToolStripMenuItem.Name = "extraUrl1ToolStripMenuItem";
+            this.extraUrl1ToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.extraUrl1ToolStripMenuItem.Text = "extra url1";
+            this.extraUrl1ToolStripMenuItem.Click += new System.EventHandler(this.extraUrl1ToolStripMenuItem_Click);
+            // 
+            // extraUrl2ToolStripMenuItem
+            // 
+            this.extraUrl2ToolStripMenuItem.Name = "extraUrl2ToolStripMenuItem";
+            this.extraUrl2ToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.extraUrl2ToolStripMenuItem.Text = "extra url2";
+            this.extraUrl2ToolStripMenuItem.Click += new System.EventHandler(this.extraUrl2ToolStripMenuItem_Click);
+            // 
+            // extraUrl3ToolStripMenuItem
+            // 
+            this.extraUrl3ToolStripMenuItem.Name = "extraUrl3ToolStripMenuItem";
+            this.extraUrl3ToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.extraUrl3ToolStripMenuItem.Text = "extra url3";
+            this.extraUrl3ToolStripMenuItem.Click += new System.EventHandler(this.extraUrl3ToolStripMenuItem_Click);
+            // 
+            // extraUrl4ToolStripMenuItem
+            // 
+            this.extraUrl4ToolStripMenuItem.Name = "extraUrl4ToolStripMenuItem";
+            this.extraUrl4ToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.extraUrl4ToolStripMenuItem.Text = "extra url4";
+            this.extraUrl4ToolStripMenuItem.Click += new System.EventHandler(this.extraUrl4ToolStripMenuItem_Click);
+            // 
+            // extraUrl5ToolStripMenuItem
+            // 
+            this.extraUrl5ToolStripMenuItem.Name = "extraUrl5ToolStripMenuItem";
+            this.extraUrl5ToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.extraUrl5ToolStripMenuItem.Text = "extra url5";
+            this.extraUrl5ToolStripMenuItem.Click += new System.EventHandler(this.extraUrl5ToolStripMenuItem_Click);
             // 
             // status
             // 
@@ -1458,7 +1512,7 @@
             this.slicerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.slicerPanel.Location = new System.Drawing.Point(0, 0);
             this.slicerPanel.Name = "slicerPanel";
-            this.slicerPanel.Size = new System.Drawing.Size(467, 255);
+            this.slicerPanel.Size = new System.Drawing.Size(467, 304);
             this.slicerPanel.TabIndex = 0;
             // 
             // tdSettings
@@ -1466,6 +1520,14 @@
             this.tdSettings.DataSource = typeof(RepetierHost.view.ThreeDSettings);
             this.tdSettings.DataMemberChanged += new System.EventHandler(this.tdSettings_DataMemberChanged);
             this.tdSettings.CurrentItemChanged += new System.EventHandler(this.tdSettings_CurrentChanged);
+            // 
+            // showCompassToolStripMenuItem
+            // 
+            this.showCompassToolStripMenuItem.Name = "showCompassToolStripMenuItem";
+            this.showCompassToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
+            this.showCompassToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.showCompassToolStripMenuItem.Text = "Show Compass";
+            this.showCompassToolStripMenuItem.Click += new System.EventHandler(this.showCompassToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -1658,6 +1720,13 @@
         private System.Windows.Forms.SplitContainer splitPrinterId;
         private System.Windows.Forms.Label printerIdLabel;
         private System.Windows.Forms.ToolStripMenuItem togglePrinterIdToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripAskSeperator;
+        private System.Windows.Forms.ToolStripMenuItem extraUrl1ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extraUrl2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extraUrl3ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extraUrl4ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extraUrl5ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showCompassToolStripMenuItem;
     }
 }
 

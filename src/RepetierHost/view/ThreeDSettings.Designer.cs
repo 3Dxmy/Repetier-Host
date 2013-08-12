@@ -82,7 +82,10 @@
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.showCoordinate = new System.Windows.Forms.CheckBox();
+            this.checkAutoenableParallelInTopView = new System.Windows.Forms.CheckBox();
             this.groupPrintbed = new System.Windows.Forms.GroupBox();
+            this.buttonGeneralColorDefaults = new System.Windows.Forms.Button();
             this.labelBackgroundBottom = new System.Windows.Forms.Label();
             this.backgroundBottom = new System.Windows.Forms.Panel();
             this.labelPrinterFrame = new System.Windows.Forms.Label();
@@ -92,6 +95,7 @@
             this.pulseOutside = new System.Windows.Forms.CheckBox();
             this.showFaces = new System.Windows.Forms.CheckBox();
             this.groupColors = new System.Windows.Forms.GroupBox();
+            this.buttonModelColorsDefaults = new System.Windows.Forms.Button();
             this.labelCutFaces = new System.Windows.Forms.Label();
             this.labelInsideFaces = new System.Windows.Forms.Label();
             this.cutFaces = new System.Windows.Forms.Panel();
@@ -144,9 +148,6 @@
             this.specular3 = new System.Windows.Forms.Panel();
             this.specular4 = new System.Windows.Forms.Panel();
             this.diffuse4 = new System.Windows.Forms.Panel();
-            this.checkAutoenableParallelInTopView = new System.Windows.Forms.CheckBox();
-            this.buttonGeneralColorDefaults = new System.Windows.Forms.Button();
-            this.buttonModelColorsDefaults = new System.Windows.Forms.Button();
             this.tdSettings = new System.Windows.Forms.BindingSource(this.components);
             this.groupColors2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -706,6 +707,7 @@
             // 
             // tabGeneral
             // 
+            this.tabGeneral.Controls.Add(this.showCoordinate);
             this.tabGeneral.Controls.Add(this.checkAutoenableParallelInTopView);
             this.tabGeneral.Controls.Add(this.comboDrawMethod);
             this.tabGeneral.Controls.Add(this.groupPrintbed);
@@ -716,6 +718,28 @@
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "General";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // showCoordinate
+            // 
+            this.showCoordinate.AutoSize = true;
+            this.showCoordinate.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.tdSettings, "ShowCompass", true));
+            this.showCoordinate.Location = new System.Drawing.Point(23, 265);
+            this.showCoordinate.Name = "showCoordinate";
+            this.showCoordinate.Size = new System.Drawing.Size(99, 17);
+            this.showCoordinate.TabIndex = 17;
+            this.showCoordinate.Text = "Show Compass";
+            this.showCoordinate.UseVisualStyleBackColor = true;
+            this.showCoordinate.CheckedChanged += new System.EventHandler(this.showCoordinate_CheckedChanged);
+            // 
+            // checkAutoenableParallelInTopView
+            // 
+            this.checkAutoenableParallelInTopView.AutoSize = true;
+            this.checkAutoenableParallelInTopView.Location = new System.Drawing.Point(23, 241);
+            this.checkAutoenableParallelInTopView.Name = "checkAutoenableParallelInTopView";
+            this.checkAutoenableParallelInTopView.Size = new System.Drawing.Size(178, 17);
+            this.checkAutoenableParallelInTopView.TabIndex = 16;
+            this.checkAutoenableParallelInTopView.Text = "Enable parallel mode in top view";
+            this.checkAutoenableParallelInTopView.UseVisualStyleBackColor = true;
             // 
             // groupPrintbed
             // 
@@ -735,6 +759,16 @@
             this.groupPrintbed.TabIndex = 0;
             this.groupPrintbed.TabStop = false;
             this.groupPrintbed.Text = "Printbed";
+            // 
+            // buttonGeneralColorDefaults
+            // 
+            this.buttonGeneralColorDefaults.Location = new System.Drawing.Point(246, 125);
+            this.buttonGeneralColorDefaults.Name = "buttonGeneralColorDefaults";
+            this.buttonGeneralColorDefaults.Size = new System.Drawing.Size(204, 23);
+            this.buttonGeneralColorDefaults.TabIndex = 6;
+            this.buttonGeneralColorDefaults.Text = "Reset defaults";
+            this.buttonGeneralColorDefaults.UseVisualStyleBackColor = true;
+            this.buttonGeneralColorDefaults.Click += new System.EventHandler(this.buttonGeneralColorDefaults_Click);
             // 
             // labelBackgroundBottom
             // 
@@ -848,6 +882,16 @@
             this.groupColors.TabIndex = 0;
             this.groupColors.TabStop = false;
             this.groupColors.Text = "Colors";
+            // 
+            // buttonModelColorsDefaults
+            // 
+            this.buttonModelColorsDefaults.Location = new System.Drawing.Point(247, 187);
+            this.buttonModelColorsDefaults.Name = "buttonModelColorsDefaults";
+            this.buttonModelColorsDefaults.Size = new System.Drawing.Size(203, 23);
+            this.buttonModelColorsDefaults.TabIndex = 4;
+            this.buttonModelColorsDefaults.Text = "Reset defaults";
+            this.buttonModelColorsDefaults.UseVisualStyleBackColor = true;
+            this.buttonModelColorsDefaults.Click += new System.EventHandler(this.buttonModelColorsDefaults_Click);
             // 
             // labelCutFaces
             // 
@@ -1442,36 +1486,6 @@
             this.diffuse4.TabIndex = 27;
             this.diffuse4.Click += new System.EventHandler(this.lightcolor_Click);
             // 
-            // checkAutoenableParallelInTopView
-            // 
-            this.checkAutoenableParallelInTopView.AutoSize = true;
-            this.checkAutoenableParallelInTopView.Location = new System.Drawing.Point(23, 241);
-            this.checkAutoenableParallelInTopView.Name = "checkAutoenableParallelInTopView";
-            this.checkAutoenableParallelInTopView.Size = new System.Drawing.Size(178, 17);
-            this.checkAutoenableParallelInTopView.TabIndex = 16;
-            this.checkAutoenableParallelInTopView.Text = "Enable parallel mode in top view";
-            this.checkAutoenableParallelInTopView.UseVisualStyleBackColor = true;
-            // 
-            // buttonGeneralColorDefaults
-            // 
-            this.buttonGeneralColorDefaults.Location = new System.Drawing.Point(246, 125);
-            this.buttonGeneralColorDefaults.Name = "buttonGeneralColorDefaults";
-            this.buttonGeneralColorDefaults.Size = new System.Drawing.Size(204, 23);
-            this.buttonGeneralColorDefaults.TabIndex = 6;
-            this.buttonGeneralColorDefaults.Text = "Reset defaults";
-            this.buttonGeneralColorDefaults.UseVisualStyleBackColor = true;
-            this.buttonGeneralColorDefaults.Click += new System.EventHandler(this.buttonGeneralColorDefaults_Click);
-            // 
-            // buttonModelColorsDefaults
-            // 
-            this.buttonModelColorsDefaults.Location = new System.Drawing.Point(247, 187);
-            this.buttonModelColorsDefaults.Name = "buttonModelColorsDefaults";
-            this.buttonModelColorsDefaults.Size = new System.Drawing.Size(203, 23);
-            this.buttonModelColorsDefaults.TabIndex = 4;
-            this.buttonModelColorsDefaults.Text = "Reset defaults";
-            this.buttonModelColorsDefaults.UseVisualStyleBackColor = true;
-            this.buttonModelColorsDefaults.Click += new System.EventHandler(this.buttonModelColorsDefaults_Click);
-            // 
             // tdSettings
             // 
             this.tdSettings.DataSource = typeof(RepetierHost.view.ThreeDSettings);
@@ -1638,5 +1652,6 @@
         private System.Windows.Forms.Button buttonGeneralColorDefaults;
         private System.Windows.Forms.Button buttonModelColorsDefaults;
         public System.Windows.Forms.CheckBox checkAutoenableParallelInTopView;
+        public System.Windows.Forms.CheckBox showCoordinate;
     }
 }

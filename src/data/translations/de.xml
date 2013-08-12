@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<translation revision="8" language="Deutsch" languageInEnglish="German" author="Repetier">
+<translation revision="10" language="Deutsch" languageInEnglish="German" author="Repetier">
 <t id="M_FILE" ver="1">Datei</t>
 <t id="M_CONFIG" ver="1">Konfiguration</t>
 <t id="M_SLICER" ver="1">Slicer</t>
@@ -605,6 +605,6 @@ Mögliche Gründe:
 <t id="L_ANA_CORRECTED_NORMAL_ORIENTATIONS" ver="9">Reparierte Normalenausrichtungen:</t>
 <t id="L_OBJECT_IS_MANIFOLD" ver="9">Objekt ist mannigfaltig.</t>
 <t id="L_OBJECT_IS_NON_MANIFOLD" ver="9">Objekt ist nicht mannigfaltig. Slicen kann falsche Ergebnisse erzeugen. Bitte reparieren Sie das Objekt zuerst.</t>
-<t id="L_" ver="9"></t>
+<t id="L_SHOW_COMPASS" ver="9">Zeige Kompass</t>
 </translation>
 

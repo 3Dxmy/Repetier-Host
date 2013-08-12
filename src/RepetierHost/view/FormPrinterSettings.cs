@@ -362,8 +362,24 @@ namespace RepetierHost.view
             float.TryParse(textAddPrintingTime.Text, out con.addPrintingTime);
             if (Main.main.printPanel != null)
             {
-                Main.main.printPanel.numericUpDownExtruder.Value = int.Parse(textDefaultExtruderTemp.Text);
-                Main.main.printPanel.numericPrintBed.Value = int.Parse(textDefaultHeatedBedTemp.Text);
+                try
+                {
+                    Main.main.printPanel.numericUpDownExtruder.Value = int.Parse(textDefaultExtruderTemp.Text);
+                }
+                catch (FormatException)
+                {
+                    Main.main.printPanel.numericUpDownExtruder.Value = 0;
+                    textDefaultExtruderTemp.Text = "0";
+                }
+                try
+                {
+                    Main.main.printPanel.numericPrintBed.Value = int.Parse(textDefaultHeatedBedTemp.Text);
+                }
+                catch (FormatException)
+                {
+                    Main.main.printPanel.numericPrintBed.Value = 0;
+                    textDefaultHeatedBedTemp.Text = "0";
+                }
                 Main.main.printPanel.refillExtruder();
             }
             if (eventPrinterChanged != null)

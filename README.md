@@ -15,9 +15,10 @@ Read the wiki at [http://www.repetier.com/documentation/repetier-host/](http://w
 # Requirements
 
 * Windows XP or later, Linux (For Mac OS X use Repetier-Host Mac [http://www.repetier.com/documentation/repetier-host-mac/](http://www.repetier.com/documentation/repetier-host-mac/) )
-* .NET 3.5 of higher or Mono on Linux platforms.
+* .NET 4 of higher or Mono on Linux platforms.
 * Skeinforge for slicing (optional).
-
+* Slic3r for slicing (optional)
+	
 # Installation:
 
 [http://www.repetier.com/documentation/repetier-host/rh-installation-and-configuration/](http://www.repetier.com/documentation/repetier-host/rh-installation-and-configuration/)

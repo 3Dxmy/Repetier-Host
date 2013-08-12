@@ -132,6 +132,10 @@ namespace RepetierHost.model.geom
         /// Remove unneded temporary data
         /// </summary>
         public void Compress()
+         {
+            Compress(false, 0);
+        }
+        public void Compress(bool override_color, int color)
         {
             glVertices = new float[3 * vertices.Count];
             glNormals = new float[3 * vertices.Count];
@@ -140,7 +144,7 @@ namespace RepetierHost.model.geom
             glTriangles = new int[triangles.Count * 3];
             glTrianglesError = new int[trianglesError.Count * 3];
             UpdateDrawLists();
-            UpdateColors();
+            UpdateColors(override_color, color);
             vertices.Clear();
         }
         public int VertexId(RHVector3 v)
@@ -181,22 +185,35 @@ namespace RepetierHost.model.geom
                 glBuffer = null;
             }
         }
-
         public void UpdateColors()
+        {
+            UpdateColors(false, 0);
+        }
+
+        public void UpdateColors(bool override_color, int color)
         {
             foreach (SubmeshTriangle t in triangles)
             {
-                glColors[t.vertex1] = glColors[t.vertex2] = glColors[t.vertex3] = ConvertColorIndex(t.color);
+                if(!override_color)
+                    glColors[t.vertex1] = glColors[t.vertex2] = glColors[t.vertex3] = ConvertColorIndex(t.color);
+                else
+                    glColors[t.vertex1] = glColors[t.vertex2] = glColors[t.vertex3] = color;
                 //glColors2[t.vertex1] = glColors2[t.vertex2] = glColors2[t.vertex3] = ConvertColorIndex((t.color == Submesh.MESHCOLOR_FRONTBACK ? Submesh.MESHCOLOR_BACK : t.color));
             }
             foreach (SubmeshTriangle t in trianglesError)
             {
-                glColors[t.vertex1] = glColors[t.vertex2] = glColors[t.vertex3] = ConvertColorIndex(t.color);
+                if (!override_color)
+                    glColors[t.vertex1] = glColors[t.vertex2] = glColors[t.vertex3] = ConvertColorIndex(t.color);
+                else
+                    glColors[t.vertex1] = glColors[t.vertex2] = glColors[t.vertex3] = color;
                 //glColors2[t.vertex1] = glColors2[t.vertex2] = glColors2[t.vertex3] = ConvertColorIndex((t.color == Submesh.MESHCOLOR_FRONTBACK ? Submesh.MESHCOLOR_BACK : t.color));
             }
             foreach (SubmeshEdge e in edges)
             {
-                glColors[e.vertex1] = glColors[e.vertex2] = ConvertColorIndex(e.color);
+                if (!override_color)
+                    glColors[e.vertex1] = glColors[e.vertex2] = ConvertColorIndex(e.color);
+                else
+                    glColors[e.vertex1] = glColors[e.vertex2] = color;
             }
             if (glBuffer != null)
             {
@@ -291,7 +308,7 @@ namespace RepetierHost.model.geom
         {
             return new OpenTK.Graphics.Color4(col.R, col.G, col.B, col.A);
         }
-        public void Draw(int method,Vector3 edgetrans)
+        public void Draw(int method,Vector3 edgetrans,bool forceFaces=false)
         {
             GL.LightModel(LightModelParameter.LightModelTwoSide, 1);
             GL.Material(MaterialFace.Back, MaterialParameter.AmbientAndDiffuse, convertColor(Main.threeDSettings.insideFaces.BackColor));
@@ -335,7 +352,7 @@ namespace RepetierHost.model.geom
                 GL.EnableClientState(ArrayCap.ColorArray);
                 GL.Enable(EnableCap.ColorMaterial);
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, glBuffer[3]);
-                if (Main.threeDSettings.ShowFaces)
+                if (Main.threeDSettings.ShowFaces || forceFaces)
                     GL.DrawElements(BeginMode.Triangles, glTriangles.Length, DrawElementsType.UnsignedInt, 0);
                 GL.LightModel(LightModelParameter.LightModelTwoSide, 0);
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, glBuffer[5]);
@@ -366,7 +383,7 @@ namespace RepetierHost.model.geom
                 GL.ColorMaterial(MaterialFace.Front, ColorMaterialParameter.AmbientAndDiffuse);
                 GL.ColorPointer(4, ColorPointerType.UnsignedByte, 0, glColors);
                 GL.EnableClientState(ArrayCap.ColorArray);
-                if (Main.threeDSettings.ShowFaces)
+                if (Main.threeDSettings.ShowFaces || forceFaces)
                     GL.DrawElements(BeginMode.Triangles, glTriangles.Length, DrawElementsType.UnsignedInt, glTriangles);
                 GL.Material(MaterialFace.FrontAndBack, MaterialParameter.AmbientAndDiffuse, convertColor(Main.threeDSettings.errorModel.BackColor));
                 GL.LightModel(LightModelParameter.LightModelTwoSide, 0);
@@ -389,7 +406,7 @@ namespace RepetierHost.model.geom
                 int n;
                 GL.ColorMaterial(MaterialFace.Front, ColorMaterialParameter.AmbientAndDiffuse);
                 GL.Enable(EnableCap.ColorMaterial);
-                if (Main.threeDSettings.ShowFaces)
+                if (Main.threeDSettings.ShowFaces || forceFaces)
                 {
                     GL.Begin(BeginMode.Triangles);
                     n = glTriangles.Length;

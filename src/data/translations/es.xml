@@ -498,8 +498,10 @@ Los cambios en el registro estarán activos despues del siguiente reinicio.</t>
 <t id="B_FORCE_SAVE_POSTPONED_JOB" ver="1">&amp;Forzar</t>
 <t id="B_RESUME_PRINTING_JOB" ver="1">&amp;Continuar</t>
 <t id="W_POSTPONED_JOB_DIALOG" ver="1">Continuar</t>
-<t id="M_TOGGLE_PRINTER_ID" ver="1">Alternar vista de Id de impresora</t>
-<t id="L_PRINTER_ID" ver="1">Id de impresora</t>
-<t id="L_SET_PRINTER_ID" ver="1">Por favor escriba un Id de impresora</t>
+<t id="M_TOGGLE_PRINTER_ID" ver="1">Alternar vista de ID de impresora</t>
+<t id="L_PRINTER_ID" ver="1">ID de impresora</t>
+<t id="L_SET_PRINTER_ID" ver="1">Por favor escriba un ID de impresora</t>
+<t id="L_SHOW_PRINTER_NAME_IN_PRINTER_ID_LABEL" ver="1">Mostrar nombre de impresora en casillero de ID de impresora</t>
+<t id="L_EDIT" ver="1">Editar</t>
 </translation>
 

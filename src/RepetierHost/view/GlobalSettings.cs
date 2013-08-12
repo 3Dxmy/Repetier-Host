@@ -67,6 +67,7 @@ namespace RepetierHost.view
             buttonSearchWorkdir.Text = Trans.T("B_BROWSE");
             folderBrowser.Description = Trans.T("L_SELECT_WORKING_DIRECTORY"); // Select working directory
             checkRedGreenSwitch.Text = Trans.T("L_USE_RED_GREEN_SWITCH");
+            checkShowPrinterNameInPrinterIdLabel.Text = Trans.T("L_SHOW_PRINTER_NAME_IN_PRINTER_ID_LABEL");
             buttonAbort.Text = Trans.T("B_CANCEL");
             buttonOK.Text = Trans.T("B_OK");
             groupFileAssociations.Text = Trans.T("L_FILE_ASSOCIATIONS");
@@ -95,6 +96,7 @@ namespace RepetierHost.view
             repetierKey.SetValue("disableQualityReduction", DisableQualityReduction ? 1 : 0);
             repetierKey.SetValue("reduceToolbarSize", ReduceToolbarSize ? 1 : 0);
             RegMemory.SetInt("onOffImageOffset", checkRedGreenSwitch.Checked ? 2 : 0);
+            RegMemory.SetInt("showPrinterNameInPrinterIdLabel", checkShowPrinterNameInPrinterIdLabel.Checked ? 1 : 0);
         }
         public void RegToForm()
         {
@@ -103,6 +105,7 @@ namespace RepetierHost.view
             checkDisableQualityReduction.Checked = 1 == (int)repetierKey.GetValue("disableQualityReduction", DisableQualityReduction ? 1 : 0);
             checkReduceToolbarSize.Checked = 1 == (int)repetierKey.GetValue("reduceToolbarSize", ReduceToolbarSize ? 1 : 0);
             checkRedGreenSwitch.Checked = 2 == RegMemory.GetInt("onOffImageOffset", 0);
+            checkShowPrinterNameInPrinterIdLabel.Checked = 1 == RegMemory.GetInt("showPrinterNameInPrinterIdLabel", 1);
         }
         public static void Associate(string extension,
            string progID, string description)

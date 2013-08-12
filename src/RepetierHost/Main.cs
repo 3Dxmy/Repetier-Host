@@ -377,6 +377,11 @@ namespace RepetierHost
             }
             toolAction.Text = Trans.T("L_IDLE");
             toolConnection.Text = Trans.T("L_DISCONNECTED");
+            if (1 == RegMemory.GetInt("showPrinterNameInPrinterIdLabel", 1))
+            {
+                //set the disconnected status as the default printer id label
+                printerIdLabel.Text = Trans.T("L_DISCONNECTED");
+            }
             updateTravelMoves();
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
@@ -553,6 +558,7 @@ namespace RepetierHost
             loadStateToolStripMenuItem.Text = Trans.T("M_RESUME_JOB");
             saveStateToolStripMenuItem.Text = Trans.T("M_POSTPONE_JOB");
             togglePrinterIdToolStripMenuItem.Text = Trans.T("M_TOGGLE_PRINTER_ID");
+            buttonEditPrinterId.Text = Trans.T("L_EDIT");
             updateTravelMoves();
             updateShowFilament();
             foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
@@ -672,6 +678,11 @@ namespace RepetierHost
         private void OnPrinterConnectionChange(string msg)
         {
             toolConnection.Text = msg;
+            if (1 == RegMemory.GetInt("showPrinterNameInPrinterIdLabel", 1))
+            {
+                //If the printer connection changed, set the the current state
+                printerIdLabel.Text = conn.connector.IsConnected() ? conn.printerName : Trans.T("L_DISCONNECTED");
+            }
             bool connected = conn.connector.IsConnected();
             sendScript1ToolStripMenuItem.Enabled = connected;
             sendScript2ToolStripMenuItem.Enabled = connected;
@@ -1910,6 +1921,16 @@ namespace RepetierHost
         }
 
         private void printerIdLabel_DoubleClick(object sender, EventArgs e)
+        {
+            UpdatePrinterID();
+        }
+
+        private void buttonEditPrinterId_Click(object sender, EventArgs e)
+        {
+            UpdatePrinterID();
+        }
+
+        private void UpdatePrinterID()
         {
             string printerId = StringInput.GetString(Trans.T("L_PRINTER_ID"), Trans.T("L_SET_PRINTER_ID"), printerIdLabel.Text, true);
             if (printerId != null)

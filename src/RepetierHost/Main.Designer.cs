@@ -55,6 +55,7 @@
             this.showEdgesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showFacesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.togglePrinterIdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showCompassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printerSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -175,9 +176,9 @@
             this.tabSlicer = new System.Windows.Forms.TabPage();
             this.tabGCode = new System.Windows.Forms.TabPage();
             this.tabPrint = new System.Windows.Forms.TabPage();
+            this.buttonEditPrinterId = new System.Windows.Forms.Button();
             this.slicerPanel = new RepetierHost.view.SlicerPanel();
             this.tdSettings = new System.Windows.Forms.BindingSource(this.components);
-            this.showCompassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -313,7 +314,7 @@
             // 
             this.isometricToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("isometricToolStripMenuItem.Image")));
             this.isometricToolStripMenuItem.Name = "isometricToolStripMenuItem";
-            this.isometricToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.isometricToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.isometricToolStripMenuItem.Text = "Isometric";
             this.isometricToolStripMenuItem.Click += new System.EventHandler(this.isometricToolStripMenuItem_Click);
             // 
@@ -414,6 +415,14 @@
             this.togglePrinterIdToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.togglePrinterIdToolStripMenuItem.Text = "Toggle Printer Id View";
             this.togglePrinterIdToolStripMenuItem.Click += new System.EventHandler(this.togglePrinterIdToolStripMenuItem_Click);
+            // 
+            // showCompassToolStripMenuItem
+            // 
+            this.showCompassToolStripMenuItem.Name = "showCompassToolStripMenuItem";
+            this.showCompassToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
+            this.showCompassToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.showCompassToolStripMenuItem.Text = "Show Compass";
+            this.showCompassToolStripMenuItem.Click += new System.EventHandler(this.showCompassToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -1065,7 +1074,7 @@
             // toolStripAskSeperator
             // 
             this.toolStripAskSeperator.Name = "toolStripAskSeperator";
-            this.toolStripAskSeperator.Size = new System.Drawing.Size(229, 6);
+            this.toolStripAskSeperator.Size = new System.Drawing.Size(225, 6);
             // 
             // supportToolStripMenuItem
             // 
@@ -1077,35 +1086,35 @@
             // extraUrl1ToolStripMenuItem
             // 
             this.extraUrl1ToolStripMenuItem.Name = "extraUrl1ToolStripMenuItem";
-            this.extraUrl1ToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.extraUrl1ToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.extraUrl1ToolStripMenuItem.Text = "extra url1";
             this.extraUrl1ToolStripMenuItem.Click += new System.EventHandler(this.extraUrl1ToolStripMenuItem_Click);
             // 
             // extraUrl2ToolStripMenuItem
             // 
             this.extraUrl2ToolStripMenuItem.Name = "extraUrl2ToolStripMenuItem";
-            this.extraUrl2ToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.extraUrl2ToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.extraUrl2ToolStripMenuItem.Text = "extra url2";
             this.extraUrl2ToolStripMenuItem.Click += new System.EventHandler(this.extraUrl2ToolStripMenuItem_Click);
             // 
             // extraUrl3ToolStripMenuItem
             // 
             this.extraUrl3ToolStripMenuItem.Name = "extraUrl3ToolStripMenuItem";
-            this.extraUrl3ToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.extraUrl3ToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.extraUrl3ToolStripMenuItem.Text = "extra url3";
             this.extraUrl3ToolStripMenuItem.Click += new System.EventHandler(this.extraUrl3ToolStripMenuItem_Click);
             // 
             // extraUrl4ToolStripMenuItem
             // 
             this.extraUrl4ToolStripMenuItem.Name = "extraUrl4ToolStripMenuItem";
-            this.extraUrl4ToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.extraUrl4ToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.extraUrl4ToolStripMenuItem.Text = "extra url4";
             this.extraUrl4ToolStripMenuItem.Click += new System.EventHandler(this.extraUrl4ToolStripMenuItem_Click);
             // 
             // extraUrl5ToolStripMenuItem
             // 
             this.extraUrl5ToolStripMenuItem.Name = "extraUrl5ToolStripMenuItem";
-            this.extraUrl5ToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.extraUrl5ToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.extraUrl5ToolStripMenuItem.Text = "extra url5";
             this.extraUrl5ToolStripMenuItem.Click += new System.EventHandler(this.extraUrl5ToolStripMenuItem_Click);
             // 
@@ -1423,6 +1432,7 @@
             // 
             // splitPrinterId.Panel1
             // 
+            this.splitPrinterId.Panel1.Controls.Add(this.buttonEditPrinterId);
             this.splitPrinterId.Panel1.Controls.Add(this.printerIdLabel);
             // 
             // splitPrinterId.Panel2
@@ -1506,13 +1516,24 @@
             this.tabPrint.Text = "Manual control";
             this.tabPrint.UseVisualStyleBackColor = true;
             // 
+            // buttonEditPrinterId
+            // 
+            this.buttonEditPrinterId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonEditPrinterId.Location = new System.Drawing.Point(429, 24);
+            this.buttonEditPrinterId.Name = "buttonEditPrinterId";
+            this.buttonEditPrinterId.Size = new System.Drawing.Size(44, 20);
+            this.buttonEditPrinterId.TabIndex = 1;
+            this.buttonEditPrinterId.Text = "Edit";
+            this.buttonEditPrinterId.UseVisualStyleBackColor = true;
+            this.buttonEditPrinterId.Click += new System.EventHandler(this.buttonEditPrinterId_Click);
+            // 
             // slicerPanel
             // 
             this.slicerPanel.AutoScroll = true;
             this.slicerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.slicerPanel.Location = new System.Drawing.Point(0, 0);
             this.slicerPanel.Name = "slicerPanel";
-            this.slicerPanel.Size = new System.Drawing.Size(467, 304);
+            this.slicerPanel.Size = new System.Drawing.Size(467, 255);
             this.slicerPanel.TabIndex = 0;
             // 
             // tdSettings
@@ -1520,14 +1541,6 @@
             this.tdSettings.DataSource = typeof(RepetierHost.view.ThreeDSettings);
             this.tdSettings.DataMemberChanged += new System.EventHandler(this.tdSettings_DataMemberChanged);
             this.tdSettings.CurrentItemChanged += new System.EventHandler(this.tdSettings_CurrentChanged);
-            // 
-            // showCompassToolStripMenuItem
-            // 
-            this.showCompassToolStripMenuItem.Name = "showCompassToolStripMenuItem";
-            this.showCompassToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
-            this.showCompassToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.showCompassToolStripMenuItem.Text = "Show Compass";
-            this.showCompassToolStripMenuItem.Click += new System.EventHandler(this.showCompassToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -1727,6 +1740,7 @@
         private System.Windows.Forms.ToolStripMenuItem extraUrl4ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem extraUrl5ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showCompassToolStripMenuItem;
+        private System.Windows.Forms.Button buttonEditPrinterId;
     }
 }
 

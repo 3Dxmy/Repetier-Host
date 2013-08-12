@@ -45,13 +45,14 @@
             this.checkRedGreenSwitch = new System.Windows.Forms.CheckBox();
             this.checkReduceToolbarSize = new System.Windows.Forms.CheckBox();
             this.groupFileAssociations = new System.Windows.Forms.GroupBox();
-            this.checkSTL = new System.Windows.Forms.CheckBox();
-            this.checkOBJ = new System.Windows.Forms.CheckBox();
-            this.checkGCode = new System.Windows.Forms.CheckBox();
-            this.checkG = new System.Windows.Forms.CheckBox();
-            this.checkGCO = new System.Windows.Forms.CheckBox();
-            this.checkNC = new System.Windows.Forms.CheckBox();
             this.buttonAssociate = new System.Windows.Forms.Button();
+            this.checkNC = new System.Windows.Forms.CheckBox();
+            this.checkGCO = new System.Windows.Forms.CheckBox();
+            this.checkG = new System.Windows.Forms.CheckBox();
+            this.checkGCode = new System.Windows.Forms.CheckBox();
+            this.checkOBJ = new System.Windows.Forms.CheckBox();
+            this.checkSTL = new System.Windows.Forms.CheckBox();
+            this.checkShowPrinterNameInPrinterIdLabel = new System.Windows.Forms.CheckBox();
             this.groupFilesAndDirectories.SuspendLayout();
             this.groupBehaviour.SuspendLayout();
             this.groupGUI.SuspendLayout();
@@ -175,11 +176,12 @@
             // 
             // groupGUI
             // 
+            this.groupGUI.Controls.Add(this.checkShowPrinterNameInPrinterIdLabel);
             this.groupGUI.Controls.Add(this.checkRedGreenSwitch);
             this.groupGUI.Controls.Add(this.checkReduceToolbarSize);
             this.groupGUI.Location = new System.Drawing.Point(13, 233);
             this.groupGUI.Name = "groupGUI";
-            this.groupGUI.Size = new System.Drawing.Size(519, 77);
+            this.groupGUI.Size = new System.Drawing.Size(519, 95);
             this.groupGUI.TabIndex = 3;
             this.groupGUI.TabStop = false;
             this.groupGUI.Text = "GUI";
@@ -214,60 +216,32 @@
             this.groupFileAssociations.Controls.Add(this.checkGCode);
             this.groupFileAssociations.Controls.Add(this.checkOBJ);
             this.groupFileAssociations.Controls.Add(this.checkSTL);
-            this.groupFileAssociations.Location = new System.Drawing.Point(13, 316);
+            this.groupFileAssociations.Location = new System.Drawing.Point(13, 334);
             this.groupFileAssociations.Name = "groupFileAssociations";
             this.groupFileAssociations.Size = new System.Drawing.Size(518, 69);
             this.groupFileAssociations.TabIndex = 4;
             this.groupFileAssociations.TabStop = false;
             this.groupFileAssociations.Text = "File Associations";
             // 
-            // checkSTL
+            // buttonAssociate
             // 
-            this.checkSTL.AutoSize = true;
-            this.checkSTL.Checked = true;
-            this.checkSTL.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkSTL.Location = new System.Drawing.Point(13, 20);
-            this.checkSTL.Name = "checkSTL";
-            this.checkSTL.Size = new System.Drawing.Size(39, 17);
-            this.checkSTL.TabIndex = 0;
-            this.checkSTL.Text = ".stl";
-            this.checkSTL.UseVisualStyleBackColor = true;
+            this.buttonAssociate.Location = new System.Drawing.Point(372, 20);
+            this.buttonAssociate.Name = "buttonAssociate";
+            this.buttonAssociate.Size = new System.Drawing.Size(140, 23);
+            this.buttonAssociate.TabIndex = 1;
+            this.buttonAssociate.Text = "Associate Extensions";
+            this.buttonAssociate.UseVisualStyleBackColor = true;
+            this.buttonAssociate.Click += new System.EventHandler(this.buttonAssociate_Click);
             // 
-            // checkOBJ
+            // checkNC
             // 
-            this.checkOBJ.AutoSize = true;
-            this.checkOBJ.Checked = true;
-            this.checkOBJ.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkOBJ.Location = new System.Drawing.Point(13, 43);
-            this.checkOBJ.Name = "checkOBJ";
-            this.checkOBJ.Size = new System.Drawing.Size(43, 17);
-            this.checkOBJ.TabIndex = 0;
-            this.checkOBJ.Text = ".obj";
-            this.checkOBJ.UseVisualStyleBackColor = true;
-            // 
-            // checkGCode
-            // 
-            this.checkGCode.AutoSize = true;
-            this.checkGCode.Checked = true;
-            this.checkGCode.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkGCode.Location = new System.Drawing.Point(80, 20);
-            this.checkGCode.Name = "checkGCode";
-            this.checkGCode.Size = new System.Drawing.Size(59, 17);
-            this.checkGCode.TabIndex = 0;
-            this.checkGCode.Text = ".gcode";
-            this.checkGCode.UseVisualStyleBackColor = true;
-            // 
-            // checkG
-            // 
-            this.checkG.AutoSize = true;
-            this.checkG.Checked = true;
-            this.checkG.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkG.Location = new System.Drawing.Point(159, 20);
-            this.checkG.Name = "checkG";
-            this.checkG.Size = new System.Drawing.Size(35, 17);
-            this.checkG.TabIndex = 0;
-            this.checkG.Text = ".g";
-            this.checkG.UseVisualStyleBackColor = true;
+            this.checkNC.AutoSize = true;
+            this.checkNC.Location = new System.Drawing.Point(159, 43);
+            this.checkNC.Name = "checkNC";
+            this.checkNC.Size = new System.Drawing.Size(41, 17);
+            this.checkNC.TabIndex = 0;
+            this.checkNC.Text = ".nc";
+            this.checkNC.UseVisualStyleBackColor = true;
             // 
             // checkGCO
             // 
@@ -281,25 +255,63 @@
             this.checkGCO.Text = ".gco";
             this.checkGCO.UseVisualStyleBackColor = true;
             // 
-            // checkNC
+            // checkG
             // 
-            this.checkNC.AutoSize = true;
-            this.checkNC.Location = new System.Drawing.Point(159, 43);
-            this.checkNC.Name = "checkNC";
-            this.checkNC.Size = new System.Drawing.Size(41, 17);
-            this.checkNC.TabIndex = 0;
-            this.checkNC.Text = ".nc";
-            this.checkNC.UseVisualStyleBackColor = true;
+            this.checkG.AutoSize = true;
+            this.checkG.Checked = true;
+            this.checkG.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkG.Location = new System.Drawing.Point(159, 20);
+            this.checkG.Name = "checkG";
+            this.checkG.Size = new System.Drawing.Size(35, 17);
+            this.checkG.TabIndex = 0;
+            this.checkG.Text = ".g";
+            this.checkG.UseVisualStyleBackColor = true;
             // 
-            // buttonAssociate
+            // checkGCode
             // 
-            this.buttonAssociate.Location = new System.Drawing.Point(372, 20);
-            this.buttonAssociate.Name = "buttonAssociate";
-            this.buttonAssociate.Size = new System.Drawing.Size(140, 23);
-            this.buttonAssociate.TabIndex = 1;
-            this.buttonAssociate.Text = "Associate Extensions";
-            this.buttonAssociate.UseVisualStyleBackColor = true;
-            this.buttonAssociate.Click += new System.EventHandler(this.buttonAssociate_Click);
+            this.checkGCode.AutoSize = true;
+            this.checkGCode.Checked = true;
+            this.checkGCode.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkGCode.Location = new System.Drawing.Point(80, 20);
+            this.checkGCode.Name = "checkGCode";
+            this.checkGCode.Size = new System.Drawing.Size(59, 17);
+            this.checkGCode.TabIndex = 0;
+            this.checkGCode.Text = ".gcode";
+            this.checkGCode.UseVisualStyleBackColor = true;
+            // 
+            // checkOBJ
+            // 
+            this.checkOBJ.AutoSize = true;
+            this.checkOBJ.Checked = true;
+            this.checkOBJ.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkOBJ.Location = new System.Drawing.Point(13, 43);
+            this.checkOBJ.Name = "checkOBJ";
+            this.checkOBJ.Size = new System.Drawing.Size(43, 17);
+            this.checkOBJ.TabIndex = 0;
+            this.checkOBJ.Text = ".obj";
+            this.checkOBJ.UseVisualStyleBackColor = true;
+            // 
+            // checkSTL
+            // 
+            this.checkSTL.AutoSize = true;
+            this.checkSTL.Checked = true;
+            this.checkSTL.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkSTL.Location = new System.Drawing.Point(13, 20);
+            this.checkSTL.Name = "checkSTL";
+            this.checkSTL.Size = new System.Drawing.Size(39, 17);
+            this.checkSTL.TabIndex = 0;
+            this.checkSTL.Text = ".stl";
+            this.checkSTL.UseVisualStyleBackColor = true;
+            // 
+            // checkUpdatePrinterId
+            // 
+            this.checkShowPrinterNameInPrinterIdLabel.AutoSize = true;
+            this.checkShowPrinterNameInPrinterIdLabel.Location = new System.Drawing.Point(13, 68);
+            this.checkShowPrinterNameInPrinterIdLabel.Name = "checkUpdatePrinterId";
+            this.checkShowPrinterNameInPrinterIdLabel.Size = new System.Drawing.Size(267, 17);
+            this.checkShowPrinterNameInPrinterIdLabel.TabIndex = 2;
+            this.checkShowPrinterNameInPrinterIdLabel.Text = "Update printer ID when connection status changes";
+            this.checkShowPrinterNameInPrinterIdLabel.UseVisualStyleBackColor = true;
             // 
             // GlobalSettings
             // 
@@ -358,6 +370,7 @@
         private System.Windows.Forms.CheckBox checkGCode;
         private System.Windows.Forms.CheckBox checkOBJ;
         private System.Windows.Forms.CheckBox checkSTL;
+        private System.Windows.Forms.CheckBox checkShowPrinterNameInPrinterIdLabel;
 
     }
 }

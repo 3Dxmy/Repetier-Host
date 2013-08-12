@@ -635,5 +635,7 @@ Reload objects?]]></t>
 <t id="M_TOGGLE_PRINTER_ID" ver="1">Toggle Printer ID View</t>
 <t id="L_PRINTER_ID" ver="1">Printer ID</t>
 <t id="L_SET_PRINTER_ID" ver="1">Please set a Printer ID</t>
+<t id="L_SHOW_PRINTER_NAME_IN_PRINTER_ID_LABEL" ver="1">Show printer name in printer ID label</t>
+<t id="L_EDIT" ver="1">Edit</t>
 </translation>
 

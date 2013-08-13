@@ -445,7 +445,7 @@ Los cambios en el registro estarán activos despues del siguiente reinicio.</t>
 <t id="L_SKEIN_STILL_RUNNING" ver="1">Último trabajo de Slicing aun en marcha. Slicing del nuevo trabajo ha sido cancelado.</t>
 <t id="L_SKEIN_KILLED" ver="1">$1 proceso de Slicing anulado a petición del usuario.</t>
 <t id="W_SKEIN_SETTINGS" ver="1">Ajustes de Skeinforge/SFACT </t>
-<t id="L_SKEIN_APPLICARTION" ver="1">Applicación Skeinforge :</t>
+<t id="L_SKEIN_APPLICARTION" ver="1">Aplicación Skeinforge :</t>
 <t id="L_SKEIN_CRAFT" ver="1">Skeinforge craft:</t>
 <t id="L_SKEIN_PROFDIR_INFO" ver="1">Seleciona la subcarpeta de perfiles en el directorio de configuración de skeinforge. Normalmente estará en HOME/.skeinforge/profiles. Para algunas versiones personalizadas como SFACT la ruta puede variar.</t>
 <t id="L_SKEIN_PROFILES_DIRECTORY" ver="1">Directorio de perfiles:</t>
@@ -483,6 +483,137 @@ Los cambios en el registro estarán activos despues del siguiente reinicio.</t>
 <t id="L_FILAMENT_NONE" ver="3">Ninguno/El mismo como Extrusor 1</t>
 <t id="L_REALLY_QUIT" ver="3">Impresión no terminada. ¿Salir de todos modos?</t>
 <t id="M_DONATE" ver="3">Donar o Colaborar</t>
+<t id="L_FAN" ver="4">Ventilador</t>
+<t id="L_HOME_X:" ver="4">Inicio X:</t>
+<t id="L_HOME_Y:" ver="4">Inicio Y:</t>
+<t id="L_HOME_Z:" ver="4">Inicio Z:</t>
+<t id="L_MIN" ver="4">Mín</t>
+<t id="L_MAX" ver="4">Máx</t>
+<t id="L_PAUSED_FIRMWARE" ver="4">Su impresora solicitó una pausa.</t>
+<t id="L_CREATE_FOLDER" ver="4">Crear nueva carpeta</t>
+<t id="L_CREATE_FOLDER_INFO" ver="4">Ingrese el nombre de la carpeta en notación 8.3:</t>
+<t id="L_UPLOADING_TIME" ver="4">Tiempo de carga: $1</t>
+<t id="L_FILAMENT_POS" ver="4">Fil: $1</t>
+<t id="L_TRAVEL_VISUALIZATION_DISABLED" ver="4">Visualización de desplazamiento deshabilitada</t>
+<t id="M_HIDE_TRAVEL" ver="4">Ocultar desplazamiento</t>
+<t id="L_TRAVEL_VISUALIZATION_ENABLED" ver="4">Visualización de desplazamiento habilitada</t>
+<t id="M_SHOW_TRAVEL" ver="4">Mostrar desplazamiento</t>
+<t id="L_TRAVEL_MOVES:" ver="4">Movimientos de desplazamiento:</t>
+<t id="L_DISABLE_TRAVEL_MOVES_VIS" ver="4">Deshabilitar visualización de movimiento de desplazamiento</t>
+<t id="L_NUMBER_OF_EXTRUDER:" ver="5">Número de extrusores:</t>
+<t id="L_NEW_FOLDER" ver="5">Nueva carpeta</t>
+<t id="L_USE_PARALLEL_PROJECTION" ver="5">Usar proyección paralela</t>
+<t id="L_USE_RED_GREEN_SWITCH" ver="5">Usar interruptor rojo/verde (requiere reiniciar)</t>
+<t id="L_SLIC3R_NOT_FOUND" ver="6">Slic3r no encontrado.</t>
+<t id="L_ANALYSING_STL" ver="6">Analizando archivo STL ...</t>
+<t id="L_SLICING_STL" ver="6">Slicing archivo STL ...</t>
+<t id="L_PYPY_NOT_FOUND" ver="6">Pypy o intérprete de Python no encontrado.</t>
+<t id="L_SKEINCRAFT_NOT_FOUND" ver="6">Skeinforge craft no encontrado.</t>
+<t id="L_PYTHON_NOT_FOUND" ver="6">Intérprete de Python no encontrado.</t>
+<t id="L_SKEINFORGE_NOT_FOUND" ver="6">Skeinforge no encontrado.</t>
+<t id="L_SKEINCRAFT_PROFILES_NOT_FOUND" ver="6">Directorio de perfiles de Skeinforge/SFACT no encontrado.</t>
+<t id="B_REFRESH_PORTS" ver="6">Actualizar puertos</t>
+<t id="L_ROS_PRINTABLE_HEIGHT:" ver="6">Altura imprimible:</t>
+<t id="L_ROS_PRINTABLE_RADIUS:" ver="6">Radio imprimible:</t>
+<t id="L_CARTESIAN_PRINTER" ver="6">Impresora clásica</t>
+<t id="L_CARTESIAN_PRINTER_DUMP" ver="6">Impresora clásica (con área de volcado)</t>
+<t id="L_ROSTOCK_CIRCLE" ver="6">Impresora Rostock (con silueta de impresión circular)</t>
+<t id="L_CORRECT_NORMALS" ver="7">Usar normales correctas (se ve mejor, necesita más memoria)</t>
+<t id="L_WARNING" ver="8">Advertencia</t>
+<t id="L_HEATERS_ON_QUEST" ver="8">Algunos calentadores todavía están prendidos. ¿Debo deshabilitarlos?</t>
+<t id="L_OBJECTS_OUTSIDE_SLICE_QUEST" ver="8">Por lo menos un objeto se encuentra fuera del área de impresión. ¿Abortar slicing?</t>
+<t id="L_CNC_ROUTER" ver="8">Router CNC</t>
+<t id="L_SLIC3R_VERSION" ver="8">Versión de Slic3r</t>
+<t id="L_MODEL_ERRORS" ver="9">Errores del Modelo:</t>
+<t id="L_REPAIR" ver="9">Reparar</t>
+<t id="L_SPLIT" ver="9">Dividir</t>
+<t id="L_YES" ver="9">Sí</t>
+<t id="L_NO" ver="9">No</t>
+<t id="L_MODEL_CHANGED_RELOAD" ver="9"><![CDATA[Uno o más archivos de objetos están modificados.
+¿Recargar objetos?]]></t>
+<t id="L_FILES_CHANGED" ver="9">Archivos modificados</t>
+<t id="L_INNER_FACES" ver="9">Caras interiores:</t>
+<t id="L_BACKGROUND_TOP" ver="9">Fondo superior:</t>
+<t id="L_BACKGROUND_BOTTOM" ver="9">Fondo inferior:</t>
+<t id="L_PRINTER_FRAME" ver="9">Marco de impresión:</t>
+<t id="L_ISOMETRIC_VIEW" ver="9">Vista isométrica</t>
+<t id="L_BOTTOM_VIEW" ver="9">Vista inferior</t>
+<t id="L_LEFT_VIEW" ver="9">Vista izquierda</t>
+<t id="L_RIGHT_VIEW" ver="9">Vista derecha</t>
+<t id="L_FRONT_VIEW" ver="9">Vista frontal</t>
+<t id="L_BACK_VIEW" ver="9">Vista posterior</t>
+<t id="M_VIEW" ver="9">Vista</t>
+<t id="M_SHOW_EDGES" ver="9">Mostrar aristas</t>
+<t id="M_SHOW_FACES" ver="9">Mostrar caras</t>
+<t id="L_ANA_MODIFIED" ver="9">Modificado:</t>
+<t id="L_ANA_MANIFOLD" ver="9">Variedad:</t>
+<t id="L_ANA_INTERSECTING_TRIANGLES" ver="9">Triángulos intersecantes:</t>
+<t id="L_ANA_NORMALS" ver="9">Normales:</t>
+<t id="L_ANA_LOOP_EDGES" ver="9">Aristas en bucle:</t>
+<t id="L_ANA_HIGHLY_CONNECTED" ver="9">Aristas Altamente Conectadas:</t>
+<t id="L_ANA_VERTICES" ver="9">Puntos:</t>
+<t id="L_ANA_EDGES" ver="9">Aristas:</t>
+<t id="L_ANA_FACES" ver="9">Caras:</t>
+<t id="L_ANA_SHELLS" ver="9">Revestimientos:</t>
+<t id="L_ANA_ORIENTED" ver="9">Orientadas</t>
+<t id="L_ANA_NOT_ORIENTED" ver="9">No Orientadas</t>
+<t id="M_TOOLS" ver="9">Herramientas</t>
+<t id="M_BELT_CALCULATOR" ver="9">Calculadora de correa</t>
+<t id="M_LEADSCREW_CALCULATOR" ver="9">Calculadora de tornillo de avance</t>
+<t id="L_MOTOR_STEP_ANGLE" ver="9">Ángulo de paso de motor</t>
+<t id="L_DRIVER_MICROSTEPPING" ver="9">Micropaso de Driver</t>
+<t id="L_BELT_PITCH" ver="9">Inclinación de correa</t>
+<t id="L_TOOTH_COUNT" ver="9">Número de dientes</t>
+<t id="B_CALCULATE" ver="9">Calcular</t>
+<t id="L_STEPS_PER_MM" ver="9">Valor para pasos por mm</t>
+<t id="L_TOOTH_COUNT_MUST_INT" ver="9">El número de dientes debe ser entero</t>
+<t id="L_LEADSCREW_PITCH" ver="9">Inclinación de tornillo de avance</t>
+<t id="L_GEAR_RATIO" ver="9">Relación de transmisión</t>
+<t id="L_SERIAL_CONNECTION" ver="9">Conexión Serial</t>
+<t id="L_VIRTUAL_CONNECTION" ver="9">Impresora Virtual</t>
+<t id="L_REPETIER_SERVER_CONNECTION" ver="9">Servidor de Repetier</t>
+<t id="L_CONNECTOR" ver="9">Conector</t>
+<t id="L_DISABLED" ver="9">Deshabilitado</t>
+<t id="L_DTR_LOW_HIGH" ver="9">DTR alto->bajo</t>
+<t id="L_DTR_LOW_HIGH_LOW" ver="9">DTR bajo->alto->bajo</t>
+<t id="L_DTR_TOGGLE" ver="9">Alternar DTR</t>
+<t id="L_RESET_ON_CONNECT" ver="9">Reestablecer al Conectar</t>
+<t id="L_RESET_ON_EMERGENCY" ver="9">Reestablecer en Emergencia</t>
+<t id="L_SEND_EMERGENCY_CMD" ver="9">Enviar comando de emergencia</t>
+<t id="L_SEND_EMERGENCY_CMD_DTR_TOGGLE" ver="9">Enviar comando de emergencia + DTR alto->bajo</t>
+<t id="L_SEND_EMERGENCY_CMD_RECONNECT" ver="9">Enviar comando de emergencia y reconectar</t>
+<t id="L_FILE_ASSOCIATIONS" ver="9">Asociación de archivos</t>
+<t id="L_ASSOCIATE_EXTENSIONS" ver="9">Asociar extensiones</t>
+<t id="L_CONNECTION_FAILED" ver="9">El conector falló con el siguiente error: $1. Asegúrese que su impresora está conectada, habilitada y los datos de conexión están configurados correctamente. ¿Abrir configuración de impresora?</t>
+<t id="L_AUTOENABLE_PARALLEL_TOPVIEW" ver="9">Habilitar modo paralela en vista en planta</t>
+<t id="L_RESET_DEFAULTS" ver="9">Reestablecer valores predeterminados</t>
+<t id="L_REMOVED_DEGENERATED" ver="9">Eliminar triángulos degenerados:</t>
+<t id="L_REMOVED_ISOLATED" ver="9">Eliminar triángulos aislados:</t>
+<t id="L_REMOVED_DOUBLE" ver="9">Eliminar triángulos dobles:</t>
+<t id="L_STARTING_ANALYSER" ver="9">Iniciando analizador de objeto ...</t>
+<t id="L_ANALYSER_FINISHED" ver="9">Análisis finalizado.</t>
+<t id="L_LOADING_3D_FAILED" ver="9">La carga del archivo 3d $1 falló.</t>
+<t id="L_OBJECT_INFORMATIONS" ver="9">Información de objeto</t>
+<t id="L_MINIMUM:" ver="9">Mínimo:</t>
+<t id="L_MAXIMUM:" ver="9">Máximo:</t>
+<t id="L_SIZE:" ver="9">Tamaño:</t>
+<t id="L_VOLUME:" ver="9">Volumen:</t>
+<t id="L_SURFACE:" ver="9">Superficie:</t>
+<t id="L_DIMENSIONS:" ver="9">Dimensiones:</t>
+<t id="L_SPLIT_OBJECT" ver="9">Dividir objeto</t>
+<t id="L_FIX_NORMALS" ver="9">Corregir normales</t>
+<t id="M_FIT_PRINTER" ver="9">Ajustar Impresora</t>
+<t id="M_FIT_OBJECTS" ver="9">Ajustar Objetos</t>
+<t id="IMPORTING_1" ver="9">Importando $1</t>
+<t id="L_LOADING..." ver="9">Cargando ...</t>
+<t id="L_INTERSECTION_TESTS" ver="9">Pruebas de intersección</t>
+<t id="L_FIXING_NORMALS" ver="9">Corrigiendo normales</t>
+<t id="L_ANA_FIXED_COLLINEAR_TRIANGLES" ver="9">Triángulos colineales corregidos:</t>
+<t id="L_ANA_CORRECTED_NORMAL_ORIENTATIONS" ver="9">Orientación de normales corregidas:</t>
+<t id="L_OBJECT_IS_MANIFOLD" ver="9">El Objeto es una variedad.</t>
+<t id="L_OBJECT_IS_NON_MANIFOLD" ver="9">El Objeto no es una variedad. El slicing puede producir resultados incorrectos. Por favor, repare el objeto primero.</t>
+<t id="L_SHOW_COMPASS" ver="9">Mostrar Brújula</t>
+<t id="L_" ver="9"></t>
 <t id="L_CONFIRM_DELETE_JOB" ver="1">¿Está seguro que desea eliminar el trabajo de impresión $1?</t>
 <t id="L_PRINT_STATE_SAVED_SUCCESSFULLY" ver="1">El estado fue guardado satisfactoriamente</t>
 <t id="M_POSPONED_JOBS" ver="1">Trabajos pospuestos</t>

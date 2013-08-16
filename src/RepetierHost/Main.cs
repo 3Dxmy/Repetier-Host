@@ -1781,7 +1781,18 @@ namespace RepetierHost
                 }
             }
 
-            snapshotDialog.Show();
+            if (snapshotDialog != null)
+            {
+                try
+                {
+                    snapshotDialog.Show();
+                }
+                catch (NullReferenceException ex)
+                {
+                    // Could happen as a consequence of a race condition. In
+                    // this case, it's ok to ignore it.
+                }
+            }
         }
 
         private bool ValidatePreconditionsToSaveStateSnapshot(PrinterConnection conn)

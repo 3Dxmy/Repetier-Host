@@ -42,6 +42,7 @@
             this.groupBehaviour = new System.Windows.Forms.GroupBox();
             this.checkDisableQualityReduction = new System.Windows.Forms.CheckBox();
             this.groupGUI = new System.Windows.Forms.GroupBox();
+            this.checkShowPrinterNameInPrinterIdLabel = new System.Windows.Forms.CheckBox();
             this.checkRedGreenSwitch = new System.Windows.Forms.CheckBox();
             this.checkReduceToolbarSize = new System.Windows.Forms.CheckBox();
             this.groupFileAssociations = new System.Windows.Forms.GroupBox();
@@ -52,7 +53,7 @@
             this.checkGCode = new System.Windows.Forms.CheckBox();
             this.checkOBJ = new System.Windows.Forms.CheckBox();
             this.checkSTL = new System.Windows.Forms.CheckBox();
-            this.checkShowPrinterNameInPrinterIdLabel = new System.Windows.Forms.CheckBox();
+            this.buttonCreate = new System.Windows.Forms.Button();
             this.groupFilesAndDirectories.SuspendLayout();
             this.groupBehaviour.SuspendLayout();
             this.groupGUI.SuspendLayout();
@@ -61,6 +62,7 @@
             // 
             // groupFilesAndDirectories
             // 
+            this.groupFilesAndDirectories.Controls.Add(this.buttonCreate);
             this.groupFilesAndDirectories.Controls.Add(this.labelOKMasg);
             this.groupFilesAndDirectories.Controls.Add(this.labelInfoWorkdir);
             this.groupFilesAndDirectories.Controls.Add(this.checkLogfile);
@@ -186,6 +188,16 @@
             this.groupGUI.TabStop = false;
             this.groupGUI.Text = "GUI";
             // 
+            // checkShowPrinterNameInPrinterIdLabel
+            // 
+            this.checkShowPrinterNameInPrinterIdLabel.AutoSize = true;
+            this.checkShowPrinterNameInPrinterIdLabel.Location = new System.Drawing.Point(13, 68);
+            this.checkShowPrinterNameInPrinterIdLabel.Name = "checkShowPrinterNameInPrinterIdLabel";
+            this.checkShowPrinterNameInPrinterIdLabel.Size = new System.Drawing.Size(267, 17);
+            this.checkShowPrinterNameInPrinterIdLabel.TabIndex = 2;
+            this.checkShowPrinterNameInPrinterIdLabel.Text = "Update printer ID when connection status changes";
+            this.checkShowPrinterNameInPrinterIdLabel.UseVisualStyleBackColor = true;
+            // 
             // checkRedGreenSwitch
             // 
             this.checkRedGreenSwitch.AutoSize = true;
@@ -303,15 +315,15 @@
             this.checkSTL.Text = ".stl";
             this.checkSTL.UseVisualStyleBackColor = true;
             // 
-            // checkUpdatePrinterId
+            // buttonCreate
             // 
-            this.checkShowPrinterNameInPrinterIdLabel.AutoSize = true;
-            this.checkShowPrinterNameInPrinterIdLabel.Location = new System.Drawing.Point(13, 68);
-            this.checkShowPrinterNameInPrinterIdLabel.Name = "checkUpdatePrinterId";
-            this.checkShowPrinterNameInPrinterIdLabel.Size = new System.Drawing.Size(267, 17);
-            this.checkShowPrinterNameInPrinterIdLabel.TabIndex = 2;
-            this.checkShowPrinterNameInPrinterIdLabel.Text = "Update printer ID when connection status changes";
-            this.checkShowPrinterNameInPrinterIdLabel.UseVisualStyleBackColor = true;
+            this.buttonCreate.Location = new System.Drawing.Point(400, 42);
+            this.buttonCreate.Name = "buttonCreate";
+            this.buttonCreate.Size = new System.Drawing.Size(101, 23);
+            this.buttonCreate.TabIndex = 6;
+            this.buttonCreate.Text = "Create";
+            this.buttonCreate.UseVisualStyleBackColor = true;
+            this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
             // 
             // GlobalSettings
             // 
@@ -371,6 +383,7 @@
         private System.Windows.Forms.CheckBox checkOBJ;
         private System.Windows.Forms.CheckBox checkSTL;
         private System.Windows.Forms.CheckBox checkShowPrinterNameInPrinterIdLabel;
+        private System.Windows.Forms.Button buttonCreate;
 
     }
 }

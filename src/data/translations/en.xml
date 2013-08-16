@@ -637,5 +637,7 @@ Reload objects?]]></t>
 <t id="L_SET_PRINTER_ID" ver="1">Please set a Printer ID</t>
 <t id="L_SHOW_PRINTER_NAME_IN_PRINTER_ID_LABEL" ver="1">Show printer name in printer ID label</t>
 <t id="L_EDIT" ver="1">Edit</t>
+<t id="L_DIRECTORY_ALREADY_EXISTS" ver="1">There's already a directory with that name</t>
+<t id="L_FILE_EXISTS_WITH_NAME" ver="1">There's already a file with that name</t>
 </translation>
 

@@ -634,5 +634,7 @@ Los cambios en el registro estarán activos despues del siguiente reinicio.</t>
 <t id="L_SET_PRINTER_ID" ver="1">Por favor escriba un ID de impresora</t>
 <t id="L_SHOW_PRINTER_NAME_IN_PRINTER_ID_LABEL" ver="1">Mostrar nombre de impresora en casillero de ID de impresora</t>
 <t id="L_EDIT" ver="1">Editar</t>
+<t id="L_DIRECTORY_ALREADY_EXISTS" ver="1">Ya existe un directorio con ese nombre</t>
+<t id="L_FILE_EXISTS_WITH_NAME" ver="1">Ya existe un archivo con ese nombre</t>
 </translation>
 

@@ -72,6 +72,7 @@ namespace RepetierHost.view
             buttonOK.Text = Trans.T("B_OK");
             groupFileAssociations.Text = Trans.T("L_FILE_ASSOCIATIONS");
             buttonAssociate.Text = Trans.T("L_ASSOCIATE_EXTENSIONS");
+            buttonCreate.Text = Trans.T("L_CREATE_FOLDER");
         }
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -224,6 +225,42 @@ namespace RepetierHost.view
                 Associate(".nc", progid, "G-Code");
 
             SHChangeNotify(0x8000000, 0x1000, IntPtr.Zero, IntPtr.Zero); 
+        }
+
+        private void buttonCreate_Click(object sender, EventArgs e)
+        {
+            if (Directory.Exists(textWorkdir.Text))
+            {
+                MessageBox.Show(Trans.T("L_DIRECTORY_ALREADY_EXISTS"));
+            }
+            else if (File.Exists(textWorkdir.Text))
+            {
+                MessageBox.Show(Trans.T("L_FILE_EXISTS_WITH_NAME"));
+            }
+            else
+            {
+                try
+                {
+                    Path.GetPathRoot(textWorkdir.Text);
+                    CreateDirStructure(new DirectoryInfo(textWorkdir.Text));
+                    WorkdirOK();
+                }
+                catch (Exception ex)
+                {
+                    //IOException, UnauthorizedAccessException, ArgumentException, ArgumentNullException, PathTooLongException, DirectoryNotFoundException, NotSupportedException
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void CreateDirStructure(DirectoryInfo path)
+        {
+            DirectoryInfo parent = path.Parent;
+            if (!parent.Exists)
+            {
+                CreateDirStructure(parent);
+            }
+            path.Create();
         }
     }
 }

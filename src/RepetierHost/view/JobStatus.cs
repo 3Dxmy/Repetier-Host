@@ -60,7 +60,7 @@ namespace RepetierHost.view
         {
             e.Cancel = true;
             this.Hide();
-        }
+        } 
         private void timer_Tick(object sender, EventArgs e)
         {
             Printjob j = Main.conn.connector.Job;

@@ -158,7 +158,7 @@ namespace RepetierHost.view
         {
             e.Cancel = true;
             this.Hide();
-        }
+        } 
         public void RefreshFilenames()
         {
             updateFilenames = false;

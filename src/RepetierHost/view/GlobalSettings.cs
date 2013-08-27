@@ -78,7 +78,7 @@ namespace RepetierHost.view
         {
             e.Cancel = true;
             this.Hide();
-        }
+        } 
         public bool WorkdirOK()
         {
             string wd = Workdir;

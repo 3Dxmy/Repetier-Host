@@ -35,7 +35,7 @@ namespace RepetierHost.connector
         /// These delegate methods are called after pause state is changed.
         /// </summary>
         public OnPauseChanged eventPauseChanged;
-
+ 
         abstract public void Activate();
         abstract public void Deactivate();
         abstract public bool Connect();

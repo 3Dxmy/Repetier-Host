@@ -63,7 +63,7 @@ namespace RepetierHost.view
         {
             e.Cancel = true;
             this.Hide();
-        }
+        } 
         /// <summary>
         /// Update the informations every second.
         /// </summary>

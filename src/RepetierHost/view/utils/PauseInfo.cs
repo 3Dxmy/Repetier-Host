@@ -42,7 +42,7 @@ namespace RepetierHost.view.utils
         protected override void OnClosing(CancelEventArgs e)
         {
             e.Cancel = true;
-            ContinueJob();
+            this.Hide();
         }
         public void translate()
         {

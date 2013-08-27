@@ -1,4 +1,4 @@
-﻿/*
+/*
    Copyright 2011 repetier repetierdev@gmail.com
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -80,8 +80,9 @@ namespace RepetierHost
         public Trans trans = null;
         public RepetierHost.view.RepetierEditor editor;
         public double gcodePrintingTime = 0;
-        public string lastFileLoadedName;
         public PrintingCheckpoints checkpoints;
+        public string lastFileLoadedName = null;
+
         public class JobUpdater
         {
             GCodeVisual visual = null;
@@ -384,6 +385,7 @@ namespace RepetierHost
                 printerIdLabel.Text = Trans.T("L_DISCONNECTED");
             }
             updateTravelMoves();
+            printerIdLabel.Text = printerSettings.comboPrinter.Text;
             this.AllowDrop = true;
             this.DragEnter += new DragEventHandler(Form1_DragEnter);
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
@@ -563,7 +565,6 @@ namespace RepetierHost
             loadStateToolStripMenuItem.Text = Trans.T("M_RESUME_JOB");
             saveStateToolStripMenuItem.Text = Trans.T("M_POSTPONE_JOB");
             togglePrinterIdToolStripMenuItem.Text = Trans.T("M_TOGGLE_PRINTER_ID");
-            buttonEditPrinterId.Text = Trans.T("L_EDIT");
             checkpointsToolStripMenuItem.Text = Trans.T("M_VIEW_CHECKPOINTS");
             updateTravelMoves();
             updateShowFilament();
@@ -1663,7 +1664,7 @@ namespace RepetierHost
             threeDSettings.ShowFaces = !threeDSettings.ShowFaces;
         }
 
-        private void tdSettings_CurrentChanged(object sender, EventArgs e)
+        public void tdSettings_CurrentChanged(object sender, EventArgs e)
         {
             showEdgesToolStripMenuItem.Checked = threeDSettings.ShowEdges;
             showFacesToolStripMenuItem.Checked = threeDSettings.ShowFaces;
@@ -1811,10 +1812,13 @@ namespace RepetierHost
             }
         }
 
+
+
         private bool ValidatePreconditionsToSaveStateSnapshot(PrinterConnection conn)
         {
             return conn.connector.IsJobRunning();
         }
+
 		
         private void extraUrl1ToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -25,6 +25,7 @@ namespace RepetierHost.model
 {
     public delegate void OnPosChange(GCode code, float x, float y, float z);
     public delegate void OnPosChangeFast(float x, float y, float z, float e);
+    public delegate void OnLayerChange(float newZ, float lastZ);
     public delegate void OnAnalyzerChange();
     public class ExtruderData
     {
@@ -41,6 +42,10 @@ namespace RepetierHost.model
     {
         public event OnPosChange eventPosChanged;
         public event OnPosChangeFast eventPosChangedFast;
+        /// <summary>
+        /// These delegate methods are called after the z coordinate changed.
+        /// </summary>
+        public OnLayerChange eventLayerChanged;
         public event OnAnalyzerChange eventChange;
         public int activeExtruderId = 0;
         public ExtruderData activeExtruder = null;
@@ -302,6 +307,10 @@ namespace RepetierHost.model
                         float dx = Math.Abs(x - lastX);
                         float dy = Math.Abs(y - lastY);
                         float dz = Math.Abs(z - lastZ);
+                        if (dz != 0)
+                        {
+                            eventLayerChanged(z, lastZ);
+                        }
                         float de = Math.Abs(activeExtruder.e - activeExtruder.lastE);
                         double time;
                         if (dx + dy + dz > 0.001)

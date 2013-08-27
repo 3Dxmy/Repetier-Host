@@ -81,6 +81,7 @@ namespace RepetierHost
         public RepetierHost.view.RepetierEditor editor;
         public double gcodePrintingTime = 0;
         public string lastFileLoadedName;
+        public PrintingCheckpoints checkpoints;
         public class JobUpdater
         {
             GCodeVisual visual = null;
@@ -388,14 +389,18 @@ namespace RepetierHost
             this.DragDrop += new DragEventHandler(Form1_DragDrop);
             extensions.ExtensionManager.Initalize();
             if (conn.connector != null)
+            {
                 conn.connector.Activate();
+                Main.conn.analyzer.eventLayerChanged += OnZChangeCreateCheckpoint;
+                Main.conn.analyzer.eventPosChanged += OnPosChangeCreateCheckpoint;
+            }
             //TestTopoTriangle triTests = new TestTopoTriangle();
             //triTests.RunTests();
 
             //everything done.  Now look at command line
             ProcessCommandLine();
 
-
+            checkpoints = new PrintingCheckpoints(conn);
         }
 
         void ProcessCommandLine()
@@ -559,6 +564,7 @@ namespace RepetierHost
             saveStateToolStripMenuItem.Text = Trans.T("M_POSTPONE_JOB");
             togglePrinterIdToolStripMenuItem.Text = Trans.T("M_TOGGLE_PRINTER_ID");
             buttonEditPrinterId.Text = Trans.T("L_EDIT");
+            checkpointsToolStripMenuItem.Text = Trans.T("M_VIEW_CHECKPOINTS");
             updateTravelMoves();
             updateShowFilament();
             foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
@@ -1686,6 +1692,20 @@ namespace RepetierHost
             threedview.FitObjects();
         }
 
+
+        private void checkpointsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CheckpointsDialog dialog = new CheckpointsDialog();
+            dialog.ShowDialog();
+            PrintingCheckpoint chk = dialog.GetSelectedCheckpoint();
+            if (chk == null)
+            {
+                // User cancelled
+                return;
+            }
+            chk.RestoreState(new PrinterConnectionGCodeExecutor(conn, false));
+        }
+
         private void loadStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -1719,7 +1739,7 @@ namespace RepetierHost
             }
         }
 
-        private OnPosChange SaveStateOnNewLayerDelegate;
+        private OnLayerChange SaveStateOnNewLayerDelegate;
         private PrinterConnectorBase.OnPauseChanged SaveStateOnPauseDelegate;
         private SnapshotDialog snapshotDialog;
         // NOTE: Used an array for the lock object because strings could be
@@ -1741,7 +1761,6 @@ namespace RepetierHost
                 return;
             }
 
-            double lastZ = Main.conn.analyzer.z;
             lock (lockObject)
             {
                 // We save the state when the first of these three events happen:
@@ -1749,13 +1768,10 @@ namespace RepetierHost
                 // tries to take the snapshot, then it's taken at that moment)
                 // - A new layer is reached.
                 // - The user forces the snapshot from the snapshot dialog.
-                SaveStateOnNewLayerDelegate = new OnPosChange(delegate(GCode gc, float x, float y, float z)
+                SaveStateOnNewLayerDelegate = new OnLayerChange(delegate(float newZ, float lastZ)
                 {
-                    if (z != lastZ)
-                    {
-                        // New Layer, ready to save state.
-                        OnReadyToSaveStateCallback();
-                    }
+                    // New Layer, ready to save state.
+                    OnReadyToSaveStateCallback();
                 });
                 SaveStateOnPauseDelegate = new PrinterConnectorBase.OnPauseChanged(delegate(bool paused)
                 {
@@ -1765,7 +1781,7 @@ namespace RepetierHost
                     }
                 });
                 snapshotNameOnNextSaveState = snapshotName;
-                Main.conn.analyzer.eventPosChanged += SaveStateOnNewLayerDelegate;
+                Main.conn.analyzer.eventLayerChanged += SaveStateOnNewLayerDelegate;
                 Main.conn.connector.eventPauseChanged += SaveStateOnPauseDelegate;
                 if (snapshotDialog == null)
                 {
@@ -1836,7 +1852,7 @@ namespace RepetierHost
             {
                 if (SaveStateOnNewLayerDelegate != null)
                 {
-                    Main.conn.analyzer.eventPosChanged -= SaveStateOnNewLayerDelegate;
+                    Main.conn.analyzer.eventLayerChanged -= SaveStateOnNewLayerDelegate;
                     Main.conn.connector.eventPauseChanged -= SaveStateOnPauseDelegate;
                     SaveStateOnNewLayerDelegate = null;
                     SaveStateOnPauseDelegate = null;
@@ -1866,7 +1882,7 @@ namespace RepetierHost
 
                 // We want the event to execute only once, so, we must remove it
                 // after the condition was met.
-                Main.conn.analyzer.eventPosChanged -= SaveStateOnNewLayerDelegate;
+                Main.conn.analyzer.eventLayerChanged -= SaveStateOnNewLayerDelegate;
                 Main.conn.connector.eventPauseChanged -= SaveStateOnPauseDelegate;
                 SaveStateOnNewLayerDelegate = null;
                 SaveStateOnPauseDelegate = null;
@@ -1914,10 +1930,10 @@ namespace RepetierHost
         /// If the user cancels, returns null.
         /// </summary>
         /// <returns></returns>
-        private static string ReadSnapshotName()
+        private string ReadSnapshotName()
         {
             // Propose as snapshot name, one that contains a timestamp.
-            string snapshotName = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            string snapshotName = DateTime.Now.ToString(RegMemory.GetString("postponedJobDateFormat", "yyyy-MM-dd_HH-mm-ss"));
             do
             {
                 snapshotName = StringInput.GetString(Trans.T("L_POSTPONED_JOB_NAME"), Trans.T("L_NAME_POSTPONED_JOB"), snapshotName, true);
@@ -1929,6 +1945,32 @@ namespace RepetierHost
             } while (PendingPrintJob.IsInvalidSnapshotName(snapshotName));
 
             return snapshotName;
+        }
+
+        private long movementsCount = 0;
+
+        public void OnZChangeCreateCheckpoint(float newZ, float lastZ)
+        {
+            bool EnableCheckpointOnNewLayer = RegMemory.GetBool("enableCheckpointOnNewLayer", true);
+            if (EnableCheckpointOnNewLayer && Main.conn.connector.IsJobRunning() && !Main.conn.connector.IsPaused)
+            {
+                string CheckpointDateFormat = RegMemory.GetString("checkpointDateFormat", "HH-mm-ss");
+                string checkpointName = DateTime.Now.ToString(CheckpointDateFormat) + " z=" + newZ;
+                checkpoints.CreateCheckpoint(checkpointName);
+            }
+        }
+
+        public void OnPosChangeCreateCheckpoint(GCode code, float x, float y, float z)
+        {
+            movementsCount++;
+            bool EnableCreateCheckpointOnNumberOfMovements = RegMemory.GetBool("enableCreateCheckpointOnNumberOfMovements", true);
+            long NumberOfMovementsToCreateCheckpoint = RegMemory.GetLong("numberOfMovementsToCreateCheckpoint", 100);
+            if (Main.conn.connector.IsJobRunning() && !Main.conn.connector.IsPaused && EnableCreateCheckpointOnNumberOfMovements && (movementsCount % NumberOfMovementsToCreateCheckpoint == 0))
+            {
+                string CheckpointDateFormat = RegMemory.GetString("checkpointDateFormat", "HH-mm-ss");
+                string checkpointName = DateTime.Now.ToString(CheckpointDateFormat) + " line " + Main.conn.connector.Job.linesSend + " pos=(" + x + ", " + y + ", " + z + ")";
+                checkpoints.CreateCheckpoint(checkpointName);
+            }
         }
 
         private void printerIdLabel_DoubleClick(object sender, EventArgs e)

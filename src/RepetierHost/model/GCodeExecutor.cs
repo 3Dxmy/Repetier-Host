@@ -63,4 +63,54 @@ namespace RepetierHost.model
         }
 
     }
+
+    public class StartNewJobGCodeExecutor : GCodeExecutor
+    {
+        private PrinterConnection conn;
+        private bool startImmediatelly;
+        public StartNewJobGCodeExecutor(PrinterConnection conn, bool startImmediatelly)
+        {
+            this.conn = conn;
+            this.startImmediatelly = startImmediatelly;
+        }
+
+        public void queueGCodeScript(string gcodeToExecute)
+        {
+            conn.connector.KillJob();
+
+            Main.main.editor.setContent(0, gcodeToExecute);
+
+            if (startImmediatelly)
+            {
+                // And then run it.
+                conn.connector.RunJob();
+            }
+        }
+
+    }
+
+    public class RunNowGCodeExecutor : GCodeExecutor
+    {
+        private PrinterConnection conn;
+        public RunNowGCodeExecutor(PrinterConnection conn)
+        {
+            this.conn = conn;
+        }
+
+        public void queueGCodeScript(string gcodeToExecute)
+        {
+            conn.connector.GetInjectLock();
+            string [] commands = gcodeToExecute.Split('\r','\n');
+            foreach (string command in commands)
+            {
+                if (command.Length > 0)
+                {
+                    conn.injectManualCommand(command);
+                }
+            }
+            conn.connector.ReturnInjectLock();
+        }
+
+    }
+    
 }

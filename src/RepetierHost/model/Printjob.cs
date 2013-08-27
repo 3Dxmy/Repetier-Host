@@ -76,6 +76,9 @@ namespace RepetierHost.model
             }
             dataComplete = true;
             jobStarted = DateTime.Now;
+
+            // Start checkpoints now!!
+            Main.main.checkpoints.BeginJob();
             con.firePrinterAction(Trans.T("L_PRINTING..."));
         }
         public void KillJob()
@@ -97,6 +100,7 @@ namespace RepetierHost.model
             }
             Main.main.Invoke(Main.main.UpdateJobButtons);
             con.firePrinterAction(Trans.T("L_JOB_KILLED")); //"Job killed");
+            //Main.main.checkpoints.EndJob();
             DoEndKillActions();
             Main.main.printPanel.Invoke(Main.main.printPanel.SetStatusJobKilled);
         }

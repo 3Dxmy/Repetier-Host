@@ -33,6 +33,7 @@
             this.menu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadGCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkpointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.snapshotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -170,27 +171,27 @@
             this.tabPage3DView = new System.Windows.Forms.TabPage();
             this.tabPageTemp = new System.Windows.Forms.TabPage();
             this.splitPrinterId = new System.Windows.Forms.SplitContainer();
+            this.buttonEditPrinterId = new System.Windows.Forms.Button();
             this.printerIdLabel = new System.Windows.Forms.Label();
             this.tab = new System.Windows.Forms.TabControl();
             this.tabModel = new System.Windows.Forms.TabPage();
             this.tabSlicer = new System.Windows.Forms.TabPage();
+            this.slicerPanel = new RepetierHost.view.SlicerPanel();
             this.tabGCode = new System.Windows.Forms.TabPage();
             this.tabPrint = new System.Windows.Forms.TabPage();
-            this.buttonEditPrinterId = new System.Windows.Forms.Button();
-            this.slicerPanel = new RepetierHost.view.SlicerPanel();
             this.tdSettings = new System.Windows.Forms.BindingSource(this.components);
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.toolStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitLog)).BeginInit();
+            //((System.ComponentModel.ISupportInitialize)(this.splitLog)).BeginInit();
             this.splitLog.Panel1.SuspendLayout();
             this.splitLog.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitInfoEdit)).BeginInit();
+            //((System.ComponentModel.ISupportInitialize)(this.splitInfoEdit)).BeginInit();
             this.splitInfoEdit.Panel1.SuspendLayout();
             this.splitInfoEdit.Panel2.SuspendLayout();
             this.splitInfoEdit.SuspendLayout();
             this.tabControlView.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitPrinterId)).BeginInit();
+            //((System.ComponentModel.ISupportInitialize)(this.splitPrinterId)).BeginInit();
             this.splitPrinterId.Panel1.SuspendLayout();
             this.splitPrinterId.Panel2.SuspendLayout();
             this.splitPrinterId.SuspendLayout();
@@ -220,6 +221,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadGCodeToolStripMenuItem,
+            this.checkpointsToolStripMenuItem,
             this.snapshotToolStripMenuItem,
             this.showWorkdirectoryToolStripMenuItem,
             this.toolStripStartHistory,
@@ -236,6 +238,14 @@
             this.loadGCodeToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
             this.loadGCodeToolStripMenuItem.Text = "&Load G-Code";
             this.loadGCodeToolStripMenuItem.Click += new System.EventHandler(this.toolGCodeLoad_Click);
+            // 
+            // checkpointsToolStripMenuItem
+            // 
+            this.checkpointsToolStripMenuItem.Name = "checkpointsToolStripMenuItem";
+            this.checkpointsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F9;
+            this.checkpointsToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.checkpointsToolStripMenuItem.Text = "View Checkpoints";
+            this.checkpointsToolStripMenuItem.Click += new System.EventHandler(this.checkpointsToolStripMenuItem_Click);
             // 
             // snapshotToolStripMenuItem
             // 
@@ -1442,6 +1452,17 @@
             this.splitPrinterId.SplitterDistance = 45;
             this.splitPrinterId.TabIndex = 0;
             // 
+            // buttonEditPrinterId
+            // 
+            this.buttonEditPrinterId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonEditPrinterId.Location = new System.Drawing.Point(429, 24);
+            this.buttonEditPrinterId.Name = "buttonEditPrinterId";
+            this.buttonEditPrinterId.Size = new System.Drawing.Size(44, 20);
+            this.buttonEditPrinterId.TabIndex = 1;
+            this.buttonEditPrinterId.Text = "Edit";
+            this.buttonEditPrinterId.UseVisualStyleBackColor = true;
+            this.buttonEditPrinterId.Click += new System.EventHandler(this.buttonEditPrinterId_Click);
+            // 
             // printerIdLabel
             // 
             this.printerIdLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -1493,6 +1514,15 @@
             this.tabSlicer.Text = "Slicer";
             this.tabSlicer.UseVisualStyleBackColor = true;
             // 
+            // slicerPanel
+            // 
+            this.slicerPanel.AutoScroll = true;
+            this.slicerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.slicerPanel.Location = new System.Drawing.Point(0, 0);
+            this.slicerPanel.Name = "slicerPanel";
+            this.slicerPanel.Size = new System.Drawing.Size(467, 255);
+            this.slicerPanel.TabIndex = 0;
+            // 
             // tabGCode
             // 
             this.tabGCode.AutoScroll = true;
@@ -1515,26 +1545,6 @@
             this.tabPrint.TabIndex = 0;
             this.tabPrint.Text = "Manual control";
             this.tabPrint.UseVisualStyleBackColor = true;
-            // 
-            // buttonEditPrinterId
-            // 
-            this.buttonEditPrinterId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonEditPrinterId.Location = new System.Drawing.Point(429, 24);
-            this.buttonEditPrinterId.Name = "buttonEditPrinterId";
-            this.buttonEditPrinterId.Size = new System.Drawing.Size(44, 20);
-            this.buttonEditPrinterId.TabIndex = 1;
-            this.buttonEditPrinterId.Text = "Edit";
-            this.buttonEditPrinterId.UseVisualStyleBackColor = true;
-            this.buttonEditPrinterId.Click += new System.EventHandler(this.buttonEditPrinterId_Click);
-            // 
-            // slicerPanel
-            // 
-            this.slicerPanel.AutoScroll = true;
-            this.slicerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.slicerPanel.Location = new System.Drawing.Point(0, 0);
-            this.slicerPanel.Name = "slicerPanel";
-            this.slicerPanel.Size = new System.Drawing.Size(467, 255);
-            this.slicerPanel.TabIndex = 0;
             // 
             // tdSettings
             // 
@@ -1571,16 +1581,16 @@
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.splitLog.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitLog)).EndInit();
+            //((System.ComponentModel.ISupportInitialize)(this.splitLog)).EndInit();
             this.splitLog.ResumeLayout(false);
             this.splitInfoEdit.Panel1.ResumeLayout(false);
             this.splitInfoEdit.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitInfoEdit)).EndInit();
+            //((System.ComponentModel.ISupportInitialize)(this.splitInfoEdit)).EndInit();
             this.splitInfoEdit.ResumeLayout(false);
             this.tabControlView.ResumeLayout(false);
             this.splitPrinterId.Panel1.ResumeLayout(false);
             this.splitPrinterId.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitPrinterId)).EndInit();
+            //((System.ComponentModel.ISupportInitialize)(this.splitPrinterId)).EndInit();
             this.splitPrinterId.ResumeLayout(false);
             this.tab.ResumeLayout(false);
             this.tabSlicer.ResumeLayout(false);
@@ -1741,6 +1751,7 @@
         private System.Windows.Forms.ToolStripMenuItem extraUrl5ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showCompassToolStripMenuItem;
         private System.Windows.Forms.Button buttonEditPrinterId;
+        private System.Windows.Forms.ToolStripMenuItem checkpointsToolStripMenuItem;
     }
 }
 

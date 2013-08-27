@@ -639,5 +639,13 @@ Reload objects?]]></t>
 <t id="L_EDIT" ver="1">Edit</t>
 <t id="L_DIRECTORY_ALREADY_EXISTS" ver="1">There's already a directory with that name</t>
 <t id="L_FILE_EXISTS_WITH_NAME" ver="1">There's already a file with that name</t>
+<t id="W_CHECKPOINTS" ver="1">Checkpoints</t>
+<t id="M_CHECKPOINT_SELECT_JOB" ver="1">Restore Checkpoint</t>
+<t id="M_CHECKPOINT_KILL" ver="1">Delete Checkpoint</t>
+<t id="M_CHECKPOINT_RENAME" ver="1">Rename Checkpoint</t>
+<t id="M_CHECKPOINT_GO_TO_POSITION" ver="1">Go to Checkpoint Position</t>
+<t id="M_VIEW_CHECKPOINTS" ver="1">View Checkpoints</t>
+<t id="L_CHECKPOINT_STOP_JOB_BEFORE_RESTORING_POINT" ver="1">You must kill current job before restoring Checkpoint</t>
+<t id="L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION" ver="1">You must kill current job before goint to Checkpoint Position</t>
 </translation>
 

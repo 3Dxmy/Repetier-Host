@@ -52,7 +52,10 @@ namespace RepetierHost.model
         {
             con.firePrinterAction(Trans.T("L_BUILDING_PRINT_JOB...")); //"Building print job...");
             dataComplete = false;
-            jobList.Clear();
+            lock (jobList)
+            {
+                jobList.Clear();
+            }
             //times.Clear();
             totalLines = 0;
             linesSend = 0;
@@ -66,13 +69,16 @@ namespace RepetierHost.model
         }
         public void EndJob()
         {
-            if (jobList.Count == 0)
+            lock (jobList)
             {
-                mode = 0;
-                con.firePrinterAction(Trans.T("L_IDLE"));
-                Main.main.Invoke(Main.main.UpdateJobButtons);
-                Main.main.printPanel.Invoke(Main.main.printPanel.SetStatusJobFinished);
-                return;
+                if (jobList.Count == 0)
+                {
+                    mode = 0;
+                    con.firePrinterAction(Trans.T("L_IDLE"));
+                    Main.main.Invoke(Main.main.UpdateJobButtons);
+                    Main.main.printPanel.Invoke(Main.main.printPanel.SetStatusJobFinished);
+                    return;
+                }
             }
             dataComplete = true;
             jobStarted = DateTime.Now;
@@ -136,8 +142,11 @@ namespace RepetierHost.model
                 gcode.Parse(line);
                 if (!gcode.comment)
                 {
-                    jobList.AddLast(new GCodeCompressed(gcode));
-                    totalLines++;
+                    lock (jobList)
+                    {
+                        jobList.AddLast(new GCodeCompressed(gcode));
+                        totalLines++;
+                    }
                 }
             }
         }
@@ -151,8 +160,11 @@ namespace RepetierHost.model
                 gcode.Parse(line.text);
                 if (!gcode.comment)
                 {
-                    jobList.AddLast(new GCodeCompressed(gcode));
-                    totalLines++;
+                    lock (jobList)
+                    {
+                        jobList.AddLast(new GCodeCompressed(gcode));
+                        totalLines++;
+                    }
                 }
                 if (line.hasLayer)
                     maxLayer = line.layer;
@@ -169,8 +181,11 @@ namespace RepetierHost.model
         }
         public GCode PeekData()
         {
-            if (jobList.Count == 0) return null;
-            return new GCode(jobList.First.Value);
+            lock (jobList)
+            {
+                if (jobList.Count == 0) return null;
+                return new GCode(jobList.First.Value);
+            }
         }
         public GCode PopData()
         {
@@ -300,7 +315,10 @@ namespace RepetierHost.model
         }
         public LinkedList<GCodeCompressed> GetPendingJobCommands()
         {
-            return new LinkedList<GCodeCompressed>(jobList);
+            lock (jobList)
+            {
+                return new LinkedList<GCodeCompressed>(jobList);
+            }
         } 
     }
 }

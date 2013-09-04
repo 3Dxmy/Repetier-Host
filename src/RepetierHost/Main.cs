@@ -64,6 +64,7 @@ namespace RepetierHost
         public ThreeDControl threedview = null;
         public ThreeDView jobPreview = null;
         public ThreeDView printPreview = null;
+        public ThreeDView checkpointsView;
         public GCodeVisual jobVisual = new GCodeVisual();
         public GCodeVisual printVisual = null;
         public STLComposer objectPlacement = null;
@@ -1247,8 +1248,20 @@ namespace RepetierHost
             slic3r.Show();
             slic3r.BringToFront();
         }
+
+        public bool CheckpointsViewMode
+        {
+            get { return CheckpointsDialog.CheckpointViewMode(); }
+        }
         public void assign3DView()
         {
+            if (CheckpointsViewMode && checkpointsView != null)
+            {
+                // If the user is seeing the checkpoints dialog, we must
+                // display the checkpoint preview.
+                threedview.SetView(checkpointsView);
+                return;
+            }
             if (tab == null) return;
             switch (tab.SelectedIndex)
             {
@@ -1696,16 +1709,9 @@ namespace RepetierHost
 
         private void checkpointsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CheckpointsDialog dialog = new CheckpointsDialog();
-            dialog.ShowDialog();
-            PrintingCheckpoint chk = dialog.GetSelectedCheckpoint();
-            if (chk == null)
-            {
-                // User cancelled
-                return;
-            }
-            chk.RestoreState(new PrinterConnectionGCodeExecutor(conn, false));
+            CheckpointsDialog.Execute();
         }
+
 
         private void loadStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1989,18 +1995,7 @@ namespace RepetierHost
 
         private void UpdatePrinterID()
         {
-            string printerId = StringInput.GetString(Trans.T("L_PRINTER_ID"), Trans.T("L_SET_PRINTER_ID"), printerIdLabel.Text, true);
-            if (printerId != null)
-            {
-                printerIdLabel.Text = printerId;
-
-                ColorDialog picker = new ColorDialog();
-                picker.Color = printerIdLabel.BackColor;
-                if (picker.ShowDialog() == DialogResult.OK)
-                {
-                    printerIdLabel.BackColor = picker.Color;
-                }
-            }
+            EditInstanceName.Execute();
         }
 
         private void togglePrinterIdToolStripMenuItem_Click(object sender, EventArgs e)

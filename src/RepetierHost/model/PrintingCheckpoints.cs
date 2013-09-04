@@ -6,7 +6,6 @@ using System.Globalization;
 
 namespace RepetierHost.model
 {
-    // XXXXXXXXXXXXXXXXXXXXXXX JUNTAR CON CODIGO DE SNAPSHOTS
     public class PrintingCheckpoints
     {
         internal LinkedList<GCodeCompressed> jobGCodes;
@@ -23,12 +22,14 @@ namespace RepetierHost.model
 
         public void BeginJob()
         {
+            // XXX TODO: ACA DEBERIA GUARDAR EL ARCHIVO DE GCODE E INICIALIZAR EL ARCHIVO DE ESTADOS.
             jobGCodes = conn.connector.Job.GetPendingJobCommands();
             checkpoints = new LinkedList<PrintingCheckpoint>();
             jobActive = true;
         }
         public void EndJob()
         {
+            // XXX TODO: ESTE METODO CREO QUE NUNCA ES LLAMADO, PODES QUITARLO O DARLE UNA FUNCION
             checkpoints = new LinkedList<PrintingCheckpoint>();
             jobGCodes = new LinkedList<GCodeCompressed>();
             jobActive = false;
@@ -45,6 +46,7 @@ namespace RepetierHost.model
 
         public LinkedList<PrintingCheckpoint> GetCheckPoints()
         {
+            // XXX TODO ESTE METODO DEBERIA CAMBIAR, YA QUE NO VAN A ESTAR EN MEMORIA
             return checkpoints;
         }
 
@@ -70,7 +72,7 @@ namespace RepetierHost.model
         public float activeExtruderValue;
 
         public int lineNumber;
-        public LinkedList<GCodeCompressed> jobGCodes;
+        public IEnumerable<GCodeCompressed> jobGCodes;
         public PrintingCheckpoints checkpoints;
 
 
@@ -130,6 +132,9 @@ namespace RepetierHost.model
             Console.Out.WriteLine(gCodeToRestoreState);
 
             executor.queueGCodeScript(gCodeToRestoreState + "\r\n" + GetRemainingGcs());
+            // XXX FIXME cambialo a gcodeexecutor
+            /*Main.conn.connector.Job.RewindGCodeCompressedEnumerable(GetRemainingGcsCompressed());
+            Main.conn.connector.PauseJob("go flaco");*/
         }
 
         public void Delete()
@@ -145,16 +150,20 @@ namespace RepetierHost.model
         private string GetRemainingGcs()
         {
             StringBuilder remainingGcs = new StringBuilder();
-            long numline = 0;
-            foreach (GCodeCompressed gc in jobGCodes)
+            foreach (GCodeCompressed gc in jobGCodes.Skip(lineNumber))
             {
-                numline++;
-                if (numline >= lineNumber)
-                {
-                    remainingGcs.AppendLine(gc.getCode().orig);
-                }
+                remainingGcs.AppendLine(gc.getCode().orig);
             }
             return remainingGcs.ToString();
+        }
+
+/*        private IEnumerable<GCodeCompressed> GetRemainingGcsCompressed()
+        {
+            return jobGCodes.Skip(lineNumber);
+        }*/
+        public IEnumerable<GCodeCompressed> GetCodeAlreadyExecuted()
+        {
+            return jobGCodes.Take(lineNumber);
         }
 
         /// <summary>

@@ -307,7 +307,7 @@ namespace RepetierHost.model
                         float dx = Math.Abs(x - lastX);
                         float dy = Math.Abs(y - lastY);
                         float dz = Math.Abs(z - lastZ);
-                        if (dz != 0)
+                        if (dz != 0 && eventLayerChanged != null)
                         {
                             eventLayerChanged(z, lastZ);
                         }

@@ -637,11 +637,16 @@ Los cambios en el registro estarán activos despues del siguiente reinicio.</t>
 <t id="L_DIRECTORY_ALREADY_EXISTS" ver="10">Ya existe un directorio con ese nombre</t>
 <t id="L_FILE_EXISTS_WITH_NAME" ver="10">Ya existe un archivo con ese nombre</t>
 <t id="W_CHECKPOINTS" ver="10">Puntos de Restauración</t>
-<t id="M_CHECKPOINT_SELECT_JOB" ver="10">Restaurar Punto de Restauración</t>
-<t id="M_CHECKPOINT_KILL" ver="10">Eliminar Punto de Restauración</t>
-<t id="M_CHECKPOINT_RENAME" ver="10">Renombrar Punto de Restauración</t>
+<t id="M_CHECKPOINT_RESTORE_CHECKPOINT" ver="10">Restaurar Punto de Restauración</t>
 <t id="M_CHECKPOINT_GO_TO_POSITION" ver="10">Ir a posición de Punto de Restauración</t>
+<t id="M_CHECKPOINT_REFRESH" ver="10">Actualizar</t>
+<t id="M_CHECKPOINT_GO_TO_CURRENT_LAYER" ver="10">Ir a punto de restauración en capa actual</t>
+<t id="M_CHECKPOINT_NEXT" ver="10">Siguiente Punto de Restauración</t>
+<t id="M_CHECKPOINT_PREVIOUS" ver="10">Anterior Punto de Restauración</t>
 <t id="M_VIEW_CHECKPOINTS" ver="10">Ver Puntos de Restauración</t>
+<t id="L_CHECKPOINT_SHOW_CHECKPOINT_IN_3D_VIEW" ver="10">Mostrar posición de Punto de Restauración en Vista 3D</t>
+<t id="L_CHECKPOINT_MOVE_EXTRUDER_TO_CHECKPOINT" ver="10">Mover extrusor a posición de Punto de Restauración</t>
+<t id="L_CHECKPOINT_PREVIEW_CHECKPOINT" ver="10">Previsualizar Punto de Restauración</t>
 <t id="L_CHECKPOINT_STOP_JOB_BEFORE_RESTORING_POINT" ver="10">Debe finalizar el trabajo actual antes de restaurar un Punto de Restauración</t>
 <t id="L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION" ver="10">Debe finalizar el trabajo actual antes de ir a la posición de un Punto de Restauración</t>
 </translation>

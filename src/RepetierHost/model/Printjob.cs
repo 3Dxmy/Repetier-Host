@@ -171,6 +171,73 @@ namespace RepetierHost.model
             }
             computedPrintingTime = ana.printingTime;
         }
+
+        /*public void RewindGCodeCompressedEnumerable(IEnumerable<GCodeCompressed> codes)
+        {
+            //XXXXX TODO VER
+            dataComplete = false;
+
+            int remainingLinesFromRewindStartingPoint = 0;
+            lock (jobList)
+            {
+                jobList.Clear();
+
+                foreach (GCodeCompressed code in codes)
+                {
+                    jobList.AddLast(code);
+                    remainingLinesFromRewindStartingPoint++;
+                }
+            }
+            linesSend += remainingLinesFromRewindStartingPoint - (totalLines - linesSend);
+
+            Main.main.Invoke(Main.main.UpdateJobButtons);
+        }
+        public void Rewind(string code)
+        {
+            //XXXXX TODO VER
+            dataComplete = false;
+
+            code = code.Replace('\r', '\n');
+            string[] lines = code.Split('\n');
+            for (int i = lines.Length - 1; i >= 0; i--)
+            {
+                string line = lines[i];
+                if (line.Length == 0) continue;
+                GCode gcode = new GCode();
+                gcode.Parse(line);
+                if (!gcode.comment)
+                {
+                    lock (jobList)
+                    {
+                        jobList.AddFirst(new GCodeCompressed(gcode));
+                        linesSend--;
+                    }
+                }
+            }
+        }
+        public void RewindGCodeShortArray(List<GCodeShort> codes)
+        {
+            //XXXXX TODO VER
+            dataComplete = false;
+            for (int i = codes.Count - 1; i >= 0; i--)
+            {
+                GCodeShort line = codes[i];
+                if (line.Length == 0) continue;
+                ana.analyzeShort(line);
+                GCode gcode = new GCode();
+                gcode.Parse(line.text);
+                if (!gcode.comment)
+                {
+                    lock (jobList)
+                    {
+                        jobList.AddFirst(new GCodeCompressed(gcode));
+                        linesSend--;
+                    }
+                }
+            }
+            computedPrintingTime = ana.printingTime;
+        }*/
+
         /// <summary>
         /// Check, if more data is stored
         /// </summary>

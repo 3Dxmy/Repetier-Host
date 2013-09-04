@@ -644,11 +644,16 @@ Reload objects?]]></t>
 <t id="L_DIRECTORY_ALREADY_EXISTS" ver="10">There's already a directory with that name</t>
 <t id="L_FILE_EXISTS_WITH_NAME" ver="10">There's already a file with that name</t>
 <t id="W_CHECKPOINTS" ver="10">Checkpoints</t>
-<t id="M_CHECKPOINT_SELECT_JOB" ver="10">Restore Checkpoint</t>
-<t id="M_CHECKPOINT_KILL" ver="10">Delete Checkpoint</t>
-<t id="M_CHECKPOINT_RENAME" ver="10">Rename Checkpoint</t>
+<t id="M_CHECKPOINT_RESTORE_CHECKPOINT" ver="10">Restore Checkpoint</t>
 <t id="M_CHECKPOINT_GO_TO_POSITION" ver="10">Go to Checkpoint Position</t>
+<t id="M_CHECKPOINT_REFRESH" ver="10">Refresh</t>
+<t id="M_CHECKPOINT_GO_TO_CURRENT_LAYER" ver="10">Go to checkpoint in current layer</t>
+<t id="M_CHECKPOINT_NEXT" ver="10">Next checkpoint</t>
+<t id="M_CHECKPOINT_PREVIOUS" ver="10">Previous checkpoint</t>
 <t id="M_VIEW_CHECKPOINTS" ver="10">View Checkpoints</t>
+<t id="L_CHECKPOINT_SHOW_CHECKPOINT_IN_3D_VIEW" ver="10">Show Checkpoint position in 3d View</t>
+<t id="L_CHECKPOINT_MOVE_EXTRUDER_TO_CHECKPOINT" ver="10">Move extruder to Checkpoint position</t>
+<t id="L_CHECKPOINT_PREVIEW_CHECKPOINT" ver="10">Preview Checkpoint</t>
 <t id="L_CHECKPOINT_STOP_JOB_BEFORE_RESTORING_POINT" ver="10">You must kill current job before restoring Checkpoint</t>
 <t id="L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION" ver="10">You must kill current job before goint to Checkpoint Position</t>
 </translation>

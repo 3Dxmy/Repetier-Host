@@ -29,32 +29,25 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CheckpointsDialog));
-            this.checkpointsListbox = new System.Windows.Forms.ListBox();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSelectCheckpoint = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonKillCheckpoint = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonRename = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonGo = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonSelectCurrentLayer = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonLast = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonNext = new System.Windows.Forms.ToolStripButton();
+            this.checkBoxUpdate3dView = new System.Windows.Forms.CheckBox();
+            this.checkBoxMoveExtruder = new System.Windows.Forms.CheckBox();
+            this.checkBoxPreviewCheckpoint = new System.Windows.Forms.CheckBox();
+            this.labelCheckpointData = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pendingJobsListbox
-            // 
-            this.checkpointsListbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkpointsListbox.FormattingEnabled = true;
-            this.checkpointsListbox.Location = new System.Drawing.Point(0, 39);
-            this.checkpointsListbox.Name = "pendingJobsListbox";
-            this.checkpointsListbox.Size = new System.Drawing.Size(550, 329);
-            this.checkpointsListbox.TabIndex = 0;
-            this.checkpointsListbox.DoubleClick += new System.EventHandler(this.pendingCheckpointsListbox_DoubleClick);
             // 
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(443, 374);
+            this.buttonCancel.Location = new System.Drawing.Point(465, 139);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 3;
@@ -67,46 +60,37 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonSelectCheckpoint,
-            this.toolStripButtonKillCheckpoint,
-            this.toolStripButtonRename,
-            this.toolStripButtonGo});
+            this.toolStripButtonRefresh,
+            this.toolStripButtonGo,
+            this.toolStripButtonSelectCurrentLayer,
+            this.toolStripButtonLast,
+            this.toolStripButtonNext});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(552, 39);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButtonSelectJob
+            // toolStripButtonSelectCheckpoint
             // 
             this.toolStripButtonSelectCheckpoint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonSelectCheckpoint.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSelectJob.Image")));
+            this.toolStripButtonSelectCheckpoint.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSelectCheckpoint.Image")));
             this.toolStripButtonSelectCheckpoint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSelectCheckpoint.Name = "toolStripButtonSelectJob";
+            this.toolStripButtonSelectCheckpoint.Name = "toolStripButtonSelectCheckpoint";
             this.toolStripButtonSelectCheckpoint.Size = new System.Drawing.Size(36, 36);
             this.toolStripButtonSelectCheckpoint.Text = "toolStripButton2";
             this.toolStripButtonSelectCheckpoint.ToolTipText = "Restore Job";
             this.toolStripButtonSelectCheckpoint.Click += new System.EventHandler(this.toolStripButtonSelectCheckpoint_Click);
             // 
-            // toolStripButtonKillJob
+            // toolStripButtonRefresh
             // 
-            this.toolStripButtonKillCheckpoint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonKillCheckpoint.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonKillJob.Image")));
-            this.toolStripButtonKillCheckpoint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonKillCheckpoint.Name = "toolStripButtonKillJob";
-            this.toolStripButtonKillCheckpoint.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonKillCheckpoint.ToolTipText = "Kill Job";
-            this.toolStripButtonKillCheckpoint.Click += new System.EventHandler(this.toolStripButtonKillCheckpoint_Click);
-            // 
-            // toolStripButtonRename
-            // 
-            this.toolStripButtonRename.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRename.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRename.Image")));
-            this.toolStripButtonRename.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonRename.Name = "toolStripButtonRename";
-            this.toolStripButtonRename.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonRename.Text = "toolStripButtonRename";
-            this.toolStripButtonRename.ToolTipText = "Rename";
-            this.toolStripButtonRename.Click += new System.EventHandler(this.toolStripButtonRename_Click);
+            this.toolStripButtonRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRefresh.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRefresh.Image")));
+            this.toolStripButtonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRefresh.Name = "toolStripButtonRefresh";
+            this.toolStripButtonRefresh.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonRefresh.Text = "toolStripButtonRefresh";
+            this.toolStripButtonRefresh.Click += new System.EventHandler(this.toolStripButtonRefresh_Click);
             // 
             // toolStripButtonGo
             // 
@@ -118,16 +102,97 @@
             this.toolStripButtonGo.Text = "toolStripButtonGo";
             this.toolStripButtonGo.Click += new System.EventHandler(this.toolStripButtonGo_Click);
             // 
+            // toolStripButtonSelectCurrentLayer
+            // 
+            this.toolStripButtonSelectCurrentLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonSelectCurrentLayer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSelectCurrentLayer.Image")));
+            this.toolStripButtonSelectCurrentLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSelectCurrentLayer.Name = "toolStripButtonSelectCurrentLayer";
+            this.toolStripButtonSelectCurrentLayer.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonSelectCurrentLayer.Text = "toolStripButtonSelectCurrentLayer";
+            this.toolStripButtonSelectCurrentLayer.Click += new System.EventHandler(this.toolStripButtonSelectCurrentLayer_Click);
+            // 
+            // toolStripButtonLast
+            // 
+            this.toolStripButtonLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonLast.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLast.Image")));
+            this.toolStripButtonLast.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonLast.Name = "toolStripButtonLast";
+            this.toolStripButtonLast.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonLast.Text = "toolStripButtonLast";
+            this.toolStripButtonLast.Click += new System.EventHandler(this.toolStripButtonLast_Click);
+            // 
+            // toolStripButtonNext
+            // 
+            this.toolStripButtonNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonNext.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonNext.Image")));
+            this.toolStripButtonNext.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonNext.Name = "toolStripButtonNext";
+            this.toolStripButtonNext.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonNext.Text = "toolStripButtonNext";
+            this.toolStripButtonNext.Click += new System.EventHandler(this.toolStripButtonNext_Click);
+            // 
+            // checkBoxUpdate3dView
+            // 
+            this.checkBoxUpdate3dView.AutoSize = true;
+            this.checkBoxUpdate3dView.Checked = true;
+            this.checkBoxUpdate3dView.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxUpdate3dView.Location = new System.Drawing.Point(12, 66);
+            this.checkBoxUpdate3dView.Name = "checkBoxUpdate3dView";
+            this.checkBoxUpdate3dView.Size = new System.Drawing.Size(201, 17);
+            this.checkBoxUpdate3dView.TabIndex = 6;
+            this.checkBoxUpdate3dView.Text = "Show Checkpoint position in 3d View";
+            this.checkBoxUpdate3dView.UseVisualStyleBackColor = true;
+            this.checkBoxUpdate3dView.CheckedChanged += new System.EventHandler(this.checkBoxUpdate3dView_CheckedChanged);
+            // 
+            // checkBoxMoveExtruder
+            // 
+            this.checkBoxMoveExtruder.AutoSize = true;
+            this.checkBoxMoveExtruder.Checked = true;
+            this.checkBoxMoveExtruder.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxMoveExtruder.Location = new System.Drawing.Point(12, 89);
+            this.checkBoxMoveExtruder.Name = "checkBoxMoveExtruder";
+            this.checkBoxMoveExtruder.Size = new System.Drawing.Size(202, 17);
+            this.checkBoxMoveExtruder.TabIndex = 7;
+            this.checkBoxMoveExtruder.Text = "Move extruder to Checkpoint position";
+            this.checkBoxMoveExtruder.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxPreviewCheckpoint
+            // 
+            this.checkBoxPreviewCheckpoint.AutoSize = true;
+            this.checkBoxPreviewCheckpoint.Checked = true;
+            this.checkBoxPreviewCheckpoint.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxPreviewCheckpoint.Location = new System.Drawing.Point(13, 113);
+            this.checkBoxPreviewCheckpoint.Name = "checkBoxPreviewCheckpoint";
+            this.checkBoxPreviewCheckpoint.Size = new System.Drawing.Size(121, 17);
+            this.checkBoxPreviewCheckpoint.TabIndex = 8;
+            this.checkBoxPreviewCheckpoint.Text = "Preview Checkpoint";
+            this.checkBoxPreviewCheckpoint.UseVisualStyleBackColor = true;
+            this.checkBoxPreviewCheckpoint.CheckedChanged += new System.EventHandler(this.checkBoxPreviewCheckpoint_CheckedChanged);
+            // 
+            // labelCheckpointData
+            // 
+            this.labelCheckpointData.Location = new System.Drawing.Point(13, 43);
+            this.labelCheckpointData.Name = "labelCheckpointData";
+            this.labelCheckpointData.Size = new System.Drawing.Size(527, 20);
+            this.labelCheckpointData.TabIndex = 9;
+            // 
             // CheckpointsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(552, 407);
+            this.ClientSize = new System.Drawing.Size(552, 174);
+            this.Controls.Add(this.labelCheckpointData);
+            this.Controls.Add(this.checkBoxPreviewCheckpoint);
+            this.Controls.Add(this.checkBoxMoveExtruder);
+            this.Controls.Add(this.checkBoxUpdate3dView);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.buttonCancel);
-            this.Controls.Add(this.checkpointsListbox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "CheckpointsDialog";
             this.Text = "PendingPrintJobsDialog";
+            this.Load += new System.EventHandler(this.CheckpointsDialog_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -137,12 +202,17 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox checkpointsListbox;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButtonKillCheckpoint;
         private System.Windows.Forms.ToolStripButton toolStripButtonSelectCheckpoint;
-        private System.Windows.Forms.ToolStripButton toolStripButtonRename;
         private System.Windows.Forms.ToolStripButton toolStripButtonGo;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSelectCurrentLayer;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRefresh;
+        private System.Windows.Forms.ToolStripButton toolStripButtonLast;
+        private System.Windows.Forms.ToolStripButton toolStripButtonNext;
+        private System.Windows.Forms.CheckBox checkBoxUpdate3dView;
+        private System.Windows.Forms.CheckBox checkBoxMoveExtruder;
+        private System.Windows.Forms.CheckBox checkBoxPreviewCheckpoint;
+        private System.Windows.Forms.Label labelCheckpointData;
     }
 }

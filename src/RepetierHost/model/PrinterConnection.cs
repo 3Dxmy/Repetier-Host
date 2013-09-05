@@ -781,7 +781,7 @@ namespace RepetierHost.model
                 level = 3;
                 float.TryParse(h, NumberStyles.Float, GCode.format, out x);
                 analyzer.x = x;
-                analyzer.hasXHome = true;
+                //analyzer.hasXHome = true;
             }
             h = extract(res, "Y:");
             if (h != null)
@@ -789,7 +789,7 @@ namespace RepetierHost.model
                 level = 3;
                 float.TryParse(h, NumberStyles.Float, GCode.format, out y);
                 analyzer.y = y;
-                analyzer.hasYHome = true;
+                //analyzer.hasYHome = true;
             }
             h = extract(res, "Z:");
             if (h != null)
@@ -797,7 +797,7 @@ namespace RepetierHost.model
                 level = 3;
                 float.TryParse(h, NumberStyles.Float, GCode.format, out z);
                 analyzer.z = z;
-                analyzer.hasZHome = true;
+               // analyzer.hasZHome = true;
             }
             h = extract(res, "E:");
             if (h != null)

@@ -140,7 +140,7 @@ You can add pauses in your code with
 <t id="L_HEATING_BED" ver="1">Heating Bed</t>
 <t id="L_HEATING_EXTRUDER" ver="1">Heating Extruder</t>
 <t id="L_PRINT_JOB_KILLED" ver="1">Print Job Killed</t>
-<t id="L_PRINT_JOB_PAUSED" ver="1">Print Job Kaused</t>
+<t id="L_PRINT_JOB_PAUSED" ver="1">Print Job Paused</t>
 <t id="L_PRINT_JOB_FINISHED" ver="1">Print Job Finished</t>
 <t id="L_UPLOADING..." ver="1">Uploading ...</t>
 <t id="L_PRINTING_JOB_ETA" ver="1">Printing job ETA $1</t>

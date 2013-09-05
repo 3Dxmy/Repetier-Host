@@ -96,7 +96,7 @@ namespace RepetierHost.connector
         bool updating = false;
         private void bindingConnection_CurrentItemChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("serialpanel bindingConnection_CurrentItemChanged");
+            // Console.WriteLine("serialpanel bindingConnection_CurrentItemChanged");
             updating = true;
             textReceiveCacheSize.Text = con.ReceiveCacheSizeString;
             comboPort.Text = con.Port;

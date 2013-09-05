@@ -31,6 +31,7 @@ using Microsoft.Win32;
 using System.Threading;
 using System.Diagnostics;
 using RepetierHost.connector;
+using System.Runtime.InteropServices;
 
 namespace RepetierHost
 {
@@ -403,8 +404,42 @@ namespace RepetierHost
             ProcessCommandLine();
 
             checkpoints = new PrintingCheckpoints(conn);
-        }
 
+            snapshotToolStripMenuItem.Visible = false;
+        }
+        internal static class NativeMethods
+        {
+            // Import SetThreadExecutionState Win32 API and necessary flags
+            [DllImport("kernel32.dll")]
+            public static extern uint SetThreadExecutionState(uint esFlags);
+            public const uint ES_CONTINUOUS = 0x80000000;
+            public const uint ES_SYSTEM_REQUIRED = 0x00000001;
+        }
+        //private uint previousExecutionState;
+        //private bool currentSleepMode = false;
+        void PreventSleepmode()
+        {
+            try
+            {
+                // if (prevent == currentSleepMode) return;
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT || Environment.OSVersion.Platform == PlatformID.Win32Windows)
+                {
+                    NativeMethods.SetThreadExecutionState(NativeMethods.ES_SYSTEM_REQUIRED);
+                    /*if (prevent)
+                    {
+                        previousExecutionState = NativeMethods.SetThreadExecutionState(
+                        NativeMethods.ES_CONTINUOUS | NativeMethods.ES_SYSTEM_REQUIRED);
+                    }
+                    else
+                    {
+                        NativeMethods.SetThreadExecutionState(0); //NativeMethods.ES_CONTINUOUS);
+                        NativeMethods.SetThreadExecutionState(previousExecutionState);
+                    }*/
+                }
+                // currentSleepMode = prevent;
+            }
+            catch { }
+        }
         void ProcessCommandLine()
         {
             string[] args = Environment.GetCommandLineArgs();
@@ -948,6 +983,7 @@ namespace RepetierHost
                 e.Cancel = true;
                 return;
             }
+            //PreventSleepmode(false);
             RegMemory.StoreWindowPos("mainWindow", this, true, true);
             RegMemory.SetInt("logSplitterDistance", splitLog.SplitterDistance);
             RegMemory.SetInt("infoEditSplitterDistance", splitInfoEdit.SplitterDistance);
@@ -1105,6 +1141,10 @@ namespace RepetierHost
 
         private void timer_Tick(object sender, EventArgs e)
         {
+            if (conn.connector.IsJobRunning())
+            {
+                PreventSleepmode();
+            }
             if (newVisual != null)
             {
                 jobPreview.models.RemoveLast();

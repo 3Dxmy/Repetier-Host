@@ -596,7 +596,6 @@
     <t id="L_DIMENSIONS:" ver="9">大小：</t>
     <t id="L_SPLIT_OBJECT" ver="9">切割物体</t>
     <t id="L_FIX_NORMALS" ver="9">法线修复</t>
-    <t id="L_REPAIR" ver="9">修复</t>
     <t id="M_FIT_PRINTER" ver="9">适合打印体积</t>
     <t id="M_FIT_OBJECTS" ver="9">适合对象</t>
     <t id="IMPORTING_1" ver="9">导入 $1</t>

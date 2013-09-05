@@ -226,10 +226,8 @@ namespace RepetierHost.view
             comboPrinter.Text = printername;
             RegistryKey p = printerKey.CreateSubKey(printername);
             currentPrinterKey = p;
-            Console.WriteLine("load " + printername);
             string id = (string)p.GetValue("connector","SerialConnector");
             int idx = 0;
-            Console.WriteLine("id " + id);
             foreach (PrinterConnectorBase b in connectors)
             {
                 if (b.Id == id) break;
@@ -613,7 +611,6 @@ namespace RepetierHost.view
 
         private void comboConnector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("comboConnector_SelectedIndexChanged");
             if (Main.conn.connector != null)
                 Main.conn.connector.Deactivate();
             if (connectorPanel != null)

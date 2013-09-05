@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Windows.Forms;
+using System.IO;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 //using QuickFont;
@@ -45,7 +47,7 @@ namespace RepetierHost.model
             {
                 // import mesh from STL.
                 model[i] = new TopoModel();
-                model[i].importSTL(names[i]);
+                model[i].importSTL(Application.StartupPath + Path.DirectorySeparatorChar + names[i]);
                 submesh[i] = new Submesh();
                 model[i].FillMeshTrianglesOnly(submesh[i], 0);
                 submesh[i].Compress(true, coordinate_colors[i]);

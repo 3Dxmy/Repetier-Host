@@ -41,6 +41,7 @@
             this.checkBoxMoveExtruder = new System.Windows.Forms.CheckBox();
             this.checkBoxPreviewCheckpoint = new System.Windows.Forms.CheckBox();
             this.labelCheckpointData = new System.Windows.Forms.Label();
+            this.toolStripButtonHome = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,6 +63,7 @@
             this.toolStripButtonSelectCheckpoint,
             this.toolStripButtonRefresh,
             this.toolStripButtonGo,
+            this.toolStripButtonHome,
             this.toolStripButtonSelectCurrentLayer,
             this.toolStripButtonLast,
             this.toolStripButtonNext});
@@ -177,6 +179,16 @@
             this.labelCheckpointData.Size = new System.Drawing.Size(527, 20);
             this.labelCheckpointData.TabIndex = 9;
             // 
+            // toolStripButtonHome
+            // 
+            this.toolStripButtonHome.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonHome.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonHome.Image")));
+            this.toolStripButtonHome.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonHome.Name = "toolStripButtonHome";
+            this.toolStripButtonHome.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonHome.Text = "toolStripButton1";
+            this.toolStripButtonHome.Click += new System.EventHandler(this.toolStripButtonHome_Click);
+            // 
             // CheckpointsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -193,7 +205,6 @@
             this.MaximizeBox = false;
             this.Name = "CheckpointsDialog";
             this.Text = "PendingPrintJobsDialog";
-            this.Load += new System.EventHandler(this.CheckpointsDialog_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -215,5 +226,6 @@
         private System.Windows.Forms.CheckBox checkBoxMoveExtruder;
         private System.Windows.Forms.CheckBox checkBoxPreviewCheckpoint;
         private System.Windows.Forms.Label labelCheckpointData;
+        private System.Windows.Forms.ToolStripButton toolStripButtonHome;
     }
 }

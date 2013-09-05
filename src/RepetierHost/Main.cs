@@ -30,7 +30,6 @@ using RepetierHost.model.geom;
 using Microsoft.Win32;
 using System.Threading;
 using System.Diagnostics;
-using RepetierHost.model;
 using RepetierHost.connector;
 
 namespace RepetierHost
@@ -1810,7 +1809,7 @@ namespace RepetierHost
                 {
                     snapshotDialog.Show();
                 }
-                catch (NullReferenceException ex)
+                catch (NullReferenceException)
                 {
                     // Could happen as a consequence of a race condition. In
                     // this case, it's ok to ignore it.

@@ -31,7 +31,7 @@ namespace RepetierHost.view
     public partial class CheckpointsDialog : Form
     {
         public PrintingCheckpoint chk;
-        private PrintingCheckpointsControl checkpointsListbox;
+        private PrintingCheckpointsIterator checkpoints;
 
         public CheckpointsDialog()
         {
@@ -105,17 +105,16 @@ namespace RepetierHost.view
         {
             lock (this)
             {
-                LinkedList<PrintingCheckpoint> list = Main.main.checkpoints.GetCheckPoints();
-                checkpointsListbox = new PrintingCheckpointsControl(list);
-                checkpointsListbox.onCurrentCheckpointChanged += RefreshCheckpointDescription;
-                checkpointsListbox.GoToLast();
+                checkpoints = new PrintingCheckpointsIterator(Main.main.checkpoints);
+                checkpoints.onCurrentCheckpointChanged += RefreshCheckpointDescription;
+                checkpoints.GoToLast();
 
                 RedrawCurrentCheckpoint();
             }
         }
         private void RedrawCurrentCheckpoint()
         {
-            if (checkpointsListbox.GetCurrent() != null && checkBoxPreviewCheckpoint.Checked)
+            if (checkpoints.GetCurrent() != null && checkBoxPreviewCheckpoint.Checked)
             {
                 GCodeVisual gcodeVisual = new GCodeVisual();
                 gcodeVisual.showSelection = true;
@@ -126,7 +125,7 @@ namespace RepetierHost.view
                 Main.main.checkpointsView.models.AddLast(gcodeVisual);
                 Main.main.assign3DView();
 
-                gcodeVisual.parseGCodeShortArray(ToGCodeShortArray(checkpointsListbox.GetCurrent().GetCodeAlreadyExecuted()), false, 0);
+                gcodeVisual.parseGCodeShortArray(ToGCodeShortArray(checkpoints.GetCurrent().GetCodeAlreadyExecuted()), false, 0);
             }
         }
 
@@ -167,7 +166,7 @@ namespace RepetierHost.view
             }
             else
             {
-                this.chk = (PrintingCheckpoint)checkpointsListbox.GetCurrent();
+                this.chk = (PrintingCheckpoint)checkpoints.GetCurrent();
                 if (this.chk != null)
                 {
                     chk.RestoreState(new PrinterConnectionGCodeExecutor(Main.conn, false));
@@ -178,7 +177,7 @@ namespace RepetierHost.view
 
         private void GoToCheckpointPosition()
         {
-            this.chk = (PrintingCheckpoint)checkpointsListbox.GetCurrent();
+            this.chk = (PrintingCheckpoint)checkpoints.GetCurrent();
             if (chk != null)
             {
                 if (Main.conn.connector.IsJobRunning())
@@ -229,15 +228,8 @@ namespace RepetierHost.view
 
         private void MoveToCurrentLayerCheckpoint()
         {
-            checkpointsListbox.Reset();
-            while (checkpointsListbox.HasNext())
-            {
-                PrintingCheckpoint o = checkpointsListbox.MoveToNext();
-                if (o.z >= Main.conn.analyzer.z)
-                {
-                    return;
-                }
-            }
+            checkpoints.GoToFirst();
+            checkpoints.GoToPositionWithZ(Main.conn.analyzer.z);
         }
 
         private void toolStripButtonRefresh_Click(object sender, EventArgs e)
@@ -258,7 +250,7 @@ namespace RepetierHost.view
                 }
                 else
                 {
-                    checkpointsListbox.MoveToNext();
+                    checkpoints.MoveToNext();
                     if (checkBoxMoveExtruder.Checked)
                     {
                         GoToCheckpointPosition();
@@ -281,7 +273,7 @@ namespace RepetierHost.view
                 }
                 else
                 {
-                    checkpointsListbox.MoveToPrevious();
+                    checkpoints.MoveToPrevious();
                     if (checkBoxMoveExtruder.Checked)
                     {
                         GoToCheckpointPosition();
@@ -307,14 +299,9 @@ namespace RepetierHost.view
             }
         }
 
-        private void CheckpointsDialog_Load(object sender, EventArgs e)
-        {
-
-        }
-
         public void RefreshCheckpointDescription()
         {
-            PrintingCheckpoint chk = checkpointsListbox.GetCurrent();
+            PrintingCheckpoint chk = checkpoints.GetCurrent();
             if (chk != null)
             {
                 labelCheckpointData.Text = chk.Name;
@@ -324,88 +311,19 @@ namespace RepetierHost.view
                 labelCheckpointData.Text = "";
             }
         }
-    }
 
-
-    public delegate void OnCurrentCheckpointChanged();
-    public class PrintingCheckpointsControl
-    {
-        private LinkedList<PrintingCheckpoint> list;
-        private int index;
-        public OnCurrentCheckpointChanged onCurrentCheckpointChanged;
-        public PrintingCheckpointsControl(LinkedList<PrintingCheckpoint> list)
+        private void toolStripButtonHome_Click(object sender, EventArgs e)
         {
-            this.list = list;
-            this.index = -1;
-            if (onCurrentCheckpointChanged != null)
+            checkpoints.GoToFirst();
+            if (checkBoxMoveExtruder.Checked)
             {
-                onCurrentCheckpointChanged();
+                GoToCheckpointPosition();
+            }
+            if (checkBoxUpdate3dView.Checked)
+            {
+                RedrawCurrentCheckpoint();
             }
         }
-        public PrintingCheckpoint GetCurrent()
-        {
-            if (index >= 0 && index < list.Count)
-            {
-                return list.ElementAt(index);
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public int GetCurrentPosition()
-        {
-            return index;
-        }
-        public void GoToLast()
-        {
-            index = list.Count - 1;
-            if (onCurrentCheckpointChanged != null)
-            {
-                onCurrentCheckpointChanged();
-            }
-        }
-        public void Reset()
-        {
-            index = 0;
-            if (onCurrentCheckpointChanged != null)
-            {
-                onCurrentCheckpointChanged();
-            }
-        }
-        public bool HasNext()
-        {
-            return index < list.Count - 1;
-        }
-        public bool HasPrevious()
-        {
-            return index > 0;
-        }
-        public PrintingCheckpoint MoveToNext()
-        {
-            if (HasNext())
-            {
-                index++;
-                if (onCurrentCheckpointChanged != null)
-                {
-                    onCurrentCheckpointChanged();
-                }
-            }
-            return GetCurrent();
-        }
-        public PrintingCheckpoint MoveToPrevious()
-        {
-            if (HasPrevious())
-            {
-                index--;
-                if (onCurrentCheckpointChanged != null)
-                {
-                    onCurrentCheckpointChanged();
-                }
-            }
-            return GetCurrent();
-        }
-
     }
 
 }

@@ -73,6 +73,9 @@ namespace RepetierHost.view
             groupFileAssociations.Text = Trans.T("L_FILE_ASSOCIATIONS");
             buttonAssociate.Text = Trans.T("L_ASSOCIATE_EXTENSIONS");
             buttonCreate.Text = Trans.T("L_CREATE_FOLDER");
+            groupBoxCheckpoints.Text = Trans.T("W_CHECKPOINTS");
+            checkBoxCreateChkpntPerLayer.Text = Trans.T("L_ENABLE_CREATE_CHECKPOINT_ON_NEW_LAYER");
+            checkBoxCreateChkpntEveryNSteps.Text = Trans.T("L_ENABLE_CREATE_CHECKPOINT_ON_NUMBER_OF_MOVEMENTS");
         }
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -98,6 +101,33 @@ namespace RepetierHost.view
             repetierKey.SetValue("reduceToolbarSize", ReduceToolbarSize ? 1 : 0);
             RegMemory.SetInt("onOffImageOffset", checkRedGreenSwitch.Checked ? 2 : 0);
             RegMemory.SetInt("showPrinterNameInPrinterIdLabel", checkShowPrinterNameInPrinterIdLabel.Checked ? 1 : 0);
+
+            RegMemory.SetBool("enableCheckpointOnNewLayer", checkBoxCreateChkpntPerLayer.Checked);
+            RegMemory.SetBool("enableCreateCheckpointOnNumberOfMovements", checkBoxCreateChkpntEveryNSteps.Checked);
+            try
+            {
+                int checkpointSteps = int.Parse(updownChkpntSteps.Text);
+                if (checkpointSteps > 0)
+                {
+                    RegMemory.SetLong("numberOfMovementsToCreateCheckpoint", checkpointSteps);
+                }
+                else
+                {
+                    RegMemory.SetLong("numberOfMovementsToCreateCheckpoint", 0);
+                }
+            }
+            catch (ArgumentNullException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (OverflowException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         public void RegToForm()
         {
@@ -107,6 +137,9 @@ namespace RepetierHost.view
             checkReduceToolbarSize.Checked = 1 == (int)repetierKey.GetValue("reduceToolbarSize", ReduceToolbarSize ? 1 : 0);
             checkRedGreenSwitch.Checked = 2 == RegMemory.GetInt("onOffImageOffset", 0);
             checkShowPrinterNameInPrinterIdLabel.Checked = 1 == RegMemory.GetInt("showPrinterNameInPrinterIdLabel", 1);
+            checkBoxCreateChkpntPerLayer.Checked = RegMemory.GetBool("enableCheckpointOnNewLayer", true);
+            checkBoxCreateChkpntEveryNSteps.Checked = RegMemory.GetBool("enableCreateCheckpointOnNumberOfMovements", true);
+            updownChkpntSteps.Text = RegMemory.GetLong("numberOfMovementsToCreateCheckpoint", 100) + "";
         }
         public static void Associate(string extension,
            string progID, string description)

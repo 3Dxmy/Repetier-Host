@@ -189,6 +189,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.buttonCancel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "CheckpointsDialog";
             this.Text = "PendingPrintJobsDialog";

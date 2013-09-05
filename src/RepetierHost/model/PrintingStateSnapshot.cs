@@ -165,7 +165,7 @@ namespace RepetierHost.model
 
             g.SetE(activeExtruderValue);
 
-            g.Add("@pause Please extrude some plastic to have a better flow and resume after removing the exceeding plastic"); // Let the user extrude some plastic.
+            g.Add("@pause " + Trans.T("L_EXTRUDE_PLASTIC_PAUSE")); // Let the user extrude some plastic.
             g.NewLine();
 
             g.Add("G28 X0 Y0"); // Go to home x y in case you moved the bed accidentally.

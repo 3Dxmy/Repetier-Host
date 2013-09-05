@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GlobalSettings));
             this.groupFilesAndDirectories = new System.Windows.Forms.GroupBox();
+            this.buttonCreate = new System.Windows.Forms.Button();
             this.labelOKMasg = new System.Windows.Forms.Label();
             this.labelInfoWorkdir = new System.Windows.Forms.Label();
             this.checkLogfile = new System.Windows.Forms.CheckBox();
@@ -53,11 +54,15 @@
             this.checkGCode = new System.Windows.Forms.CheckBox();
             this.checkOBJ = new System.Windows.Forms.CheckBox();
             this.checkSTL = new System.Windows.Forms.CheckBox();
-            this.buttonCreate = new System.Windows.Forms.Button();
+            this.groupBoxCheckpoints = new System.Windows.Forms.GroupBox();
+            this.checkBoxCreateChkpntPerLayer = new System.Windows.Forms.CheckBox();
+            this.checkBoxCreateChkpntEveryNSteps = new System.Windows.Forms.CheckBox();
+            this.updownChkpntSteps = new System.Windows.Forms.DomainUpDown();
             this.groupFilesAndDirectories.SuspendLayout();
             this.groupBehaviour.SuspendLayout();
             this.groupGUI.SuspendLayout();
             this.groupFileAssociations.SuspendLayout();
+            this.groupBoxCheckpoints.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupFilesAndDirectories
@@ -75,6 +80,16 @@
             this.groupFilesAndDirectories.TabIndex = 0;
             this.groupFilesAndDirectories.TabStop = false;
             this.groupFilesAndDirectories.Text = "Files and directories";
+            // 
+            // buttonCreate
+            // 
+            this.buttonCreate.Location = new System.Drawing.Point(400, 42);
+            this.buttonCreate.Name = "buttonCreate";
+            this.buttonCreate.Size = new System.Drawing.Size(101, 23);
+            this.buttonCreate.TabIndex = 6;
+            this.buttonCreate.Text = "Create";
+            this.buttonCreate.UseVisualStyleBackColor = true;
+            this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
             // 
             // labelOKMasg
             // 
@@ -133,7 +148,7 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(365, 418);
+            this.buttonOK.Location = new System.Drawing.Point(366, 491);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(80, 22);
             this.buttonOK.TabIndex = 0;
@@ -143,7 +158,7 @@
             // 
             // buttonAbort
             // 
-            this.buttonAbort.Location = new System.Drawing.Point(451, 418);
+            this.buttonAbort.Location = new System.Drawing.Point(452, 491);
             this.buttonAbort.Name = "buttonAbort";
             this.buttonAbort.Size = new System.Drawing.Size(80, 22);
             this.buttonAbort.TabIndex = 1;
@@ -315,22 +330,53 @@
             this.checkSTL.Text = ".stl";
             this.checkSTL.UseVisualStyleBackColor = true;
             // 
-            // buttonCreate
+            // groupBoxCheckpoints
             // 
-            this.buttonCreate.Location = new System.Drawing.Point(400, 42);
-            this.buttonCreate.Name = "buttonCreate";
-            this.buttonCreate.Size = new System.Drawing.Size(101, 23);
-            this.buttonCreate.TabIndex = 6;
-            this.buttonCreate.Text = "Create";
-            this.buttonCreate.UseVisualStyleBackColor = true;
-            this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
+            this.groupBoxCheckpoints.Controls.Add(this.updownChkpntSteps);
+            this.groupBoxCheckpoints.Controls.Add(this.checkBoxCreateChkpntEveryNSteps);
+            this.groupBoxCheckpoints.Controls.Add(this.checkBoxCreateChkpntPerLayer);
+            this.groupBoxCheckpoints.Location = new System.Drawing.Point(13, 410);
+            this.groupBoxCheckpoints.Name = "groupBoxCheckpoints";
+            this.groupBoxCheckpoints.Size = new System.Drawing.Size(518, 75);
+            this.groupBoxCheckpoints.TabIndex = 5;
+            this.groupBoxCheckpoints.TabStop = false;
+            this.groupBoxCheckpoints.Text = "Checkpoints";
+            // 
+            // checkBoxCreateChkpntPerLayer
+            // 
+            this.checkBoxCreateChkpntPerLayer.AutoSize = true;
+            this.checkBoxCreateChkpntPerLayer.Location = new System.Drawing.Point(13, 19);
+            this.checkBoxCreateChkpntPerLayer.Name = "checkBoxCreateChkpntPerLayer";
+            this.checkBoxCreateChkpntPerLayer.Size = new System.Drawing.Size(204, 17);
+            this.checkBoxCreateChkpntPerLayer.TabIndex = 1;
+            this.checkBoxCreateChkpntPerLayer.Text = "Create Checkpoint on each new layer";
+            this.checkBoxCreateChkpntPerLayer.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCreateChkpntEveryNSteps
+            // 
+            this.checkBoxCreateChkpntEveryNSteps.AutoSize = true;
+            this.checkBoxCreateChkpntEveryNSteps.Location = new System.Drawing.Point(13, 43);
+            this.checkBoxCreateChkpntEveryNSteps.Name = "checkBoxCreateChkpntEveryNSteps";
+            this.checkBoxCreateChkpntEveryNSteps.Size = new System.Drawing.Size(182, 17);
+            this.checkBoxCreateChkpntEveryNSteps.TabIndex = 2;
+            this.checkBoxCreateChkpntEveryNSteps.Text = "Create Checkpoint every N steps";
+            this.checkBoxCreateChkpntEveryNSteps.UseVisualStyleBackColor = true;
+            // 
+            // updownChkpntSteps
+            // 
+            this.updownChkpntSteps.Location = new System.Drawing.Point(372, 40);
+            this.updownChkpntSteps.Name = "updownChkpntSteps";
+            this.updownChkpntSteps.Size = new System.Drawing.Size(49, 20);
+            this.updownChkpntSteps.TabIndex = 3;
+            this.updownChkpntSteps.Text = "0";
             // 
             // GlobalSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(544, 494);
+            this.ClientSize = new System.Drawing.Size(544, 549);
             this.ControlBox = false;
+            this.Controls.Add(this.groupBoxCheckpoints);
             this.Controls.Add(this.groupFileAssociations);
             this.Controls.Add(this.groupGUI);
             this.Controls.Add(this.groupBehaviour);
@@ -353,6 +399,8 @@
             this.groupGUI.PerformLayout();
             this.groupFileAssociations.ResumeLayout(false);
             this.groupFileAssociations.PerformLayout();
+            this.groupBoxCheckpoints.ResumeLayout(false);
+            this.groupBoxCheckpoints.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -384,6 +432,10 @@
         private System.Windows.Forms.CheckBox checkSTL;
         private System.Windows.Forms.CheckBox checkShowPrinterNameInPrinterIdLabel;
         private System.Windows.Forms.Button buttonCreate;
+        private System.Windows.Forms.GroupBox groupBoxCheckpoints;
+        private System.Windows.Forms.DomainUpDown updownChkpntSteps;
+        private System.Windows.Forms.CheckBox checkBoxCreateChkpntEveryNSteps;
+        private System.Windows.Forms.CheckBox checkBoxCreateChkpntPerLayer;
 
     }
 }

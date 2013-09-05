@@ -1975,7 +1975,7 @@ namespace RepetierHost
             movementsCount++;
             bool EnableCreateCheckpointOnNumberOfMovements = RegMemory.GetBool("enableCreateCheckpointOnNumberOfMovements", true);
             long NumberOfMovementsToCreateCheckpoint = RegMemory.GetLong("numberOfMovementsToCreateCheckpoint", 100);
-            if (Main.conn.connector.IsJobRunning() && !Main.conn.connector.IsPaused && EnableCreateCheckpointOnNumberOfMovements && (movementsCount % NumberOfMovementsToCreateCheckpoint == 0))
+            if (Main.conn.connector.IsJobRunning() && !Main.conn.connector.IsPaused && EnableCreateCheckpointOnNumberOfMovements && (NumberOfMovementsToCreateCheckpoint > 0 && movementsCount % NumberOfMovementsToCreateCheckpoint == 0))
             {
                 string CheckpointDateFormat = RegMemory.GetString("checkpointDateFormat", "HH-mm-ss");
                 string checkpointName = DateTime.Now.ToString(CheckpointDateFormat) + " line " + Main.conn.connector.Job.linesSend + " pos=(" + x + ", " + y + ", " + z + ")";

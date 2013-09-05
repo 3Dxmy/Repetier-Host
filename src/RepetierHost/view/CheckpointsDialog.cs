@@ -91,6 +91,12 @@ namespace RepetierHost.view
                 case (Keys.Return):
                     RestoreCheckpoint();
                 break;
+                case (Keys.Left):
+                toolStripButtonLast_Click(null, null);
+                break;
+                case (Keys.Right):
+                toolStripButtonNext_Click(null, null);
+                break;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
@@ -153,7 +159,6 @@ namespace RepetierHost.view
         {
             GoToCheckpointPosition();
         }
-        
         private void RestoreCheckpoint()
         {
             if (Main.conn.connector.IsJobRunning())

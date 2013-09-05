@@ -649,5 +649,8 @@ Los cambios en el registro estarán activos despues del siguiente reinicio.</t>
 <t id="L_CHECKPOINT_PREVIEW_CHECKPOINT" ver="10">Previsualizar Punto de Restauración</t>
 <t id="L_CHECKPOINT_STOP_JOB_BEFORE_RESTORING_POINT" ver="10">Debe finalizar el trabajo actual antes de restaurar un Punto de Restauración</t>
 <t id="L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION" ver="10">Debe finalizar el trabajo actual antes de ir a la posición de un Punto de Restauración</t>
+<t id="L_EXTRUDE_PLASTIC_PAUSE" ver="10">Por favor, extruya algo de plástico para tener un mejor flujo y continúe después de quitar el plástico excedente</t>
+<t id="L_ENABLE_CREATE_CHECKPOINT_ON_NEW_LAYER" ver="10">Crear Punto de Restauración en una nueva capa</t>
+<t id="L_ENABLE_CREATE_CHECKPOINT_ON_NUMBER_OF_MOVEMENTS" ver="10">Crear Punto de Restauración al alcanzar un número de movimientos</t>
 </translation>
 

@@ -656,5 +656,8 @@ Reload objects?]]></t>
 <t id="L_CHECKPOINT_PREVIEW_CHECKPOINT" ver="10">Preview Checkpoint</t>
 <t id="L_CHECKPOINT_STOP_JOB_BEFORE_RESTORING_POINT" ver="10">You must kill current job before restoring Checkpoint</t>
 <t id="L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION" ver="10">You must kill current job before goint to Checkpoint Position</t>
+<t id="L_EXTRUDE_PLASTIC_PAUSE" ver="10">Please extrude some plastic to have a better flow and resume after removing the exceeding plastic</t>
+<t id="L_ENABLE_CREATE_CHECKPOINT_ON_NEW_LAYER" ver="10">Create Checkpoint on new layer</t>
+<t id="L_ENABLE_CREATE_CHECKPOINT_ON_NUMBER_OF_MOVEMENTS" ver="10">Create Checkpoint on number of movements</t>
 </translation>
 

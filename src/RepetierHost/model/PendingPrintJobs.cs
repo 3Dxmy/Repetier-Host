@@ -20,6 +20,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Globalization;
+using System.Xml.Linq;
 
 namespace RepetierHost.model
 {
@@ -212,10 +214,90 @@ namespace RepetierHost.model
         }
         public static PrintingStateSnapshot LoadSnapshotFile(Stream stream)
         {
-            System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(typeof(SnapshotContainer));
+            XElement containerNode = XElement.Load(new StreamReader(stream));
+            SnapshotContainer container = new SnapshotContainer();
+
+            foreach (XElement elem in containerNode.Elements())
+            {
+                if ("version".Equals(elem.Name.LocalName))
+                {
+                    container.version = elem.Value;
+                }
+                else if ("type".Equals(elem.Name.LocalName))
+                {
+                    container.type = elem.Value;
+                }
+                else if ("snapshot".Equals(elem.Name.LocalName))
+                {
+                    container.snapshot = new PrintingStateSnapshot();
+                    foreach (XElement elemCh in elem.Elements())
+                    {
+                        if ("x".Equals(elemCh.Name.LocalName))
+                        {
+                            container.snapshot.x = float.Parse(elemCh.Value, CultureInfo.InvariantCulture);
+                        }
+                        else if ("y".Equals(elemCh.Name.LocalName))
+                        {
+                            container.snapshot.y = float.Parse(elemCh.Value, CultureInfo.InvariantCulture);
+                        }
+                        else if ("z".Equals(elemCh.Name.LocalName))
+                        {
+                            container.snapshot.z = float.Parse(elemCh.Value, CultureInfo.InvariantCulture);
+                        }
+                        else if ("speed".Equals(elemCh.Name.LocalName))
+                        {
+                            container.snapshot.speed = float.Parse(elemCh.Value, CultureInfo.InvariantCulture);
+                        }
+                        else if ("fanVoltage".Equals(elemCh.Name.LocalName))
+                        {
+                            container.snapshot.fanVoltage = float.Parse(elemCh.Value, CultureInfo.InvariantCulture);
+                        }
+                        else if ("fanOn".Equals(elemCh.Name.LocalName))
+                        {
+                            container.snapshot.fanOn = bool.Parse(elemCh.Value);
+                        }
+                        else if ("relative".Equals(elemCh.Name.LocalName))
+                        {
+                            container.snapshot.relative = bool.Parse(elemCh.Value);
+                        }
+                        else if ("extrudersTemp".Equals(elemCh.Name.LocalName))
+                        {
+                            LinkedList<float> extrudersTempList = new LinkedList<float>();
+                            foreach (XElement elemChCh in elemCh.Elements())
+                            {
+                                if ("float".Equals(elemChCh.Name.LocalName))
+                                {
+                                    extrudersTempList.AddLast(float.Parse(elemCh.Value, CultureInfo.InvariantCulture));
+                                }
+                            }
+                            container.snapshot.extrudersTemp = extrudersTempList.ToArray();
+                        }
+
+                        else if ("bedTemp".Equals(elemCh.Name.LocalName))
+                        {
+                            container.snapshot.bedTemp = float.Parse(elemCh.Value, CultureInfo.InvariantCulture);
+                        }
+                        else if ("layer".Equals(elemCh.Name.LocalName))
+                        {
+                            container.snapshot.layer = int.Parse(elemCh.Value, CultureInfo.InvariantCulture);
+                        }
+                        else if ("activeExtruderId".Equals(elemCh.Name.LocalName))
+                        {
+                            container.snapshot.activeExtruderId = int.Parse(elemCh.Value, CultureInfo.InvariantCulture);
+                        }
+                        else if ("activeExtruderValue".Equals(elemCh.Name.LocalName))
+                        {
+                            container.snapshot.activeExtruderValue = float.Parse(elemCh.Value, CultureInfo.InvariantCulture);
+                        }
+                        else if ("remainingCode".Equals(elemCh.Name.LocalName))
+                        {
+                            container.snapshot.remainingCode = elemCh.Value;
+                        }
+                    }
+                }
+            }
             try
             {
-                SnapshotContainer container = (SnapshotContainer)x.Deserialize(stream);
                 ValidateSnapshot(container);
                 return container.snapshot;
             }
@@ -258,10 +340,41 @@ namespace RepetierHost.model
             container.version = ContainerVersion;
             container.snapshot = state;
 
-            System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(container.GetType());
+            Serialize(container, fileStream);
+        }
+
+        private static void Serialize(SnapshotContainer container, Stream fileStream)
+        {
+            //System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(container.GetType());
+            XElement[] extrudersTempNode = new XElement[container.snapshot.extrudersTemp.Count()];
+            for (int i = 0; i < container.snapshot.extrudersTemp.Count(); i++)
+            {
+                extrudersTempNode[i] = new XElement("float", container.snapshot.extrudersTemp[i]);
+            }
+
+            XElement containerNode = new XElement("SnapshotContainer",
+                new XElement("version", container.version),
+                new XElement("type", container.type),
+                new XElement("snapshot",
+                    new XElement("x", container.snapshot.x),
+                    new XElement("y", container.snapshot.y),
+                    new XElement("z", container.snapshot.z),
+                    new XElement("speed", container.snapshot.speed),
+                    new XElement("fanVoltage", container.snapshot.fanVoltage),
+                    new XElement("fanOn", container.snapshot.fanOn),
+                    new XElement("relative", container.snapshot.relative),
+                    new XElement("extrudersTemp", extrudersTempNode),
+                    new XElement("bedTemp", container.snapshot.bedTemp),
+                    new XElement("layer", container.snapshot.layer),
+                    new XElement("activeExtruderId", container.snapshot.activeExtruderId),
+                    new XElement("activeExtruderValue", container.snapshot.activeExtruderValue),
+                    new XElement("remainingCode", container.snapshot.remainingCode)
+                )
+            );
+           
             try
             {
-                x.Serialize(fileStream, container);
+                containerNode.Save(new StreamWriter(fileStream));
             }
             catch (InvalidOperationException ex)
             {

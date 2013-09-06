@@ -34,6 +34,7 @@
             this.toolStripButtonSelectCheckpoint = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonGo = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonHome = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSelectCurrentLayer = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonLast = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonNext = new System.Windows.Forms.ToolStripButton();
@@ -41,7 +42,6 @@
             this.checkBoxMoveExtruder = new System.Windows.Forms.CheckBox();
             this.checkBoxPreviewCheckpoint = new System.Windows.Forms.CheckBox();
             this.labelCheckpointData = new System.Windows.Forms.Label();
-            this.toolStripButtonHome = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -104,6 +104,16 @@
             this.toolStripButtonGo.Text = "toolStripButtonGo";
             this.toolStripButtonGo.Click += new System.EventHandler(this.toolStripButtonGo_Click);
             // 
+            // toolStripButtonHome
+            // 
+            this.toolStripButtonHome.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonHome.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonHome.Image")));
+            this.toolStripButtonHome.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonHome.Name = "toolStripButtonHome";
+            this.toolStripButtonHome.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonHome.Text = "toolStripButton1";
+            this.toolStripButtonHome.Click += new System.EventHandler(this.toolStripButtonHome_Click);
+            // 
             // toolStripButtonSelectCurrentLayer
             // 
             this.toolStripButtonSelectCurrentLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -150,8 +160,6 @@
             // checkBoxMoveExtruder
             // 
             this.checkBoxMoveExtruder.AutoSize = true;
-            this.checkBoxMoveExtruder.Checked = true;
-            this.checkBoxMoveExtruder.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxMoveExtruder.Location = new System.Drawing.Point(12, 89);
             this.checkBoxMoveExtruder.Name = "checkBoxMoveExtruder";
             this.checkBoxMoveExtruder.Size = new System.Drawing.Size(202, 17);
@@ -178,16 +186,6 @@
             this.labelCheckpointData.Name = "labelCheckpointData";
             this.labelCheckpointData.Size = new System.Drawing.Size(527, 20);
             this.labelCheckpointData.TabIndex = 9;
-            // 
-            // toolStripButtonHome
-            // 
-            this.toolStripButtonHome.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonHome.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonHome.Image")));
-            this.toolStripButtonHome.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonHome.Name = "toolStripButtonHome";
-            this.toolStripButtonHome.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonHome.Text = "toolStripButton1";
-            this.toolStripButtonHome.Click += new System.EventHandler(this.toolStripButtonHome_Click);
             // 
             // CheckpointsDialog
             // 

@@ -154,10 +154,13 @@ namespace RepetierHost.model
         {
             // Generate code to restore state.
             string gCodeToRestoreState = GenerateGCodeToRestoreState();
-            executor.queueGCodeScript(gCodeToRestoreState + "\r\n" + GetRemainingCode());
+            StringBuilder sb = new StringBuilder(gCodeToRestoreState);
+            sb.AppendLine();
+            sb = GetRemainingCode(sb);
+            executor.queueGCodeScript(sb.ToString());
         }
 
-        protected abstract string GetRemainingCode();
+        protected abstract StringBuilder GetRemainingCode(StringBuilder gcodeStringBuilder);
 
 
 

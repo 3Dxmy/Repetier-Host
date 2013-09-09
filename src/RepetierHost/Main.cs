@@ -2003,9 +2003,7 @@ namespace RepetierHost
             bool EnableCheckpointOnNewLayer = RegMemory.GetBool("enableCheckpointOnNewLayer", true);
             if (EnableCheckpointOnNewLayer && Main.conn.connector.IsJobRunning() && !Main.conn.connector.IsPaused)
             {
-                string CheckpointDateFormat = RegMemory.GetString("checkpointDateFormat", "HH-mm-ss");
-                string checkpointName = DateTime.Now.ToString(CheckpointDateFormat) + " z=" + newZ;
-                checkpoints.CreateCheckpoint(checkpointName);
+                checkpoints.CreateCheckpoint(ZChangeCheckpointType.Instance);
             }
         }
 
@@ -2016,9 +2014,7 @@ namespace RepetierHost
             long NumberOfMovementsToCreateCheckpoint = RegMemory.GetLong("numberOfMovementsToCreateCheckpoint", 100);
             if (Main.conn.connector.IsJobRunning() && !Main.conn.connector.IsPaused && EnableCreateCheckpointOnNumberOfMovements && (NumberOfMovementsToCreateCheckpoint > 0 && movementsCount % NumberOfMovementsToCreateCheckpoint == 0))
             {
-                string CheckpointDateFormat = RegMemory.GetString("checkpointDateFormat", "HH-mm-ss");
-                string checkpointName = DateTime.Now.ToString(CheckpointDateFormat) + " line " + Main.conn.connector.Job.linesSend + " pos=(" + x + ", " + y + ", " + z + ")";
-                checkpoints.CreateCheckpoint(checkpointName);
+                checkpoints.CreateCheckpoint(MovementCountCheckpointType.Instance);
             }
         }
 

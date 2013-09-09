@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Globalization;
+using RepetierHost.view.utils;
 
 namespace RepetierHost.model
 {
@@ -11,15 +12,17 @@ namespace RepetierHost.model
     /// </summary>
     public class PrintingCheckpoints
     {
-        internal LinkedList<GCodeCompressed> jobGCodes;
-        internal LinkedList<PrintingCheckpoint> checkpoints;
+        internal BasicList<GCodeCompressed> jobGCodes;
+        internal BasicList<PrintingCheckpoint> checkpoints;
         internal ZLayerCheckpointIndex checkpointIndex;
         internal PrinterConnection conn;
         internal bool jobActive;
 
         public PrintingCheckpoints(PrinterConnection conn)
         {
-            checkpoints = new LinkedList<PrintingCheckpoint>();
+            // TODO Give an option to make checkpoints list configurable (in
+            // memory or in disk).
+            checkpoints = new InMemoryLinkedListBasicList<PrintingCheckpoint>();
             checkpointIndex = new ZLayerCheckpointIndex();
             this.conn = conn;
             jobActive = false;
@@ -27,25 +30,19 @@ namespace RepetierHost.model
 
         public void BeginJob()
         {
-            // XXX TODO: ACA DEBERIA GUARDAR EL ARCHIVO DE GCODE E INICIALIZAR EL ARCHIVO DE ESTADOS.
-            jobGCodes = conn.connector.Job.GetPendingJobCommands();
-            checkpoints = new LinkedList<PrintingCheckpoint>();
+            // TODO Give an option to make jobGCode list configurable (in
+            // memory or in disk).
+            jobGCodes = new InMemoryLinkedListBasicList<GCodeCompressed>(conn.connector.Job.GetPendingJobCommands());
+            checkpoints = new InMemoryLinkedListBasicList<PrintingCheckpoint>();
             jobActive = true;
         }
-        public void EndJob()
-        {
-            // XXX TODO: ESTE METODO CREO QUE NUNCA ES LLAMADO, PODES QUITARLO O DARLE UNA FUNCION
-            checkpoints = new LinkedList<PrintingCheckpoint>();
-            jobGCodes = new LinkedList<GCodeCompressed>();
-            jobActive = false;
-        }
 
-        public void CreateCheckpoint(string name)
+        public void CreateCheckpoint(CheckpointType type)
         {
             if (jobActive)
             {
-                PrintingCheckpoint chk = PrintingCheckpoint.GenerateCheckpoint(name, this);
-                if (checkpoints.Count == 0 || checkpoints.Last.Value.z != chk.z)
+                PrintingCheckpoint chk = PrintingCheckpoint.GenerateCheckpoint(type, this);
+                if (checkpoints.Count == 0 || checkpoints.Last.z != chk.z)
                 {
                     // Layer changed, add an index entry.
                     checkpointIndex.AddIndexEntry(chk.z, checkpoints.Count);
@@ -54,44 +51,78 @@ namespace RepetierHost.model
             }
         }
 
-        public LinkedList<PrintingCheckpoint> GetCheckPoints()
+        public BasicList<PrintingCheckpoint> CheckPoints
         {
-            // XXX TODO ESTE METODO DEBERIA CAMBIAR, YA QUE NO VAN A ESTAR EN MEMORIA
-            return checkpoints;
-        }
-
-        public void RemoveCheckpoint(PrintingCheckpoint chk)
-        {
-            checkpoints.Remove(chk);
+            get
+            {
+                return checkpoints;
+            }
         }
     }
 
+
+    /// <summary>
+    /// This class represents the type of a checkpoint.
+    /// </summary>
+    public interface CheckpointType
+    {
+        string FormatName(PrintingCheckpoint chk);
+    }
+    public class ZChangeCheckpointType : CheckpointType
+    {
+        public static ZChangeCheckpointType Instance = new ZChangeCheckpointType();
+        public string FormatName(PrintingCheckpoint chk)
+        {
+            string CheckpointDateFormat = RegMemory.GetString("checkpointDateFormat", "HH:mm:ss");
+            string checkpointName = new DateTime(chk.timestamp).ToString(CheckpointDateFormat) + " z=" + chk.z;
+            return checkpointName;
+        }
+    }
+    public class MovementCountCheckpointType : CheckpointType
+    {
+        public static MovementCountCheckpointType Instance = new MovementCountCheckpointType();
+        public string FormatName(PrintingCheckpoint chk)
+        {
+            string CheckpointDateFormat = RegMemory.GetString("checkpointDateFormat", "HH:mm:ss");
+            string checkpointName = new DateTime(chk.timestamp).ToString(CheckpointDateFormat) + " line " + chk.lineNumber + " pos=(" + chk.x + ", " + chk.y + ", " + chk.z + ")";
+            return checkpointName;
+        }
+    }
+    
+
     public class PrintingCheckpoint : PrintingState
     {
-        private string name;
+        private CheckpointType type;
 
         // checkpoint state attributes are inherited from PrintingState
 
+        public long timestamp;
         public int lineNumber;
-        public IEnumerable<GCodeCompressed> jobGCodes;
-        public PrintingCheckpoints checkpoints;
+        public BasicList<GCodeCompressed> jobGCodes;
 
 
-        internal static PrintingCheckpoint GenerateCheckpoint(string name, PrintingCheckpoints checkpoints)
+        internal static PrintingCheckpoint GenerateCheckpoint(CheckpointType namingStrategy, PrintingCheckpoints checkpoints)
         {
             // Analyze status and save state.
             PrinterConnection conn = checkpoints.conn;
             PrintingCheckpoint s = new PrintingCheckpoint();
-            s.Name = name;
+            s.type = namingStrategy;
             s.CaptureState(conn);
             s.lineNumber = conn.connector.Job.linesSend;
             s.jobGCodes = checkpoints.jobGCodes;
+            s.timestamp = DateTime.Now.Ticks;
             return s;
         }
 
-        public string Name {
-            get { return name; }
-            set { name = value; }
+        public string Name
+        {
+            get { return this.type.FormatName(this); }
+        }
+
+        public CheckpointType Type
+        {
+            get { return type; }
+            set { type = value; }
         }
 
         public void RestorePosition(GCodeExecutor executor)
@@ -99,24 +130,13 @@ namespace RepetierHost.model
             executor.queueGCodeScript("G1 Z" + z.ToString(GCode.format) + "\r\nG1 X" + x.ToString(GCode.format) + " Y" + y.ToString(GCode.format) + " F" + Main.conn.travelFeedRate);
         }
 
-        public void Delete()
+        protected override StringBuilder GetRemainingCode(StringBuilder gcodeStringBuilder)
         {
-            checkpoints.RemoveCheckpoint(this);
-        }
-
-        public void Rename(string newCheckpointName)
-        {
-            this.Name = newCheckpointName;
-        }
-
-        protected override string GetRemainingCode()
-        {
-            StringBuilder remainingGcs = new StringBuilder();
             foreach (GCodeCompressed gc in jobGCodes.Skip(lineNumber))
             {
-                remainingGcs.AppendLine(gc.getCode().orig);
+                gcodeStringBuilder.AppendLine(gc.getCode().orig);
             }
-            return remainingGcs.ToString();
+            return gcodeStringBuilder;
         }
 
         public IEnumerable<GCodeCompressed> GetCodeAlreadyExecuted()
@@ -244,16 +264,12 @@ namespace RepetierHost.model
     /// </summary>
     public class PrintingCheckpointsIterator
     {
-        private LinkedList<PrintingCheckpoint> list;
         private PrintingCheckpoints chks;
         private int index;
         public OnCurrentCheckpointChanged onCurrentCheckpointChanged;
         public PrintingCheckpointsIterator(PrintingCheckpoints chks)
         {
-            LinkedList<PrintingCheckpoint> list = chks.GetCheckPoints();
             this.chks = chks;
-
-            this.list = list;
             this.index = -1;
             if (onCurrentCheckpointChanged != null)
             {
@@ -262,6 +278,7 @@ namespace RepetierHost.model
         }
         public PrintingCheckpoint GetCurrent()
         {
+            BasicList<PrintingCheckpoint> list = chks.CheckPoints;
             if (index >= 0 && index < list.Count)
             {
                 return list.ElementAt(index);
@@ -293,9 +310,65 @@ namespace RepetierHost.model
                 return true;
             }
         }
+        internal bool GoToPositionWithNearestCoords(float x, float y, float z)
+        {
+            int minIndex = index;
+            int? foundIndex = chks.checkpointIndex.FindElementAtZWithIndexGreaterThan(z, minIndex);
+            if (foundIndex == null)
+            {
+                return false;
+            }
+            else
+            {
+                index = (int)foundIndex;
+                PrintingCheckpoint chk = chks.checkpoints.ElementAt(index);
+                float currentZ = chk.z;
+                double sqDist = vectorSquareDistance(chk.x, chk.y, chk.z, x, y, z);
+                double minDist = sqDist;
+                int indexMin = index;
+
+                while ((chk.z == currentZ) && (index + 1 < chks.checkpoints.Count) && (minDist > 0))
+                {
+                    index++;
+                    chk = chks.checkpoints.ElementAt(index);
+                    sqDist = vectorSquareDistance(chk.x, chk.y, chk.z, x, y, z);
+                    if (sqDist < minDist)
+                    {
+                        minDist = sqDist;
+                        indexMin = index;
+                    }
+                }
+
+                index = indexMin;
+
+                if (onCurrentCheckpointChanged != null)
+                {
+                    onCurrentCheckpointChanged();
+                }
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Calculates the square of the distance between two 3d points.
+        /// (Square to avoid the square root, we only need to compare
+        /// distances)
+        /// </summary>
+        /// <param name="x1"></param>
+        /// <param name="y1"></param>
+        /// <param name="z1"></param>
+        /// <param name="x2"></param>
+        /// <param name="y2"></param>
+        /// <param name="z2"></param>
+        /// <returns></returns>
+        private double vectorSquareDistance(float x1, float y1, float z1, float x2, float y2, float z2)
+        {
+            return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
+        }
+
         public void GoToLast()
         {
-            index = list.Count - 1;
+            index = chks.CheckPoints.Count - 1;
             if (onCurrentCheckpointChanged != null)
             {
                 onCurrentCheckpointChanged();
@@ -311,7 +384,7 @@ namespace RepetierHost.model
         }
         public bool HasNext()
         {
-            return index < list.Count - 1;
+            return index < chks.CheckPoints.Count - 1;
         }
         public bool HasPrevious()
         {
@@ -341,7 +414,6 @@ namespace RepetierHost.model
             }
             return GetCurrent();
         }
-
     }
 
 }

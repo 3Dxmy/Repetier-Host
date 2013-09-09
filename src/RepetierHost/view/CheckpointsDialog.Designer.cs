@@ -32,12 +32,15 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSelectCheckpoint = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonGo = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonHome = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonGoToLast = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSelectCurrentLayer = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonLast = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonGoToNearest = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonPrevious = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonNext = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonRew = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonFF = new System.Windows.Forms.ToolStripButton();
             this.checkBoxUpdate3dView = new System.Windows.Forms.CheckBox();
             this.checkBoxMoveExtruder = new System.Windows.Forms.CheckBox();
             this.checkBoxPreviewCheckpoint = new System.Windows.Forms.CheckBox();
@@ -61,12 +64,15 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonSelectCheckpoint,
-            this.toolStripButtonRefresh,
             this.toolStripButtonGo,
             this.toolStripButtonHome,
+            this.toolStripButtonGoToLast,
             this.toolStripButtonSelectCurrentLayer,
-            this.toolStripButtonLast,
-            this.toolStripButtonNext});
+            this.toolStripButtonGoToNearest,
+            this.toolStripButtonPrevious,
+            this.toolStripButtonNext,
+            this.toolStripButtonRew,
+            this.toolStripButtonFF});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(552, 39);
@@ -83,16 +89,6 @@
             this.toolStripButtonSelectCheckpoint.Text = "toolStripButton2";
             this.toolStripButtonSelectCheckpoint.ToolTipText = "Restore Job";
             this.toolStripButtonSelectCheckpoint.Click += new System.EventHandler(this.toolStripButtonSelectCheckpoint_Click);
-            // 
-            // toolStripButtonRefresh
-            // 
-            this.toolStripButtonRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRefresh.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRefresh.Image")));
-            this.toolStripButtonRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonRefresh.Name = "toolStripButtonRefresh";
-            this.toolStripButtonRefresh.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonRefresh.Text = "toolStripButtonRefresh";
-            this.toolStripButtonRefresh.Click += new System.EventHandler(this.toolStripButtonRefresh_Click);
             // 
             // toolStripButtonGo
             // 
@@ -114,6 +110,16 @@
             this.toolStripButtonHome.Text = "toolStripButton1";
             this.toolStripButtonHome.Click += new System.EventHandler(this.toolStripButtonHome_Click);
             // 
+            // toolStripButtonGoToLast
+            // 
+            this.toolStripButtonGoToLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonGoToLast.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonGoToLast.Image")));
+            this.toolStripButtonGoToLast.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonGoToLast.Name = "toolStripButtonGoToLast";
+            this.toolStripButtonGoToLast.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonGoToLast.Text = "toolStripButtonRefresh";
+            this.toolStripButtonGoToLast.Click += new System.EventHandler(this.toolStripButtonGoToLast_Click);
+            // 
             // toolStripButtonSelectCurrentLayer
             // 
             this.toolStripButtonSelectCurrentLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -124,15 +130,25 @@
             this.toolStripButtonSelectCurrentLayer.Text = "toolStripButtonSelectCurrentLayer";
             this.toolStripButtonSelectCurrentLayer.Click += new System.EventHandler(this.toolStripButtonSelectCurrentLayer_Click);
             // 
-            // toolStripButtonLast
+            // toolStripButtonGoToNearest
             // 
-            this.toolStripButtonLast.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonLast.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLast.Image")));
-            this.toolStripButtonLast.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonLast.Name = "toolStripButtonLast";
-            this.toolStripButtonLast.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButtonLast.Text = "toolStripButtonLast";
-            this.toolStripButtonLast.Click += new System.EventHandler(this.toolStripButtonLast_Click);
+            this.toolStripButtonGoToNearest.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonGoToNearest.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonGoToNearest.Image")));
+            this.toolStripButtonGoToNearest.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonGoToNearest.Name = "toolStripButtonGoToNearest";
+            this.toolStripButtonGoToNearest.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonGoToNearest.Text = "toolStripButton1";
+            this.toolStripButtonGoToNearest.Click += new System.EventHandler(this.toolStripButtonGoToNearest_Click);
+            // 
+            // toolStripButtonPrevious
+            // 
+            this.toolStripButtonPrevious.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPrevious.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPrevious.Image")));
+            this.toolStripButtonPrevious.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPrevious.Name = "toolStripButtonPrevious";
+            this.toolStripButtonPrevious.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonPrevious.Text = "toolStripButtonPrevious";
+            this.toolStripButtonPrevious.Click += new System.EventHandler(this.toolStripButtonPrevious_Click);
             // 
             // toolStripButtonNext
             // 
@@ -143,6 +159,26 @@
             this.toolStripButtonNext.Size = new System.Drawing.Size(36, 36);
             this.toolStripButtonNext.Text = "toolStripButtonNext";
             this.toolStripButtonNext.Click += new System.EventHandler(this.toolStripButtonNext_Click);
+            // 
+            // toolStripButtonRew
+            // 
+            this.toolStripButtonRew.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRew.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRew.Image")));
+            this.toolStripButtonRew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRew.Name = "toolStripButtonRew";
+            this.toolStripButtonRew.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonRew.Text = "toolStripButton1";
+            this.toolStripButtonRew.Click += new System.EventHandler(this.toolStripButtonRew_Click);
+            // 
+            // toolStripButtonFF
+            // 
+            this.toolStripButtonFF.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonFF.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonFF.Image")));
+            this.toolStripButtonFF.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonFF.Name = "toolStripButtonFF";
+            this.toolStripButtonFF.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonFF.Text = "toolStripButton1";
+            this.toolStripButtonFF.Click += new System.EventHandler(this.toolStripButtonFF_Click);
             // 
             // checkBoxUpdate3dView
             // 
@@ -217,13 +253,16 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonSelectCheckpoint;
         private System.Windows.Forms.ToolStripButton toolStripButtonGo;
         private System.Windows.Forms.ToolStripButton toolStripButtonSelectCurrentLayer;
-        private System.Windows.Forms.ToolStripButton toolStripButtonRefresh;
-        private System.Windows.Forms.ToolStripButton toolStripButtonLast;
+        private System.Windows.Forms.ToolStripButton toolStripButtonGoToLast;
+        private System.Windows.Forms.ToolStripButton toolStripButtonPrevious;
         private System.Windows.Forms.ToolStripButton toolStripButtonNext;
         private System.Windows.Forms.CheckBox checkBoxUpdate3dView;
         private System.Windows.Forms.CheckBox checkBoxMoveExtruder;
         private System.Windows.Forms.CheckBox checkBoxPreviewCheckpoint;
         private System.Windows.Forms.Label labelCheckpointData;
         private System.Windows.Forms.ToolStripButton toolStripButtonHome;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRew;
+        private System.Windows.Forms.ToolStripButton toolStripButtonFF;
+        private System.Windows.Forms.ToolStripButton toolStripButtonGoToNearest;
     }
 }

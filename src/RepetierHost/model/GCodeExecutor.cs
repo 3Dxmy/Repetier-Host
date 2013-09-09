@@ -38,19 +38,6 @@ namespace RepetierHost.model
 
         public void queueGCodeScript(string gcodeToExecute)
         {
-            /*conn.connector.Job.BeginJob();
-            conn.connector.GetInjectLock();
-            foreach (string line in gcodeToExecute.Split(new char[] { '\n', '\r' }))
-            {
-                if (!String.IsNullOrEmpty(line))
-                {
-                    conn.connector.InjectManualCommand(line);
-                }
-            }
-            conn.connector.ReturnInjectLock();
-            conn.connector.Job.EndJob();*/
-
-
             // Load Generated GCode as current job.
             //Main.main.editor.Text = gcodeToExecute;
             Main.main.editor.setContent(0, gcodeToExecute);

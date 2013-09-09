@@ -46,10 +46,13 @@ namespace RepetierHost.view
             Text = Trans.T("W_CHECKPOINTS");
             toolStripButtonSelectCheckpoint.ToolTipText = Trans.T("M_CHECKPOINT_RESTORE_CHECKPOINT");
             toolStripButtonGo.ToolTipText = Trans.T("M_CHECKPOINT_GO_TO_POSITION");
-            toolStripButtonRefresh.ToolTipText = Trans.T("M_CHECKPOINT_REFRESH");
+            toolStripButtonGoToLast.ToolTipText = Trans.T("M_CHECKPOINT_REFRESH");
             toolStripButtonSelectCurrentLayer.ToolTipText = Trans.T("M_CHECKPOINT_GO_TO_CURRENT_LAYER");
+            toolStripButtonGoToNearest.ToolTipText = Trans.T("M_CHECKPOINT_GO_TO_NEAREST_POSITION");
             toolStripButtonNext.ToolTipText = Trans.T("M_CHECKPOINT_NEXT");
-            toolStripButtonLast.ToolTipText = Trans.T("M_CHECKPOINT_PREVIOUS");
+            toolStripButtonPrevious.ToolTipText = Trans.T("M_CHECKPOINT_PREVIOUS");
+            toolStripButtonFF.ToolTipText = Trans.T("M_CHECKPOINT_FF");
+            toolStripButtonRew.ToolTipText = Trans.T("M_CHECKPOINT_REW");
             checkBoxUpdate3dView.Text = Trans.T("L_CHECKPOINT_SHOW_CHECKPOINT_IN_3D_VIEW");
             checkBoxMoveExtruder.Text = Trans.T("L_CHECKPOINT_MOVE_EXTRUDER_TO_CHECKPOINT");
             checkBoxPreviewCheckpoint.Text = Trans.T("L_CHECKPOINT_PREVIEW_CHECKPOINT");
@@ -92,10 +95,16 @@ namespace RepetierHost.view
                     RestoreCheckpoint();
                 break;
                 case (Keys.Left):
-                toolStripButtonLast_Click(null, null);
+                toolStripButtonPrevious_Click(null, null);
                 break;
                 case (Keys.Right):
                 toolStripButtonNext_Click(null, null);
+                break;
+                case (Keys.Left | Keys.Shift):
+                toolStripButtonRew_Click(null, null);
+                break;
+                case (Keys.Right | Keys.Shift):
+                toolStripButtonFF_Click(null, null);
                 break;
             }
             return base.ProcessCmdKey(ref msg, keyData);
@@ -213,15 +222,7 @@ namespace RepetierHost.view
                 else
                 {
                     MoveToCurrentLayerCheckpoint();
-
-                    if (checkBoxMoveExtruder.Checked)
-                    {
-                        GoToCheckpointPosition();
-                    }
-                    if (checkBoxUpdate3dView.Checked)
-                    {
-                        RedrawCurrentCheckpoint();
-                    }
+                    MoveAndRedrawIfNeeded();
                 }
             }
         }
@@ -232,11 +233,37 @@ namespace RepetierHost.view
             checkpoints.GoToPositionWithZ(Main.conn.analyzer.z);
         }
 
-        private void toolStripButtonRefresh_Click(object sender, EventArgs e)
+        private void toolStripButtonGoToNearest_Click(object sender, EventArgs e)
         {
             lock (this)
             {
-                LoadCheckpoints();
+                if (checkBoxMoveExtruder.Checked && Main.conn.connector.IsJobRunning())
+                {
+                    MessageBox.Show(Trans.T("L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION"));
+                }
+                else
+                {
+                    checkpoints.GoToFirst();
+                    checkpoints.GoToPositionWithNearestCoords(Main.conn.analyzer.x, Main.conn.analyzer.y, Main.conn.analyzer.z);
+                    MoveAndRedrawIfNeeded();
+                }
+            }
+        }
+
+
+        private void toolStripButtonGoToLast_Click(object sender, EventArgs e)
+        {
+            lock (this)
+            {
+                if (checkBoxMoveExtruder.Checked && Main.conn.connector.IsJobRunning())
+                {
+                    MessageBox.Show(Trans.T("L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION"));
+                }
+                else
+                {
+                    checkpoints.GoToLast();
+                    MoveAndRedrawIfNeeded();
+                }
             }
         }
 
@@ -251,19 +278,12 @@ namespace RepetierHost.view
                 else
                 {
                     checkpoints.MoveToNext();
-                    if (checkBoxMoveExtruder.Checked)
-                    {
-                        GoToCheckpointPosition();
-                    }
-                    if (checkBoxUpdate3dView.Checked)
-                    {
-                        RedrawCurrentCheckpoint();
-                    }
+                    MoveAndRedrawIfNeeded();
                 }
             }
         }
 
-        private void toolStripButtonLast_Click(object sender, EventArgs e)
+        private void toolStripButtonPrevious_Click(object sender, EventArgs e)
         {
             lock (this)
             {
@@ -274,14 +294,7 @@ namespace RepetierHost.view
                 else
                 {
                     checkpoints.MoveToPrevious();
-                    if (checkBoxMoveExtruder.Checked)
-                    {
-                        GoToCheckpointPosition();
-                    }
-                    if (checkBoxUpdate3dView.Checked)
-                    {
-                        RedrawCurrentCheckpoint();
-                    }
+                    MoveAndRedrawIfNeeded();
                 }
             }
         }
@@ -314,7 +327,65 @@ namespace RepetierHost.view
 
         private void toolStripButtonHome_Click(object sender, EventArgs e)
         {
-            checkpoints.GoToFirst();
+            lock (this)
+            {
+                if (checkBoxMoveExtruder.Checked && Main.conn.connector.IsJobRunning())
+                {
+                    MessageBox.Show(Trans.T("L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION"));
+                }
+                else
+                {
+                    checkpoints.GoToFirst();
+                    MoveAndRedrawIfNeeded();
+                }
+            }
+        }
+
+        private void toolStripButtonRew_Click(object sender, EventArgs e)
+        {
+            lock (this)
+            {
+                if (checkBoxMoveExtruder.Checked && Main.conn.connector.IsJobRunning())
+                {
+                    MessageBox.Show(Trans.T("L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION"));
+                }
+                else
+                {
+                    int speed = RegMemory.GetInt("ffAndRewSpeed", 20);
+                    for (int i = 0; i < speed; i++)
+                    {
+                        checkpoints.MoveToPrevious();
+                    }
+
+                    MoveAndRedrawIfNeeded();
+                }
+            }
+        }
+
+        private void toolStripButtonFF_Click(object sender, EventArgs e)
+        {
+            lock (this)
+            {
+                if (checkBoxMoveExtruder.Checked && Main.conn.connector.IsJobRunning())
+                {
+                    MessageBox.Show(Trans.T("L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION"));
+                }
+                else
+                {
+                    int speed = RegMemory.GetInt("ffAndRewSpeed", 20);
+                    for (int i = 0; i < speed; i++)
+                    {
+                        checkpoints.MoveToNext();
+                    }
+
+                    MoveAndRedrawIfNeeded();
+                }
+            }
+        }
+
+
+        private void MoveAndRedrawIfNeeded()
+        {
             if (checkBoxMoveExtruder.Checked)
             {
                 GoToCheckpointPosition();

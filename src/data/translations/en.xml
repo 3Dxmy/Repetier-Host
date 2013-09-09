@@ -648,8 +648,11 @@ Reload objects?]]></t>
 <t id="M_CHECKPOINT_GO_TO_POSITION" ver="10">Go to Checkpoint Position</t>
 <t id="M_CHECKPOINT_REFRESH" ver="10">Refresh</t>
 <t id="M_CHECKPOINT_GO_TO_CURRENT_LAYER" ver="10">Go to checkpoint in current layer</t>
-<t id="M_CHECKPOINT_NEXT" ver="10">Next checkpoint</t>
-<t id="M_CHECKPOINT_PREVIOUS" ver="10">Previous checkpoint</t>
+<t id="M_CHECKPOINT_GO_TO_NEAREST_POSITION" ver="10">Go to checkpoint nearest to current position</t>
+<t id="M_CHECKPOINT_NEXT" ver="10">Next checkpoint (Right Key)</t>
+<t id="M_CHECKPOINT_PREVIOUS" ver="10">Previous checkpoint (Left Key)</t>
+<t id="M_CHECKPOINT_FF" ver="10">Fast Forward checkpoint (Shift+Right Key)</t>
+<t id="M_CHECKPOINT_REW" ver="10">Rewind checkpoint (Shift+Left Key)</t>
 <t id="M_VIEW_CHECKPOINTS" ver="10">View Checkpoints</t>
 <t id="L_CHECKPOINT_SHOW_CHECKPOINT_IN_3D_VIEW" ver="10">Show Checkpoint position in 3d View</t>
 <t id="L_CHECKPOINT_MOVE_EXTRUDER_TO_CHECKPOINT" ver="10">Move extruder to Checkpoint position</t>

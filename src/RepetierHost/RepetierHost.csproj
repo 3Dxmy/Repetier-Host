@@ -165,6 +165,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="model\PulseAnimation.cs" />
+    <Compile Include="model\BasicList.cs" />
     <Compile Include="model\RectPacker.cs" />
     <Compile Include="model\SkeinConfig.cs" />
     <Compile Include="model\PrintModel.cs" />

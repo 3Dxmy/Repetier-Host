@@ -51,9 +51,10 @@ namespace RepetierHost.model
             return remainingCodeSb.ToString();
         }
 
-        protected override string GetRemainingCode()
+        protected override StringBuilder GetRemainingCode(StringBuilder gcodeStringBuilder)
         {
-            return remainingCode;
+            gcodeStringBuilder.Append(remainingCode);
+            return gcodeStringBuilder;
         }
     }
 

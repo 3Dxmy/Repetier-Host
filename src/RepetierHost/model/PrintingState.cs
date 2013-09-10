@@ -117,10 +117,12 @@ namespace RepetierHost.model
             g.Add("T" + activeExtruderId);
             g.NewLine();
 
-            g.SetE(activeExtruderValue);
-
             g.Add("@pause " + Trans.T("L_EXTRUDE_PLASTIC_PAUSE")); // Let the user extrude some plastic.
             g.NewLine();
+
+            // We must set the extruder value after pausing, because users will
+            // extrude plastic.
+            g.SetE(activeExtruderValue);
 
             g.Add("G28 X0 Y0"); // Go to home x y in case you moved the bed accidentally.
             g.NewLine();

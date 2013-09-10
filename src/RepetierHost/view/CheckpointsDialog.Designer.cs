@@ -41,6 +41,8 @@
             this.toolStripButtonNext = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonRew = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonFF = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonPreviousLayer = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonNextLayer = new System.Windows.Forms.ToolStripButton();
             this.checkBoxUpdate3dView = new System.Windows.Forms.CheckBox();
             this.checkBoxMoveExtruder = new System.Windows.Forms.CheckBox();
             this.checkBoxPreviewCheckpoint = new System.Windows.Forms.CheckBox();
@@ -72,7 +74,9 @@
             this.toolStripButtonPrevious,
             this.toolStripButtonNext,
             this.toolStripButtonRew,
-            this.toolStripButtonFF});
+            this.toolStripButtonFF,
+            this.toolStripButtonPreviousLayer,
+            this.toolStripButtonNextLayer});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(552, 39);
@@ -180,6 +184,26 @@
             this.toolStripButtonFF.Text = "toolStripButton1";
             this.toolStripButtonFF.Click += new System.EventHandler(this.toolStripButtonFF_Click);
             // 
+            // toolStripButtonPreviousLayer
+            // 
+            this.toolStripButtonPreviousLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPreviousLayer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPreviousLayer.Image")));
+            this.toolStripButtonPreviousLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPreviousLayer.Name = "toolStripButtonPreviousLayer";
+            this.toolStripButtonPreviousLayer.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonPreviousLayer.Text = "toolStripButton1";
+            this.toolStripButtonPreviousLayer.Click += new System.EventHandler(this.toolStripButtonPreviousLayer_Click);
+            // 
+            // toolStripButtonNextLayer
+            // 
+            this.toolStripButtonNextLayer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonNextLayer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonNextLayer.Image")));
+            this.toolStripButtonNextLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonNextLayer.Name = "toolStripButtonNextLayer";
+            this.toolStripButtonNextLayer.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonNextLayer.Text = "toolStripButton1";
+            this.toolStripButtonNextLayer.Click += new System.EventHandler(this.toolStripButtonNextLayer_Click);
+            // 
             // checkBoxUpdate3dView
             // 
             this.checkBoxUpdate3dView.AutoSize = true;
@@ -264,5 +288,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonRew;
         private System.Windows.Forms.ToolStripButton toolStripButtonFF;
         private System.Windows.Forms.ToolStripButton toolStripButtonGoToNearest;
+        private System.Windows.Forms.ToolStripButton toolStripButtonPreviousLayer;
+        private System.Windows.Forms.ToolStripButton toolStripButtonNextLayer;
     }
 }

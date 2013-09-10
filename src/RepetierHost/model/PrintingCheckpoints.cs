@@ -177,6 +177,22 @@ namespace RepetierHost.model
     public class ZLayerCheckpointIndex
     {
         public LinkedList<List<IndexElement>> indexes = new LinkedList<List<IndexElement>>();
+
+        public int? FindElementAtZWithIndexGreaterThan(float z, int minIndex)
+        {
+            return FindElementAtZWithIndexGreaterThan(z, minIndex, 0);
+        }
+
+        public int? FindElementAboveZWithIndexGreaterThan(float z, int minIndex)
+        {
+            return FindElementAtZWithIndexGreaterThan(z, minIndex, 1);
+        }
+
+        public int? FindElementBelowZWithIndexGreaterThan(float z, int minIndex)
+        {
+            return FindElementAtZWithIndexGreaterThan(z, minIndex, -1);
+        }
+
         /// <summary>
         /// Returns the index of the position where the element with specified
         /// z was found, or the index of the first value with greater z if not
@@ -187,8 +203,9 @@ namespace RepetierHost.model
         /// </summary>
         /// <param name="z"></param>
         /// <param name="minIndex"></param>
+        /// <param name="delta"></param>
         /// <returns></returns>
-        public int? FindElementAtZWithIndexGreaterThan(float z, int minIndex)
+        public int? FindElementAtZWithIndexGreaterThan(float z, int minIndex, int delta)
         {
             IndexElement dummyElement = new IndexElement();
             dummyElement.z = z;
@@ -214,16 +231,23 @@ namespace RepetierHost.model
                     if (index >= 0)
                     {
                         // element found
-                        IndexElement element = list[index];
-                        if (element.listIndex >= minIndex)
+                        // shift the index based on the delta
+                        int shiftedIndex = index + delta;
+                        if (!(shiftedIndex >= list.Count || shiftedIndex < 0))
                         {
-                            return element.listIndex;
+                            IndexElement element = list[shiftedIndex];
+                            if (element.listIndex >= minIndex)
+                            {
+                                return element.listIndex;
+                            }
                         }
                     }
                 }
             }
             return null;
         }
+
+
 
         /// <summary>
         /// Adds an element in the index, associating the given z value with
@@ -261,6 +285,8 @@ namespace RepetierHost.model
     /// <summary>
     /// This class works as a bidirectional iterator to navigate the
     /// checkpoints.
+    /// It provides some additional methods, like moving between layers and
+    /// searching coordinates.
     /// </summary>
     public class PrintingCheckpointsIterator
     {
@@ -276,6 +302,10 @@ namespace RepetierHost.model
                 onCurrentCheckpointChanged();
             }
         }
+        /// <summary>
+        /// Returns the current element or null if none.
+        /// </summary>
+        /// <returns></returns>
         public PrintingCheckpoint GetCurrent()
         {
             BasicList<PrintingCheckpoint> list = chks.CheckPoints;
@@ -288,10 +318,21 @@ namespace RepetierHost.model
                 return null;
             }
         }
+        /// <summary>
+        /// Returns the current index position.
+        /// </summary>
+        /// <returns></returns>
         public int GetCurrentPosition()
         {
             return index;
         }
+        /// <summary>
+        /// Searchs for a layer with the same z value, or if none, it searchs the nearest with a
+        /// higher value.
+        /// If one was found, it returns true. Otherwise, false.
+        /// </summary>
+        /// <param name="z"></param>
+        /// <returns></returns>
         public bool GoToPositionWithZ(float z)
         {
             int minIndex = index;
@@ -310,6 +351,17 @@ namespace RepetierHost.model
                 return true;
             }
         }
+        /// <summary>
+        /// Searchs for the checkpoint with the nearest distance in the current
+        /// layer (in order to decide in which layer it's working it uses the
+        /// same criteria GoToPositionWithZ uses).
+        /// If more than one has the same distance, it picks the first one.
+        /// If any was found, it returns true. Otherwise, false.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="z"></param>
+        /// <returns></returns>
         internal bool GoToPositionWithNearestCoords(float x, float y, float z)
         {
             int minIndex = index;
@@ -366,6 +418,9 @@ namespace RepetierHost.model
             return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
         }
 
+        /// <summary>
+        /// Goes to the last checkpoint.
+        /// </summary>
         public void GoToLast()
         {
             index = chks.CheckPoints.Count - 1;
@@ -374,6 +429,9 @@ namespace RepetierHost.model
                 onCurrentCheckpointChanged();
             }
         }
+        /// <summary>
+        /// Goes to the first checkpoint.
+        /// </summary>
         public void GoToFirst()
         {
             index = 0;
@@ -382,14 +440,29 @@ namespace RepetierHost.model
                 onCurrentCheckpointChanged();
             }
         }
+        /// <summary>
+        /// Returns true if there's a next checkpoint.
+        /// </summary>
+        /// <returns></returns>
         public bool HasNext()
         {
             return index < chks.CheckPoints.Count - 1;
         }
+        /// <summary>
+        /// Returns true if there's a previous checkpoint.
+        /// </summary>
+        /// <returns></returns>
         public bool HasPrevious()
         {
             return index > 0;
         }
+        /// <summary>
+        /// Moves to the next position, and returns it.
+        /// If there are no more, it stays in the same position, and returns
+        /// the same element.
+        /// If there are no elements, it returns null.
+        /// </summary>
+        /// <returns></returns>
         public PrintingCheckpoint MoveToNext()
         {
             if (HasNext())
@@ -402,11 +475,80 @@ namespace RepetierHost.model
             }
             return GetCurrent();
         }
+        /// <summary>
+        /// Moves to the previous position, and returns it.
+        /// If there are no more, it stays in the same position, and returns
+        /// the same element.
+        /// If there are no elements, it returns null.
+        /// </summary>
+        /// <returns></returns>
         public PrintingCheckpoint MoveToPrevious()
         {
             if (HasPrevious())
             {
                 index--;
+                if (onCurrentCheckpointChanged != null)
+                {
+                    onCurrentCheckpointChanged();
+                }
+            }
+            return GetCurrent();
+        }
+        /// <summary>
+        /// Moves to the first checkpoint in the next layer, and returns it.
+        /// If there are no more, it stays in the same position, and returns
+        /// the same element.
+        /// If there are no elements, it returns null.
+        /// </summary>
+        /// <returns></returns>
+        public PrintingCheckpoint MoveToNextLayer()
+        {
+            if (index < chks.checkpoints.Count && chks.checkpoints.Count > 0)
+            {
+                if (index < 0)
+                {
+                    index = 0;
+                }
+                PrintingCheckpoint chk = chks.checkpoints.ElementAt(index);
+                float currentZ = chk.z;
+
+                int minIndex = 0;
+
+                int? newIndex = chks.checkpointIndex.FindElementAboveZWithIndexGreaterThan(currentZ, minIndex);
+                if (newIndex != null)
+                {
+                    index = (int)newIndex;
+                }
+
+                if (onCurrentCheckpointChanged != null)
+                {
+                    onCurrentCheckpointChanged();
+                }
+            }
+            return GetCurrent();
+        }
+        /// <summary>
+        /// Moves to the first checkpoint in the previous layer, and returns it.
+        /// If there are no more, it stays in the same position, and returns
+        /// the same element.
+        /// If there are no elements, it returns null.
+        /// </summary>
+        /// <returns></returns>
+        public PrintingCheckpoint MoveToPreviousLayer()
+        {
+            if (index > 0 && chks.checkpoints.Count > 0)
+            {
+                PrintingCheckpoint chk = chks.checkpoints.ElementAt(index);
+                float currentZ = chk.z;
+
+                int minIndex = 0;
+
+                int? newIndex = chks.checkpointIndex.FindElementBelowZWithIndexGreaterThan(currentZ, minIndex);
+                if (newIndex != null)
+                {
+                    index = (int)newIndex;
+                }
+
                 if (onCurrentCheckpointChanged != null)
                 {
                     onCurrentCheckpointChanged();

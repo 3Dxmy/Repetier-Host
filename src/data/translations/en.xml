@@ -646,11 +646,14 @@ Reload objects?]]></t>
 <t id="W_CHECKPOINTS" ver="10">Checkpoints</t>
 <t id="M_CHECKPOINT_RESTORE_CHECKPOINT" ver="10">Restore Checkpoint</t>
 <t id="M_CHECKPOINT_GO_TO_POSITION" ver="10">Go to Checkpoint Position</t>
-<t id="M_CHECKPOINT_REFRESH" ver="10">Refresh</t>
+<t id="M_CHECKPOINT_HOME" ver="10">Go to first Checkpoint</t>
+<t id="M_CHECKPOINT_GO_TO_LAST" ver="10">Go to last Checkpoint</t>
 <t id="M_CHECKPOINT_GO_TO_CURRENT_LAYER" ver="10">Go to checkpoint in current layer</t>
 <t id="M_CHECKPOINT_GO_TO_NEAREST_POSITION" ver="10">Go to checkpoint nearest to current position</t>
 <t id="M_CHECKPOINT_NEXT" ver="10">Next checkpoint (Right Key)</t>
 <t id="M_CHECKPOINT_PREVIOUS" ver="10">Previous checkpoint (Left Key)</t>
+<t id="M_CHECKPOINT_NEXT_LAYER" ver="10">Go to next layer (Up Key)</t>
+<t id="M_CHECKPOINT_PREVIOUS_LAYER" ver="10">Go to previous layer (Down Key)</t>
 <t id="M_CHECKPOINT_FF" ver="10">Fast Forward checkpoint (Shift+Right Key)</t>
 <t id="M_CHECKPOINT_REW" ver="10">Rewind checkpoint (Shift+Left Key)</t>
 <t id="M_VIEW_CHECKPOINTS" ver="10">View Checkpoints</t>

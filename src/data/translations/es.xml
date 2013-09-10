@@ -639,11 +639,14 @@ Los cambios en el registro estarán activos despues del siguiente reinicio.</t>
 <t id="W_CHECKPOINTS" ver="10">Puntos de Restauración</t>
 <t id="M_CHECKPOINT_RESTORE_CHECKPOINT" ver="10">Restaurar Punto de Restauración</t>
 <t id="M_CHECKPOINT_GO_TO_POSITION" ver="10">Ir a posición de Punto de Restauración</t>
+<t id="M_CHECKPOINT_HOME" ver="10">Ir a primer Punto de Restauración</t>
 <t id="M_CHECKPOINT_GO_TO_NEAREST_POSITION" ver="10">Ir a Punto de Restauración más cercano a posición actual</t>
-<t id="M_CHECKPOINT_REFRESH" ver="10">Actualizar</t>
-<t id="M_CHECKPOINT_GO_TO_CURRENT_LAYER" ver="10">Ir a punto de restauración en capa actual</t>
+<t id="M_CHECKPOINT_GO_TO_LAST" ver="10">Ir a último Punto de Restauración</t>
+<t id="M_CHECKPOINT_GO_TO_CURRENT_LAYER" ver="10">Ir a Punto de Restauración en capa actual</t>
 <t id="M_CHECKPOINT_NEXT" ver="10">Siguiente Punto de Restauración (Tecla derecha)</t>
 <t id="M_CHECKPOINT_PREVIOUS" ver="10">Anterior Punto de Restauración (Tecla izquierda)</t>
+<t id="M_CHECKPOINT_NEXT_LAYER" ver="10">Ir a siguiente capa (Tecla arriba)</t>
+<t id="M_CHECKPOINT_PREVIOUS_LAYER" ver="10">Ir a anterior capa (Tecla abajo)</t>
 <t id="M_CHECKPOINT_FF" ver="10">Adelantar Punto de Restauración (Shift+Tecla derecha)</t>
 <t id="M_CHECKPOINT_REW" ver="10">Rebobinar Punto de Restauración (Shift+Tecla izquierda)</t>
 <t id="M_VIEW_CHECKPOINTS" ver="10">Ver Puntos de Restauración</t>

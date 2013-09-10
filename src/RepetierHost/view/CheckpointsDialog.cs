@@ -23,6 +23,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 using RepetierHost.model;
 using RepetierHost.view.utils;
 
@@ -46,11 +47,14 @@ namespace RepetierHost.view
             Text = Trans.T("W_CHECKPOINTS");
             toolStripButtonSelectCheckpoint.ToolTipText = Trans.T("M_CHECKPOINT_RESTORE_CHECKPOINT");
             toolStripButtonGo.ToolTipText = Trans.T("M_CHECKPOINT_GO_TO_POSITION");
-            toolStripButtonGoToLast.ToolTipText = Trans.T("M_CHECKPOINT_REFRESH");
+            toolStripButtonHome.ToolTipText = Trans.T("M_CHECKPOINT_HOME");
+            toolStripButtonGoToLast.ToolTipText = Trans.T("M_CHECKPOINT_GO_TO_LAST");
             toolStripButtonSelectCurrentLayer.ToolTipText = Trans.T("M_CHECKPOINT_GO_TO_CURRENT_LAYER");
             toolStripButtonGoToNearest.ToolTipText = Trans.T("M_CHECKPOINT_GO_TO_NEAREST_POSITION");
             toolStripButtonNext.ToolTipText = Trans.T("M_CHECKPOINT_NEXT");
             toolStripButtonPrevious.ToolTipText = Trans.T("M_CHECKPOINT_PREVIOUS");
+            toolStripButtonNextLayer.ToolTipText = Trans.T("M_CHECKPOINT_NEXT_LAYER");
+            toolStripButtonPreviousLayer.ToolTipText = Trans.T("M_CHECKPOINT_PREVIOUS_LAYER");
             toolStripButtonFF.ToolTipText = Trans.T("M_CHECKPOINT_FF");
             toolStripButtonRew.ToolTipText = Trans.T("M_CHECKPOINT_REW");
             checkBoxUpdate3dView.Text = Trans.T("L_CHECKPOINT_SHOW_CHECKPOINT_IN_3D_VIEW");
@@ -106,6 +110,12 @@ namespace RepetierHost.view
                 case (Keys.Right | Keys.Shift):
                 toolStripButtonFF_Click(null, null);
                 break;
+                case (Keys.Down):
+                toolStripButtonPreviousLayer_Click(null, null);
+                break;
+                case (Keys.Up):
+                toolStripButtonNextLayer_Click(null, null);
+                break;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
@@ -125,6 +135,9 @@ namespace RepetierHost.view
         {
             if (checkpoints.GetCurrent() != null && checkBoxPreviewCheckpoint.Checked)
             {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+
                 GCodeVisual gcodeVisual = new GCodeVisual();
                 gcodeVisual.showSelection = true;
                 gcodeVisual.minLayer = 0;
@@ -135,6 +148,10 @@ namespace RepetierHost.view
                 Main.main.assign3DView();
 
                 gcodeVisual.parseGCodeShortArray(ToGCodeShortArray(checkpoints.GetCurrent().GetCodeAlreadyExecuted()), false, 0);
+
+                gcodeVisual.Reduce();
+
+                sw.Stop();
             }
         }
 
@@ -299,6 +316,39 @@ namespace RepetierHost.view
             }
         }
 
+        private void toolStripButtonNextLayer_Click(object sender, EventArgs e)
+        {
+            lock (this)
+            {
+                if (checkBoxMoveExtruder.Checked && Main.conn.connector.IsJobRunning())
+                {
+                    MessageBox.Show(Trans.T("L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION"));
+                }
+                else
+                {
+                    checkpoints.MoveToNextLayer();
+                    MoveAndRedrawIfNeeded();
+                }
+            }
+        }
+
+        private void toolStripButtonPreviousLayer_Click(object sender, EventArgs e)
+        {
+            lock (this)
+            {
+                if (checkBoxMoveExtruder.Checked && Main.conn.connector.IsJobRunning())
+                {
+                    MessageBox.Show(Trans.T("L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION"));
+                }
+                else
+                {
+                    checkpoints.MoveToPreviousLayer();
+                    MoveAndRedrawIfNeeded();
+                }
+            }
+        }
+
+
         private void checkBoxPreviewCheckpoint_CheckedChanged(object sender, EventArgs e)
         {
             Main.main.assign3DView();
@@ -395,6 +445,7 @@ namespace RepetierHost.view
                 RedrawCurrentCheckpoint();
             }
         }
+
     }
 
 }

@@ -651,7 +651,7 @@ Los cambios en el registro estarán activos despues del siguiente reinicio.</t>
 <t id="M_CHECKPOINT_REW" ver="10">Rebobinar Punto de Restauración (Shift+Tecla izquierda)</t>
 <t id="M_VIEW_CHECKPOINTS" ver="10">Ver Puntos de Restauración</t>
 <t id="L_CHECKPOINT_SHOW_CHECKPOINT_IN_3D_VIEW" ver="10">Mostrar posición de Punto de Restauración en Vista 3D</t>
-<t id="L_CHECKPOINT_MOVE_EXTRUDER_TO_CHECKPOINT" ver="10">Mover extrusor a posición de Punto de Restauración</t>
+<t id="L_CHECKPOINT_MOVE_NOZZLE_TO_CHECKPOINT" ver="10">Mover nozzle a posición de Punto de Restauración</t>
 <t id="L_CHECKPOINT_PREVIEW_CHECKPOINT" ver="10">Previsualizar Punto de Restauración</t>
 <t id="L_CHECKPOINT_STOP_JOB_BEFORE_RESTORING_POINT" ver="10">Debe finalizar el trabajo actual antes de restaurar un Punto de Restauración</t>
 <t id="L_CHECKPOINT_STOP_JOB_BEFORE_GOING_TO_POSITION" ver="10">Debe finalizar el trabajo actual antes de ir a la posición de un Punto de Restauración</t>

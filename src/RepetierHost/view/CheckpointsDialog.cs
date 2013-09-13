@@ -60,7 +60,7 @@ namespace RepetierHost.view
             toolStripButtonRew.ToolTipText = Trans.T("M_CHECKPOINT_REW");
             toolStripButtonLockZ.ToolTipText = Trans.T("M_CHECKPOINT_LOCK_Z");
             checkBoxUpdate3dView.Text = Trans.T("L_CHECKPOINT_SHOW_CHECKPOINT_IN_3D_VIEW");
-            checkBoxMoveExtruder.Text = Trans.T("L_CHECKPOINT_MOVE_EXTRUDER_TO_CHECKPOINT");
+            checkBoxMoveExtruder.Text = Trans.T("L_CHECKPOINT_MOVE_NOZZLE_TO_CHECKPOINT");
             checkBoxPreviewCheckpoint.Text = Trans.T("L_CHECKPOINT_PREVIEW_CHECKPOINT");
             buttonCancel.Text = Trans.T("B_CANCEL");
         }

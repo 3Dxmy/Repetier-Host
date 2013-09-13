@@ -658,5 +658,6 @@ Los cambios en el registro estarán activos despues del siguiente reinicio.</t>
 <t id="L_EXTRUDE_PLASTIC_PAUSE" ver="10">Por favor, extruya algo de plástico para tener un mejor flujo y continúe después de quitar el plástico excedente</t>
 <t id="L_ENABLE_CREATE_CHECKPOINT_ON_NEW_LAYER" ver="10">Crear Punto de Restauración en una nueva capa</t>
 <t id="L_ENABLE_CREATE_CHECKPOINT_ON_NUMBER_OF_MOVEMENTS" ver="10">Crear Punto de Restauración al alcanzar un número de movimientos</t>
+<t id="M_CHECKPOINT_LOCK_Z" ver="10">Bloquear Z</t>
 </translation>
 

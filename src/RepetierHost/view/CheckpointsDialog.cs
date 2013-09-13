@@ -57,6 +57,7 @@ namespace RepetierHost.view
             toolStripButtonPreviousLayer.ToolTipText = Trans.T("M_CHECKPOINT_PREVIOUS_LAYER");
             toolStripButtonFF.ToolTipText = Trans.T("M_CHECKPOINT_FF");
             toolStripButtonRew.ToolTipText = Trans.T("M_CHECKPOINT_REW");
+            toolStripButtonLockZ.ToolTipText = Trans.T("M_CHECKPOINT_LOCK_Z");
             checkBoxUpdate3dView.Text = Trans.T("L_CHECKPOINT_SHOW_CHECKPOINT_IN_3D_VIEW");
             checkBoxMoveExtruder.Text = Trans.T("L_CHECKPOINT_MOVE_EXTRUDER_TO_CHECKPOINT");
             checkBoxPreviewCheckpoint.Text = Trans.T("L_CHECKPOINT_PREVIEW_CHECKPOINT");
@@ -230,6 +231,10 @@ namespace RepetierHost.view
 
         private void toolStripButtonSelectCurrentLayer_Click(object sender, EventArgs e)
         {
+            if (toolStripButtonLockZ.Checked)
+            {
+                return;
+            }
             lock (this)
             {
                 if (checkBoxMoveExtruder.Checked && Main.conn.connector.IsJobRunning())
@@ -246,8 +251,14 @@ namespace RepetierHost.view
 
         private void MoveToCurrentLayerCheckpoint()
         {
-            checkpoints.GoToFirst();
-            checkpoints.GoToPositionWithZ(Main.conn.analyzer.z);
+            bool found = checkpoints.GoToPositionWithZ(Main.conn.analyzer.z);
+
+            if (!found)
+            {
+                // Try again from the beginning in case we were in a position.
+                checkpoints.GoToFirst();
+                checkpoints.GoToPositionWithZ(Main.conn.analyzer.z);
+            }
         }
 
         private void toolStripButtonGoToNearest_Click(object sender, EventArgs e)
@@ -270,6 +281,10 @@ namespace RepetierHost.view
 
         private void toolStripButtonGoToLast_Click(object sender, EventArgs e)
         {
+            if (toolStripButtonLockZ.Checked)
+            {
+                return;
+            }
             lock (this)
             {
                 if (checkBoxMoveExtruder.Checked && Main.conn.connector.IsJobRunning())
@@ -294,7 +309,7 @@ namespace RepetierHost.view
                 }
                 else
                 {
-                    checkpoints.MoveToNext();
+                    checkpoints.MoveToNext(toolStripButtonLockZ.Checked);
                     MoveAndRedrawIfNeeded();
                 }
             }
@@ -310,7 +325,7 @@ namespace RepetierHost.view
                 }
                 else
                 {
-                    checkpoints.MoveToPrevious();
+                    checkpoints.MoveToPrevious(toolStripButtonLockZ.Checked);
                     MoveAndRedrawIfNeeded();
                 }
             }
@@ -318,6 +333,10 @@ namespace RepetierHost.view
 
         private void toolStripButtonNextLayer_Click(object sender, EventArgs e)
         {
+            if (toolStripButtonLockZ.Checked)
+            {
+                return;
+            }
             lock (this)
             {
                 if (checkBoxMoveExtruder.Checked && Main.conn.connector.IsJobRunning())
@@ -334,6 +353,10 @@ namespace RepetierHost.view
 
         private void toolStripButtonPreviousLayer_Click(object sender, EventArgs e)
         {
+            if (toolStripButtonLockZ.Checked)
+            {
+                return;
+            }
             lock (this)
             {
                 if (checkBoxMoveExtruder.Checked && Main.conn.connector.IsJobRunning())
@@ -377,6 +400,10 @@ namespace RepetierHost.view
 
         private void toolStripButtonHome_Click(object sender, EventArgs e)
         {
+            if (toolStripButtonLockZ.Checked)
+            {
+                return;
+            }
             lock (this)
             {
                 if (checkBoxMoveExtruder.Checked && Main.conn.connector.IsJobRunning())
@@ -404,7 +431,7 @@ namespace RepetierHost.view
                     int speed = RegMemory.GetInt("ffAndRewSpeed", 20);
                     for (int i = 0; i < speed; i++)
                     {
-                        checkpoints.MoveToPrevious();
+                        checkpoints.MoveToPrevious(toolStripButtonLockZ.Checked);
                     }
 
                     MoveAndRedrawIfNeeded();
@@ -425,7 +452,7 @@ namespace RepetierHost.view
                     int speed = RegMemory.GetInt("ffAndRewSpeed", 20);
                     for (int i = 0; i < speed; i++)
                     {
-                        checkpoints.MoveToNext();
+                        checkpoints.MoveToNext(toolStripButtonLockZ.Checked);
                     }
 
                     MoveAndRedrawIfNeeded();

@@ -47,6 +47,7 @@
             this.checkBoxMoveExtruder = new System.Windows.Forms.CheckBox();
             this.checkBoxPreviewCheckpoint = new System.Windows.Forms.CheckBox();
             this.labelCheckpointData = new System.Windows.Forms.Label();
+            this.toolStripButtonLockZ = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,7 +77,8 @@
             this.toolStripButtonRew,
             this.toolStripButtonFF,
             this.toolStripButtonPreviousLayer,
-            this.toolStripButtonNextLayer});
+            this.toolStripButtonNextLayer,
+            this.toolStripButtonLockZ});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(552, 39);
@@ -247,6 +249,16 @@
             this.labelCheckpointData.Size = new System.Drawing.Size(527, 20);
             this.labelCheckpointData.TabIndex = 9;
             // 
+            // toolStripButtonLockZ
+            // 
+            this.toolStripButtonLockZ.CheckOnClick = true;
+            this.toolStripButtonLockZ.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonLockZ.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLockZ.Image")));
+            this.toolStripButtonLockZ.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonLockZ.Name = "toolStripButtonLockZ";
+            this.toolStripButtonLockZ.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonLockZ.Text = "toolStripButton1";
+            // 
             // CheckpointsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -290,5 +302,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonGoToNearest;
         private System.Windows.Forms.ToolStripButton toolStripButtonPreviousLayer;
         private System.Windows.Forms.ToolStripButton toolStripButtonNextLayer;
+        private System.Windows.Forms.ToolStripButton toolStripButtonLockZ;
     }
 }

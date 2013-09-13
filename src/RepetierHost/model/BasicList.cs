@@ -58,7 +58,14 @@ namespace RepetierHost.model
 
         public T ElementAt(int index)
         {
-            return list.ElementAt(index);
+            if (index < 0 || index >= list.Count)
+            {
+                return default(T);
+            }
+            else
+            {
+                return list.ElementAt(index);
+            }
         }
 
         public BasicList<T> SkipAsList(int offset)

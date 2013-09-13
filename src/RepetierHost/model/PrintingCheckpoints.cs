@@ -180,39 +180,51 @@ namespace RepetierHost.model
 
         public int? FindElementAtZWithIndexGreaterThan(float z, int minIndex)
         {
-            return FindElementAtZWithIndexGreaterThan(z, minIndex, 0);
+            return FindElementAtZWithIndexGreaterOrLowerThan(z, minIndex, 0, false);
+        }
+
+        public int? FindElementAtZWithIndexLowerThan(float z, int maxIndex)
+        {
+            return FindElementAtZWithIndexGreaterOrLowerThan(z, maxIndex, 0, true);
         }
 
         public int? FindElementAboveZWithIndexGreaterThan(float z, int minIndex)
         {
-            return FindElementAtZWithIndexGreaterThan(z, minIndex, 1);
+            return FindElementAtZWithIndexGreaterOrLowerThan(z, minIndex, 1, false);
         }
 
-        public int? FindElementBelowZWithIndexGreaterThan(float z, int minIndex)
+        public int? FindElementBelowZWithIndexLowerThan(float z, int maxIndex)
         {
-            return FindElementAtZWithIndexGreaterThan(z, minIndex, -1);
+            return FindElementAtZWithIndexGreaterOrLowerThan(z, maxIndex, -1, true);
         }
 
         /// <summary>
         /// Returns the index of the position where the element with specified
         /// z was found, or the index of the first value with greater z if not
         /// found.
-        /// This method verifies the element has an index not lower than the
-        /// one given as parameter (this allows making a search next if
-        /// needed).
+        /// This method verifies the element has an index not lower or greater
+        /// than the one given as boundaryIndex parameter (this allows making a
+        /// search next if needed). In order to decide whether it must be
+        /// greater or lower, it uses the parameter reverse.
+        /// If delta is different from 0, instead of returning the elment with
+        /// the specified z, it returns "index + delta" if that index exists in
+        /// "the same heap".
         /// </summary>
         /// <param name="z"></param>
-        /// <param name="minIndex"></param>
+        /// <param name="boundaryIndex"></param>
         /// <param name="delta"></param>
+        /// <param name="reverse"></param>
         /// <returns></returns>
-        public int? FindElementAtZWithIndexGreaterThan(float z, int minIndex, int delta)
+        public int? FindElementAtZWithIndexGreaterOrLowerThan(float z, int boundaryIndex, int delta, bool reverse)
         {
+            float maxLayerDistance = (float)RegMemory.GetDouble("indexingMaxLayerHeight", 1f);
+
             IndexElement dummyElement = new IndexElement();
             dummyElement.z = z;
             IComparer<IndexElement> comparer = new IndexElementComparer();
-            foreach (List<IndexElement> list in indexes)
+            foreach (List<IndexElement> list in reverse ? indexes.Reverse() : indexes)
             {
-                if ((list.Count > 0) && (list.Last().listIndex >= minIndex))
+                if (list.Count > 0)
                 {
                     int index = list.BinarySearch(dummyElement, comparer);
                     if (index < 0)
@@ -230,15 +242,19 @@ namespace RepetierHost.model
                     }
                     if (index >= 0)
                     {
-                        // element found
-                        // shift the index based on the delta
-                        int shiftedIndex = index + delta;
-                        if (!(shiftedIndex >= list.Count || shiftedIndex < 0))
+                        // element found. We must verify it's not much greater
+                        // than searched z.
+                        if (Math.Abs(((IndexElement)list[index]).z - z) <= maxLayerDistance)
                         {
-                            IndexElement element = list[shiftedIndex];
-                            if (element.listIndex >= minIndex)
+                            // shift the index based on the delta
+                            int shiftedIndex = index + delta;
+                            if (!(shiftedIndex >= list.Count || shiftedIndex < 0) && (Math.Abs(((IndexElement)list[shiftedIndex]).z - z) <= maxLayerDistance))
                             {
-                                return element.listIndex;
+                                IndexElement element = list[shiftedIndex];
+                                if ((!reverse && element.listIndex >= boundaryIndex) || (reverse && element.listIndex <= boundaryIndex))
+                                {
+                                    return element.listIndex;
+                                }
                             }
                         }
                     }
@@ -364,19 +380,26 @@ namespace RepetierHost.model
         /// <returns></returns>
         internal bool GoToPositionWithNearestCoords(float x, float y, float z)
         {
+            // FIXME If you have more than one "column", it should check in all columns available for the nearest coords
             int minIndex = index;
-            int? foundIndex = chks.checkpointIndex.FindElementAtZWithIndexGreaterThan(z, minIndex);
-            if (foundIndex == null)
+            int? foundIndex;
+            bool foundOne = false;
+            int globalIndexMin = index;
+            double minDist = double.MaxValue;
+
+            // There may be many stacks. We must verify in all of them
+            while ((foundIndex = chks.checkpointIndex.FindElementAtZWithIndexGreaterThan(z, minIndex)) != null)
             {
-                return false;
-            }
-            else
-            {
+                foundOne = true;
+
                 index = (int)foundIndex;
                 PrintingCheckpoint chk = chks.checkpoints.ElementAt(index);
                 float currentZ = chk.z;
                 double sqDist = vectorSquareDistance(chk.x, chk.y, chk.z, x, y, z);
-                double minDist = sqDist;
+                if (sqDist < minDist)
+                {
+                    minDist = sqDist;
+                }
                 int indexMin = index;
 
                 while ((chk.z == currentZ) && (index + 1 < chks.checkpoints.Count) && (minDist > 0))
@@ -390,15 +413,23 @@ namespace RepetierHost.model
                         indexMin = index;
                     }
                 }
+                // we set the new index after the end of current index, which
+                // is the end of current layer.
+                minIndex = index + 1;
 
-                index = indexMin;
-
-                if (onCurrentCheckpointChanged != null)
+                if (minIndex < globalIndexMin)
                 {
-                    onCurrentCheckpointChanged();
+                    globalIndexMin = minIndex;
                 }
-                return true;
             }
+
+            index = globalIndexMin;
+
+            if (foundOne && onCurrentCheckpointChanged != null)
+            {
+                onCurrentCheckpointChanged();
+            }
+            return foundOne;
         }
 
         /// <summary>
@@ -463,11 +494,30 @@ namespace RepetierHost.model
         /// If there are no elements, it returns null.
         /// </summary>
         /// <returns></returns>
-        public PrintingCheckpoint MoveToNext()
+        public PrintingCheckpoint MoveToNext(bool lockZ)
         {
             if (HasNext())
             {
+                float lockedZ = GetCurrent().z; //only used if lockz=true
+
+                // increment index
                 index++;
+
+                if (lockZ && GetCurrent().z != lockedZ)
+                {
+                    // if z is locked, we must ensure z doesn't change
+                    int? candidateIndex = chks.checkpointIndex.FindElementAtZWithIndexGreaterThan(lockedZ, index);
+                    if (candidateIndex != null)
+                    {
+                        index = (int)candidateIndex;
+                    }
+                    else
+                    {
+                        // Restore last position with z=currentZ.
+                        index--;
+                    }
+                }
+
                 if (onCurrentCheckpointChanged != null)
                 {
                     onCurrentCheckpointChanged();
@@ -482,11 +532,36 @@ namespace RepetierHost.model
         /// If there are no elements, it returns null.
         /// </summary>
         /// <returns></returns>
-        public PrintingCheckpoint MoveToPrevious()
+        public PrintingCheckpoint MoveToPrevious(bool lockZ)
         {
             if (HasPrevious())
             {
+                float lockedZ = GetCurrent().z; //only used if lockz=true
+                
                 index--;
+
+                if (lockZ && GetCurrent().z != lockedZ)
+                {
+                    // if z is locked, we must ensure z doesn't change
+                    int? candidateIndex = chks.checkpointIndex.FindElementAtZWithIndexLowerThan(lockedZ, index);
+                    if (candidateIndex != null)
+                    {
+                        // Go to the end of the layer
+                        int candidateIndexInt = (int)candidateIndex;
+                        while (chks.checkpoints.Count > candidateIndexInt && chks.checkpoints.ElementAt(candidateIndexInt).z == lockedZ)
+                        {
+                            candidateIndexInt++;
+                        }
+
+                        index = candidateIndexInt - 1;
+                    }
+                    else
+                    {
+                        // Restore last position with z=currentZ.
+                        index++;
+                    }
+                }
+
                 if (onCurrentCheckpointChanged != null)
                 {
                     onCurrentCheckpointChanged();
@@ -505,14 +580,13 @@ namespace RepetierHost.model
         {
             if (index < chks.checkpoints.Count && chks.checkpoints.Count > 0)
             {
-                if (index < 0)
+                int minIndex = index;
+                if (minIndex < 0)
                 {
-                    index = 0;
+                    minIndex = 0;
                 }
                 PrintingCheckpoint chk = chks.checkpoints.ElementAt(index);
                 float currentZ = chk.z;
-
-                int minIndex = 0;
 
                 int? newIndex = chks.checkpointIndex.FindElementAboveZWithIndexGreaterThan(currentZ, minIndex);
                 if (newIndex != null)
@@ -538,12 +612,10 @@ namespace RepetierHost.model
         {
             if (index > 0 && chks.checkpoints.Count > 0)
             {
-                PrintingCheckpoint chk = chks.checkpoints.ElementAt(index);
+                int minIndex = index;
+                PrintingCheckpoint chk = chks.checkpoints.ElementAt(minIndex);
                 float currentZ = chk.z;
-
-                int minIndex = 0;
-
-                int? newIndex = chks.checkpointIndex.FindElementBelowZWithIndexGreaterThan(currentZ, minIndex);
+                int? newIndex = chks.checkpointIndex.FindElementBelowZWithIndexLowerThan(currentZ, minIndex);
                 if (newIndex != null)
                 {
                     index = (int)newIndex;

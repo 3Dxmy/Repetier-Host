@@ -388,19 +388,19 @@ namespace RepetierHost.model
             double minDist = double.MaxValue;
 
             // There may be many stacks. We must verify in all of them
-            while ((foundIndex = chks.checkpointIndex.FindElementAtZWithIndexGreaterThan(z, minIndex)) != null)
+            while (((foundIndex = chks.checkpointIndex.FindElementAtZWithIndexGreaterThan(z, minIndex)) != null) && (minDist > 0))
             {
                 foundOne = true;
 
-                index = (int)foundIndex;
-                PrintingCheckpoint chk = chks.checkpoints.ElementAt(index);
+                int workingIndex = (int)foundIndex;
+                PrintingCheckpoint chk = chks.checkpoints.ElementAt(workingIndex);
                 float currentZ = chk.z;
                 double sqDist = vectorSquareDistance(chk.x, chk.y, chk.z, x, y, z);
                 if (sqDist < minDist)
                 {
                     minDist = sqDist;
+                    globalIndexMin = workingIndex;
                 }
-                int indexMin = index;
 
                 while ((chk.z == currentZ) && (index + 1 < chks.checkpoints.Count) && (minDist > 0))
                 {
@@ -410,24 +410,22 @@ namespace RepetierHost.model
                     if (sqDist < minDist)
                     {
                         minDist = sqDist;
-                        indexMin = index;
+                        globalIndexMin = workingIndex;
                     }
                 }
                 // we set the new index after the end of current index, which
                 // is the end of current layer.
-                minIndex = index + 1;
-
-                if (minIndex < globalIndexMin)
-                {
-                    globalIndexMin = minIndex;
-                }
+                minIndex = workingIndex + 1;
             }
 
-            index = globalIndexMin;
-
-            if (foundOne && onCurrentCheckpointChanged != null)
+            if (foundOne)
             {
-                onCurrentCheckpointChanged();
+                index = globalIndexMin;
+
+                if (onCurrentCheckpointChanged != null)
+                {
+                    onCurrentCheckpointChanged();
+                }
             }
             return foundOne;
         }

@@ -139,7 +139,7 @@ namespace RepetierHost.view
             checkShowPrinterNameInPrinterIdLabel.Checked = 1 == RegMemory.GetInt("showPrinterNameInPrinterIdLabel", 1);
             checkBoxCreateChkpntPerLayer.Checked = RegMemory.GetBool("enableCheckpointOnNewLayer", true);
             checkBoxCreateChkpntEveryNSteps.Checked = RegMemory.GetBool("enableCreateCheckpointOnNumberOfMovements", true);
-            updownChkpntSteps.Text = RegMemory.GetLong("numberOfMovementsToCreateCheckpoint", 100) + "";
+            updownChkpntSteps.Text = RegMemory.GetLong("numberOfMovementsToCreateCheckpoint", 10) + "";
         }
         public static void Associate(string extension,
            string progID, string description)

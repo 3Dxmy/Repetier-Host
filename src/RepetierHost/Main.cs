@@ -2011,7 +2011,7 @@ namespace RepetierHost
         {
             movementsCount++;
             bool EnableCreateCheckpointOnNumberOfMovements = RegMemory.GetBool("enableCreateCheckpointOnNumberOfMovements", true);
-            long NumberOfMovementsToCreateCheckpoint = RegMemory.GetLong("numberOfMovementsToCreateCheckpoint", 100);
+            long NumberOfMovementsToCreateCheckpoint = RegMemory.GetLong("numberOfMovementsToCreateCheckpoint", 10);
             if (Main.conn.connector.IsJobRunning() && !Main.conn.connector.IsPaused && EnableCreateCheckpointOnNumberOfMovements && (NumberOfMovementsToCreateCheckpoint > 0 && movementsCount % NumberOfMovementsToCreateCheckpoint == 0))
             {
                 checkpoints.CreateCheckpoint(MovementCountCheckpointType.Instance);

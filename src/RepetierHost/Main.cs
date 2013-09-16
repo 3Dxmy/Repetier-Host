@@ -404,8 +404,6 @@ namespace RepetierHost
             ProcessCommandLine();
 
             checkpoints = new PrintingCheckpoints(conn);
-
-            snapshotToolStripMenuItem.Visible = false;
         }
         internal static class NativeMethods
         {

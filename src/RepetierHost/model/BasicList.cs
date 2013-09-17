@@ -13,7 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
-   written by eze-eoc at kikai labs (eai@eoconsulting.com.ar)
+   written by eze-eoc
 */
 
 using System;

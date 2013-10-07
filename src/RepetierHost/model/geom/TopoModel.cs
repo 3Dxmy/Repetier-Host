@@ -32,7 +32,7 @@ namespace RepetierHost.model.geom
     public class TopoModel
     {
         public const bool debugRepair = false;
-        public const float epsilon = 0.001f;
+        public const double epsilon = 0.0001f;
         public TopoVertexStorage vertices = new TopoVertexStorage();
         public TopoTriangleStorage triangles = new TopoTriangleStorage();
         public LinkedList<TopoEdge> edges = new LinkedList<TopoEdge>();
@@ -719,6 +719,48 @@ namespace RepetierHost.model.geom
                 Debug.WriteLine("========");
             }
         }
+        public void AnalyseFast()
+        {
+            RLog.info(Trans.T("L_STARTING_ANALYSER"));
+            //RepairUnobtrusive();
+            //UpdateIntersectingTriangles();
+            CheckNormals();
+            manyShardEdges = 0;
+            loopEdges = 0;
+            foreach (TopoEdge edge in edges)
+            {
+                if (edge.connectedFaces < 2)
+                    loopEdges++;
+                else if (edge.connectedFaces > 2)
+                    manyShardEdges++;
+            }
+            if (loopEdges > 0)
+                RLog.info(Trans.T("L_ANA_LOOP_EDGES") + loopEdges);
+            if (manyShardEdges > 0)
+                RLog.info(Trans.T("L_ANA_HIGHLY_CONNECTED") + manyShardEdges);
+            if (updatedNormals > 0)
+                RLog.info(Trans.T("L_ANA_CORRECTED_NORMAL_ORIENTATIONS") + updatedNormals);
+            statistics();
+            if (loopEdges + manyShardEdges == 0)
+            {
+                manifold = true;
+                RLog.info(Trans.T("L_OBJECT_IS_MANIFOLD"));
+            }
+            else
+            {
+                manifold = false;
+                RLog.info(Trans.T("L_OBJECT_IS_NON_MANIFOLD"));
+            }
+            UpdateVertexNumbers();
+            RLog.info(Trans.T("L_ANALYSER_FINISHED"));
+            if (false)
+            {
+                Debug.WriteLine("Intersecting triangles:");
+                foreach (TopoTriangle t in intersectingTriangles)
+                    Debug.WriteLine(t);
+                Debug.WriteLine("========");
+            }
+        }
         public void RetestIntersectingTriangles()
         {
             foreach (TopoTriangle t in intersectingTriangles)
@@ -1287,6 +1329,7 @@ namespace RepetierHost.model.geom
                 addTriangle(p1, p2, p3, normalVect);
             }
         }
+
         public void importSTL(string filename)
         {
             StartAction("L_LOADING...");
@@ -1337,5 +1380,32 @@ namespace RepetierHost.model.geom
                 MessageBox.Show(e.ToString(), "Error reading STL file", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        public bool import3Ds(string filename)
+        {
+            _3DSLoader loader = new _3DSLoader();
+            _3DSLoader._3DScene scene = loader.Load(filename);
+            if (scene.GetObjectCount() == 0) return false;
+            foreach (_3DSLoader._3DObject obj in scene.GetObjects())
+            {
+                for (int index = 0; index < obj.GetFaceCount(); index++)
+                {
+                    _3DSLoader._3DFace face = obj.GetFace(index);
+                    _3DSLoader._3DVertex vertex;
+
+                    vertex = obj.GetVertex(face.Vertex1);
+                    RHVector3 vert1 = new RHVector3(vertex.X, vertex.Y, vertex.Z);
+                    vertex = obj.GetVertex(face.Vertex2);
+                    RHVector3 vert2 = new RHVector3(vertex.X, vertex.Y, vertex.Z);
+                    vertex = obj.GetVertex(face.Vertex3);
+                    RHVector3 vert3 = new RHVector3(vertex.X, vertex.Y, vertex.Z);
+                    RHVector3 normal = new RHVector3(0, 0, 0);
+
+                    addTriangle(vert1, vert2, vert3, normal).RecomputeNormal();
+                }
+            }
+            return true;
+        }
+
     }
 }

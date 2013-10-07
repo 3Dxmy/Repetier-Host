@@ -648,6 +648,7 @@ namespace RepetierHost.view
         public void Clear()
         {
             lines.Clear();
+            cur.ClearUndo();
             row = col = topRow = topCol = 0;
             hasSel = true;
             AppendLine("");

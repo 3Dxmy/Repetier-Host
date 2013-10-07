@@ -54,8 +54,8 @@
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.showEdgesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showFacesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.togglePrinterIdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCompassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.togglePrinterIdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printerSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -170,14 +170,14 @@
             this.tabPage3DView = new System.Windows.Forms.TabPage();
             this.tabPageTemp = new System.Windows.Forms.TabPage();
             this.splitPrinterId = new System.Windows.Forms.SplitContainer();
+            this.buttonChangeId = new System.Windows.Forms.Button();
             this.printerIdLabel = new System.Windows.Forms.Label();
             this.tab = new System.Windows.Forms.TabControl();
             this.tabModel = new System.Windows.Forms.TabPage();
             this.tabSlicer = new System.Windows.Forms.TabPage();
+            this.slicerPanel = new RepetierHost.view.SlicerPanel();
             this.tabGCode = new System.Windows.Forms.TabPage();
             this.tabPrint = new System.Windows.Forms.TabPage();
-            this.buttonEditPrinterId = new System.Windows.Forms.Button();
-            this.slicerPanel = new RepetierHost.view.SlicerPanel();
             this.tdSettings = new System.Windows.Forms.BindingSource(this.components);
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
@@ -190,7 +190,6 @@
             this.splitInfoEdit.Panel2.SuspendLayout();
             this.splitInfoEdit.SuspendLayout();
             this.tabControlView.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitPrinterId)).BeginInit();
             this.splitPrinterId.Panel1.SuspendLayout();
             this.splitPrinterId.Panel2.SuspendLayout();
             this.splitPrinterId.SuspendLayout();
@@ -243,14 +242,14 @@
             this.loadStateToolStripMenuItem,
             this.saveStateToolStripMenuItem});
             this.snapshotToolStripMenuItem.Name = "snapshotToolStripMenuItem";
-            this.snapshotToolStripMenuItem.Size = new System.Drawing.Size(218, 22);
+            this.snapshotToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.snapshotToolStripMenuItem.Text = "Snapshot";
             // 
             // loadStateToolStripMenuItem
             // 
             this.loadStateToolStripMenuItem.Name = "loadStateToolStripMenuItem";
             this.loadStateToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.loadStateToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.loadStateToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.loadStateToolStripMenuItem.Text = "Load";
             this.loadStateToolStripMenuItem.Click += new System.EventHandler(this.loadStateToolStripMenuItem_Click);
             // 
@@ -259,7 +258,7 @@
             this.saveStateToolStripMenuItem.Enabled = false;
             this.saveStateToolStripMenuItem.Name = "saveStateToolStripMenuItem";
             this.saveStateToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8;
-            this.saveStateToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.saveStateToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.saveStateToolStripMenuItem.Text = "Save";
             this.saveStateToolStripMenuItem.Click += new System.EventHandler(this.saveStateToolStripMenuItem_Click);
             // 
@@ -304,8 +303,8 @@
             this.toolStripMenuItem7,
             this.showEdgesToolStripMenuItem,
             this.showFacesToolStripMenuItem,
-            this.togglePrinterIdToolStripMenuItem,
-            this.showCompassToolStripMenuItem});
+            this.showCompassToolStripMenuItem,
+            this.togglePrinterIdToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -314,7 +313,7 @@
             // 
             this.isometricToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("isometricToolStripMenuItem.Image")));
             this.isometricToolStripMenuItem.Name = "isometricToolStripMenuItem";
-            this.isometricToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.isometricToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.isometricToolStripMenuItem.Text = "Isometric";
             this.isometricToolStripMenuItem.Click += new System.EventHandler(this.isometricToolStripMenuItem_Click);
             // 
@@ -322,7 +321,7 @@
             // 
             this.frontViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("frontViewToolStripMenuItem.Image")));
             this.frontViewToolStripMenuItem.Name = "frontViewToolStripMenuItem";
-            this.frontViewToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.frontViewToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.frontViewToolStripMenuItem.Text = "Front view";
             this.frontViewToolStripMenuItem.Click += new System.EventHandler(this.frontViewToolStripMenuItem_Click);
             // 
@@ -330,7 +329,7 @@
             // 
             this.leftViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("leftViewToolStripMenuItem.Image")));
             this.leftViewToolStripMenuItem.Name = "leftViewToolStripMenuItem";
-            this.leftViewToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.leftViewToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.leftViewToolStripMenuItem.Text = "Left view";
             this.leftViewToolStripMenuItem.Click += new System.EventHandler(this.leftViewToolStripMenuItem_Click);
             // 
@@ -338,7 +337,7 @@
             // 
             this.rightViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("rightViewToolStripMenuItem.Image")));
             this.rightViewToolStripMenuItem.Name = "rightViewToolStripMenuItem";
-            this.rightViewToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.rightViewToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.rightViewToolStripMenuItem.Text = "Right view";
             this.rightViewToolStripMenuItem.Click += new System.EventHandler(this.rightViewToolStripMenuItem_Click);
             // 
@@ -346,7 +345,7 @@
             // 
             this.backViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("backViewToolStripMenuItem.Image")));
             this.backViewToolStripMenuItem.Name = "backViewToolStripMenuItem";
-            this.backViewToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.backViewToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.backViewToolStripMenuItem.Text = "Back view";
             this.backViewToolStripMenuItem.Click += new System.EventHandler(this.backViewToolStripMenuItem_Click);
             // 
@@ -354,7 +353,7 @@
             // 
             this.topViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("topViewToolStripMenuItem.Image")));
             this.topViewToolStripMenuItem.Name = "topViewToolStripMenuItem";
-            this.topViewToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.topViewToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.topViewToolStripMenuItem.Text = "Top view";
             this.topViewToolStripMenuItem.Click += new System.EventHandler(this.topViewToolStripMenuItem_Click);
             // 
@@ -362,20 +361,20 @@
             // 
             this.bottomViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("bottomViewToolStripMenuItem.Image")));
             this.bottomViewToolStripMenuItem.Name = "bottomViewToolStripMenuItem";
-            this.bottomViewToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.bottomViewToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.bottomViewToolStripMenuItem.Text = "Bottom view";
             this.bottomViewToolStripMenuItem.Click += new System.EventHandler(this.bottomViewToolStripMenuItem_Click);
             // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-            this.toolStripMenuItem8.Size = new System.Drawing.Size(223, 6);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(226, 6);
             // 
             // fitPrinterToolStripMenuItem
             // 
             this.fitPrinterToolStripMenuItem.Name = "fitPrinterToolStripMenuItem";
             this.fitPrinterToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.fitPrinterToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.fitPrinterToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.fitPrinterToolStripMenuItem.Text = "Fit Printer";
             this.fitPrinterToolStripMenuItem.Click += new System.EventHandler(this.fitPrinterToolStripMenuItem_Click);
             // 
@@ -383,20 +382,20 @@
             // 
             this.fitObjectsToolStripMenuItem.Name = "fitObjectsToolStripMenuItem";
             this.fitObjectsToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.fitObjectsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.fitObjectsToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.fitObjectsToolStripMenuItem.Text = "Fit Objects";
             this.fitObjectsToolStripMenuItem.Click += new System.EventHandler(this.fitObjectsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(223, 6);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(226, 6);
             // 
             // showEdgesToolStripMenuItem
             // 
             this.showEdgesToolStripMenuItem.Name = "showEdgesToolStripMenuItem";
             this.showEdgesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.showEdgesToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.showEdgesToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.showEdgesToolStripMenuItem.Text = "Show Edges";
             this.showEdgesToolStripMenuItem.Click += new System.EventHandler(this.showEdgesToolStripMenuItem_Click);
             // 
@@ -404,25 +403,25 @@
             // 
             this.showFacesToolStripMenuItem.Name = "showFacesToolStripMenuItem";
             this.showFacesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.showFacesToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.showFacesToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.showFacesToolStripMenuItem.Text = "Show Faces";
             this.showFacesToolStripMenuItem.Click += new System.EventHandler(this.showFacesToolStripMenuItem_Click);
-            // 
-            // togglePrinterIdToolStripMenuItem
-            // 
-            this.togglePrinterIdToolStripMenuItem.Name = "togglePrinterIdToolStripMenuItem";
-            this.togglePrinterIdToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.togglePrinterIdToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.togglePrinterIdToolStripMenuItem.Text = "Toggle Printer Id View";
-            this.togglePrinterIdToolStripMenuItem.Click += new System.EventHandler(this.togglePrinterIdToolStripMenuItem_Click);
             // 
             // showCompassToolStripMenuItem
             // 
             this.showCompassToolStripMenuItem.Name = "showCompassToolStripMenuItem";
             this.showCompassToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.C)));
-            this.showCompassToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.showCompassToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.showCompassToolStripMenuItem.Text = "Show Compass";
             this.showCompassToolStripMenuItem.Click += new System.EventHandler(this.showCompassToolStripMenuItem_Click);
+            // 
+            // togglePrinterIdToolStripMenuItem
+            // 
+            this.togglePrinterIdToolStripMenuItem.Name = "togglePrinterIdToolStripMenuItem";
+            this.togglePrinterIdToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.togglePrinterIdToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
+            this.togglePrinterIdToolStripMenuItem.Text = "Toggle Printer Id View";
+            this.togglePrinterIdToolStripMenuItem.Click += new System.EventHandler(this.togglePrinterIdToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -1344,7 +1343,8 @@
             // openGCode
             // 
             this.openGCode.DefaultExt = "gcode";
-            this.openGCode.Filter = "GCode/3D-Files|*.gcode;*.gco;*.g;*.nc;*.stl;*.STL;*.obj;*.OBJ|All files|*.*";
+            this.openGCode.Filter = "GCode/3D-Files|*.gcode;*.gco;*.g;*.nc;*.stl;*.STL;*.obj;*.OBJ;*.3ds;*.3DS|All fil" +
+    "es|*.*";
             this.openGCode.Title = "Import G-Code";
             // 
             // saveJobDialog
@@ -1426,27 +1426,44 @@
             // splitPrinterId
             // 
             this.splitPrinterId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitPrinterId.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitPrinterId.IsSplitterFixed = true;
             this.splitPrinterId.Location = new System.Drawing.Point(0, 0);
             this.splitPrinterId.Name = "splitPrinterId";
             this.splitPrinterId.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitPrinterId.Panel1
             // 
-            this.splitPrinterId.Panel1.Controls.Add(this.buttonEditPrinterId);
+            this.splitPrinterId.Panel1.Controls.Add(this.buttonChangeId);
             this.splitPrinterId.Panel1.Controls.Add(this.printerIdLabel);
             // 
             // splitPrinterId.Panel2
             // 
             this.splitPrinterId.Panel2.Controls.Add(this.tab);
             this.splitPrinterId.Size = new System.Drawing.Size(475, 330);
-            this.splitPrinterId.SplitterDistance = 45;
+            this.splitPrinterId.SplitterDistance = 33;
+            this.splitPrinterId.SplitterWidth = 1;
             this.splitPrinterId.TabIndex = 0;
+            // 
+            // buttonChangeId
+            // 
+            this.buttonChangeId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonChangeId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonChangeId.Image = ((System.Drawing.Image)(resources.GetObject("buttonChangeId.Image")));
+            this.buttonChangeId.Location = new System.Drawing.Point(438, -1);
+            this.buttonChangeId.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonChangeId.Name = "buttonChangeId";
+            this.buttonChangeId.Size = new System.Drawing.Size(37, 34);
+            this.buttonChangeId.TabIndex = 1;
+            this.buttonChangeId.UseVisualStyleBackColor = true;
+            this.buttonChangeId.Click += new System.EventHandler(this.printerIdLabel_DoubleClick);
             // 
             // printerIdLabel
             // 
-            this.printerIdLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.printerIdLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.printerIdLabel.BackColor = System.Drawing.Color.RoyalBlue;
             this.printerIdLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.printerIdLabel.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Bold);
@@ -1454,7 +1471,7 @@
             this.printerIdLabel.Location = new System.Drawing.Point(0, 0);
             this.printerIdLabel.Name = "printerIdLabel";
             this.printerIdLabel.Padding = new System.Windows.Forms.Padding(3);
-            this.printerIdLabel.Size = new System.Drawing.Size(475, 45);
+            this.printerIdLabel.Size = new System.Drawing.Size(442, 34);
             this.printerIdLabel.TabIndex = 0;
             this.printerIdLabel.Text = "Printer ID";
             this.printerIdLabel.DoubleClick += new System.EventHandler(this.printerIdLabel_DoubleClick);
@@ -1469,7 +1486,7 @@
             this.tab.Location = new System.Drawing.Point(0, 0);
             this.tab.Name = "tab";
             this.tab.SelectedIndex = 0;
-            this.tab.Size = new System.Drawing.Size(475, 281);
+            this.tab.Size = new System.Drawing.Size(475, 296);
             this.tab.TabIndex = 3;
             this.tab.SelectedIndexChanged += new System.EventHandler(this.tab_SelectedIndexChanged);
             // 
@@ -1478,7 +1495,7 @@
             this.tabModel.BackColor = System.Drawing.Color.Transparent;
             this.tabModel.Location = new System.Drawing.Point(4, 22);
             this.tabModel.Name = "tabModel";
-            this.tabModel.Size = new System.Drawing.Size(467, 255);
+            this.tabModel.Size = new System.Drawing.Size(467, 270);
             this.tabModel.TabIndex = 2;
             this.tabModel.Text = "Object placements";
             this.tabModel.UseVisualStyleBackColor = true;
@@ -1488,10 +1505,19 @@
             this.tabSlicer.Controls.Add(this.slicerPanel);
             this.tabSlicer.Location = new System.Drawing.Point(4, 22);
             this.tabSlicer.Name = "tabSlicer";
-            this.tabSlicer.Size = new System.Drawing.Size(467, 255);
+            this.tabSlicer.Size = new System.Drawing.Size(467, 270);
             this.tabSlicer.TabIndex = 3;
             this.tabSlicer.Text = "Slicer";
             this.tabSlicer.UseVisualStyleBackColor = true;
+            // 
+            // slicerPanel
+            // 
+            this.slicerPanel.AutoScroll = true;
+            this.slicerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.slicerPanel.Location = new System.Drawing.Point(0, 0);
+            this.slicerPanel.Name = "slicerPanel";
+            this.slicerPanel.Size = new System.Drawing.Size(467, 270);
+            this.slicerPanel.TabIndex = 0;
             // 
             // tabGCode
             // 
@@ -1500,7 +1526,7 @@
             this.tabGCode.Location = new System.Drawing.Point(4, 22);
             this.tabGCode.Name = "tabGCode";
             this.tabGCode.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGCode.Size = new System.Drawing.Size(467, 255);
+            this.tabGCode.Size = new System.Drawing.Size(467, 270);
             this.tabGCode.TabIndex = 1;
             this.tabGCode.Text = "G-Code editor";
             this.tabGCode.UseVisualStyleBackColor = true;
@@ -1511,35 +1537,16 @@
             this.tabPrint.Location = new System.Drawing.Point(4, 22);
             this.tabPrint.Name = "tabPrint";
             this.tabPrint.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrint.Size = new System.Drawing.Size(467, 255);
+            this.tabPrint.Size = new System.Drawing.Size(467, 270);
             this.tabPrint.TabIndex = 0;
             this.tabPrint.Text = "Manual control";
             this.tabPrint.UseVisualStyleBackColor = true;
-            // 
-            // buttonEditPrinterId
-            // 
-            this.buttonEditPrinterId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonEditPrinterId.Location = new System.Drawing.Point(429, 24);
-            this.buttonEditPrinterId.Name = "buttonEditPrinterId";
-            this.buttonEditPrinterId.Size = new System.Drawing.Size(44, 20);
-            this.buttonEditPrinterId.TabIndex = 1;
-            this.buttonEditPrinterId.Text = "Edit";
-            this.buttonEditPrinterId.UseVisualStyleBackColor = true;
-            this.buttonEditPrinterId.Click += new System.EventHandler(this.buttonEditPrinterId_Click);
-            // 
-            // slicerPanel
-            // 
-            this.slicerPanel.AutoScroll = true;
-            this.slicerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.slicerPanel.Location = new System.Drawing.Point(0, 0);
-            this.slicerPanel.Name = "slicerPanel";
-            this.slicerPanel.Size = new System.Drawing.Size(467, 255);
-            this.slicerPanel.TabIndex = 0;
             // 
             // tdSettings
             // 
             this.tdSettings.DataSource = typeof(RepetierHost.view.ThreeDSettings);
             this.tdSettings.DataMemberChanged += new System.EventHandler(this.tdSettings_DataMemberChanged);
+            this.tdSettings.CurrentChanged += new System.EventHandler(this.tdSettings_CurrentChanged);
             this.tdSettings.CurrentItemChanged += new System.EventHandler(this.tdSettings_CurrentChanged);
             // 
             // Main
@@ -1556,7 +1563,7 @@
             this.MainMenuStrip = this.menu;
             this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "Main";
-            this.Text = "Repetier-Host V0.90C";
+            this.Text = "Repetier-Host V0.90D";
             this.Activated += new System.EventHandler(this.Main_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
@@ -1580,7 +1587,6 @@
             this.tabControlView.ResumeLayout(false);
             this.splitPrinterId.Panel1.ResumeLayout(false);
             this.splitPrinterId.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitPrinterId)).EndInit();
             this.splitPrinterId.ResumeLayout(false);
             this.tab.ResumeLayout(false);
             this.tabSlicer.ResumeLayout(false);
@@ -1731,8 +1737,7 @@
         private System.Windows.Forms.ToolStripMenuItem loadStateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveStateToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitPrinterId;
-        private System.Windows.Forms.Label printerIdLabel;
-        private System.Windows.Forms.ToolStripMenuItem togglePrinterIdToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem togglePrinterIdToolStripMenuItem; 
         private System.Windows.Forms.ToolStripSeparator toolStripAskSeperator;
         private System.Windows.Forms.ToolStripMenuItem extraUrl1ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem extraUrl2ToolStripMenuItem;
@@ -1740,7 +1745,8 @@
         private System.Windows.Forms.ToolStripMenuItem extraUrl4ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem extraUrl5ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showCompassToolStripMenuItem;
-        private System.Windows.Forms.Button buttonEditPrinterId;
+        private System.Windows.Forms.Button buttonChangeId;
+        public System.Windows.Forms.Label printerIdLabel;
     }
 }
 

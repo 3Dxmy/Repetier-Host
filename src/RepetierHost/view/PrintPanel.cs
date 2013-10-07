@@ -252,7 +252,59 @@ namespace RepetierHost.view
                 comboExtruder.SelectedIndex = ann.activeExtruderId;
             createCommands = true;
         }
+        int lastXHomeTest = -1;
+        int lastYHomeTest = -1;
+        int lastZHomeTest = -1;
+        private void updateCrossColors()
+        {
+            int newXHomeTest = (ann.hasXHome ? 1 : 0);
+            int newYHomeTest = (ann.hasYHome ? 1 : 0);
+            int newZHomeTest = (ann.hasZHome ? 1 : 0);
+            if (lastXHomeTest != newXHomeTest)
+            {
+                if (ann.hasXHome)
+                {
+                    arrowButtonXMinus.GradientEndColor = Color.BurlyWood;
+                    arrowButtonXPlus.GradientEndColor = Color.BurlyWood;
+                }
+                else
+                {
+                    arrowButtonXMinus.GradientEndColor = Color.MediumPurple;
+                    arrowButtonXPlus.GradientEndColor = Color.MediumPurple;
+                }
+                lastXHomeTest = newXHomeTest;
+            }
+            if (lastYHomeTest != newYHomeTest)
+            {
+                if (ann.hasYHome)
+                {
+                    arrowButtonYMinus.GradientEndColor = Color.SkyBlue;
+                    arrowButtonYPlus.GradientEndColor = Color.SkyBlue;
+                }
+                else
+                {
+                    arrowButtonYMinus.GradientEndColor = Color.MediumPurple;
+                    arrowButtonYPlus.GradientEndColor = Color.MediumPurple;
+                }
+                lastYHomeTest = newYHomeTest;
+            }
+            if (lastZHomeTest != newZHomeTest)
+            {
+                if (ann.hasZHome)
+                {
+                    arrowButtonZMinus.GradientEndColor = Color.MediumAquamarine;
+                    arrowButtonZPlus.GradientEndColor = Color.MediumAquamarine;
+                }
+                else
+                {
+                    arrowButtonZMinus.GradientEndColor = Color.MediumPurple;
+                    arrowButtonZPlus.GradientEndColor = Color.MediumPurple;
+                }
+                lastZHomeTest = newZHomeTest;
+            }
+        }
         private void coordUpdate(GCode code,float x,float y,float z) {
+            updateCrossColors();
             if (x != -lastx || x==0)
             {
                 labelX.Text = "X=" + x.ToString("0.00");

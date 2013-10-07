@@ -29,6 +29,7 @@ using OpenTK;
 using RepetierHost.model;
 using RepetierHost.model.geom;
 using RepetierHost.view.utils;
+using System.Diagnostics;
 
 namespace RepetierHost.view
 {
@@ -201,7 +202,10 @@ namespace RepetierHost.view
             labelEdges.Text = model.ActiveModel.edges.Count.ToString();
             labelFaces.Text = model.ActiveModel.triangles.Count.ToString();
             labelShells.Text = model.ActiveModel.shells.ToString();
-            labelIntersectingTriangles.Text = model.ActiveModel.intersectingTriangles.Count.ToString();
+            if (model.ActiveModel.intersectionsUpToDate)
+                labelIntersectingTriangles.Text = model.ActiveModel.intersectingTriangles.Count.ToString();
+            else
+                labelIntersectingTriangles.Text = Trans.T("L_NOT_TESTED");
             labelIntersectingTriangles.ForeColor = (model.ActiveModel.intersectingTriangles.Count == 0 ? Color.Black : Color.Red);
             labelLoopEdges.Text = model.ActiveModel.loopEdges.ToString();
             labelLoopEdges.ForeColor = (model.ActiveModel.loopEdges == 0 ? Color.Black : Color.Red);
@@ -240,6 +244,7 @@ namespace RepetierHost.view
         private void updateEnabled()
         {
             int n = listObjects.SelectedItems.Count;
+            Debug.WriteLine("updateENabled "+n);
             if (n != 1)
             {
                 textRotX.Enabled = false;
@@ -498,7 +503,11 @@ namespace RepetierHost.view
                 }
                 else
                 {
-                    listObjects.SelectedItems.Clear();
+                    foreach (ListViewItem test in listObjects.Items) {
+                        if (test.Selected && (PrintModel)test.Tag != (PrintModel)sel)
+                            test.Selected = false;
+                    }
+                    //listObjects.SelectedItems.Clear();
                     SetObjectSelected((PrintModel)sel,true);
                 }
         }
@@ -951,6 +960,23 @@ namespace RepetierHost.view
             PrintModel act = SingleSelectedModel;
             if (act == null) return;
             ObjectInformation.Execute(act);
+        }
+
+        private void buttonAnalyse_Click(object sender, EventArgs e)
+        {
+            if (listObjects.SelectedItems.Count != 1) return;
+            PrintModel model = (PrintModel)ListObjects(true).First.Value;
+            if (model != null)
+            {
+                InfoProgressPanel ipp = InfoProgressPanel.Create(Trans.T("L_ANAYLSING"), true);
+                ipp.Action = ""; // Trans.T("L_LOADING...");
+                ipp.Dock = DockStyle.Top;
+                panelControls.Controls.Add(ipp);
+                panelControls.Update();
+                model.DeepAnalysis(ipp);
+                ipp.Finished();
+                UpdateAnalyserData();
+            }
         }
     }
     public class EnglishStreamWriter : StreamWriter

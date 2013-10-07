@@ -272,7 +272,7 @@ namespace RepetierHost.model
             code.Append("G92 E" + e.ToString(GCode.format));
             NewLine();
             E = e;
-        }
+        } 
         public void SetRetract(bool rt)
         {
             if (rt == IsRetract) return;

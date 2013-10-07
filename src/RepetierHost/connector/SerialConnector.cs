@@ -92,11 +92,12 @@ namespace RepetierHost.connector
        // int ignoreXEqualResendsResend = 0;
         bool prequelFinished = false;
 
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+       /* protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
+            Console.WriteLine("Fire Property changed " + PropertyChanged);
             if (PropertyChanged != null)
                 PropertyChanged(this, e);
-        }
+        }*/
         public SerialConnector()
         {
             con = Main.conn;
@@ -571,8 +572,10 @@ namespace RepetierHost.connector
             {                
                 //serial.DtrEnable = !serial.DtrEnable;
                 serial.DtrEnable = true;
+                serial.RtsEnable = true;
                 Thread.Sleep(200);
                 serial.DtrEnable = false;
+                serial.RtsEnable = false;
             }
         }
         public override void ToggleETAMode()
@@ -583,10 +586,17 @@ namespace RepetierHost.connector
 
         public override void RunJob()
         {
+            bool isContinuedJob = false; // @continuedScript
+            List<GCodeShort> content = Main.main.editor.getContentArray(0);
+            if (content.Count == 0) return; // nothing to print
+            if(content[0].text.StartsWith("@continuedScript"))
+                isContinuedJob = true;
             job.BeginJob();
-            job.PushGCodeShortArray(Main.main.editor.getContentArray(1));
-            job.PushGCodeShortArray(Main.main.editor.getContentArray(0));
-            job.PushGCodeShortArray(Main.main.editor.getContentArray(2));
+            if(!isContinuedJob)
+                job.PushGCodeShortArray(Main.main.editor.getContentArray(1));
+            job.PushGCodeShortArray(content);
+            if (!isContinuedJob)
+                job.PushGCodeShortArray(Main.main.editor.getContentArray(2));
             job.EndJob();
             Main.main.Invoke(Main.main.UpdateJobButtons);
         }
@@ -613,7 +623,7 @@ namespace RepetierHost.connector
             if (eventPauseChanged != null)
             {
                 eventPauseChanged(true);
-            }
+            } 
         }
         public override void ContinueJob()
         {
@@ -650,14 +660,24 @@ namespace RepetierHost.connector
         {
             return Name;
         }
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+        protected bool SetField<T>(ref T field, T value, string propertyName)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
         public string Port
         {
             get { return port; }
             set
             {
-                if (port == value) return;
-                port = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("Port"));
+                SetField(ref port, value, "Port");
             }
         }
         public string BaudRate
@@ -665,9 +685,7 @@ namespace RepetierHost.connector
             get { return baudRate; }
             set
             {
-                if (baudRate == value) return;
-                baudRate = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("BaudRate"));
+                SetField(ref baudRate, value, "BaudRate");
             }
         }
         public int Protocol
@@ -675,9 +693,7 @@ namespace RepetierHost.connector
             get { return transferProtocol; }
             set
             {
-                if (transferProtocol == value) return;
-                transferProtocol = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("Protocol"));
+                SetField(ref transferProtocol, value, "Protocol");
             }
         }
         public string ReceiveCacheSizeString
@@ -687,9 +703,7 @@ namespace RepetierHost.connector
             {
                 int size;
                 int.TryParse(value, out size);
-                if (size == receiveCacheSize) return;
-                receiveCacheSize = size;
-                OnPropertyChanged(new PropertyChangedEventArgs("ReceivingCacheSizeString"));
+                SetField(ref receiveCacheSize, size, "ReceiveCacheSizeString");
             }
         }
         public int ResetOnConnect
@@ -697,9 +711,7 @@ namespace RepetierHost.connector
             get { return resetOnConnect; }
             set
             {
-                if (resetOnConnect == value) return;
-                resetOnConnect = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("ResetOnConnect"));
+                SetField(ref resetOnConnect, value, "ResetOnConnect");
             }
         }
         public int ResetOnEmergency
@@ -707,9 +719,7 @@ namespace RepetierHost.connector
             get { return resetOnEmergency; }
             set
             {
-                if (resetOnEmergency == value) return;
-                resetOnEmergency = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("ResetOnEmergency"));
+                SetField(ref resetOnEmergency, value, "ResetOnEmergency");
             }
         }
         public bool PingPong
@@ -717,9 +727,7 @@ namespace RepetierHost.connector
             get { return pingPong; }
             set
             {
-                if (pingPong == value) return;
-                pingPong = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("PingPong"));
+                SetField(ref pingPong, value, "PingPong");
             }
         }
 

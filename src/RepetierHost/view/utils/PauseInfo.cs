@@ -42,7 +42,7 @@ namespace RepetierHost.view.utils
         protected override void OnClosing(CancelEventArgs e)
         {
             e.Cancel = true;
-            ContinueJob();
+            this.Hide();
         }
         public void translate()
         {
@@ -56,7 +56,7 @@ namespace RepetierHost.view.utils
         }
 
         private void ContinueJob()
-        {
+        { 
             Main.conn.connector.ContinueJob();
             /*
             GCodeAnalyzer a = Main.conn.analyzer;

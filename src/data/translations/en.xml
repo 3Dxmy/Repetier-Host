@@ -140,7 +140,7 @@ You can add pauses in your code with
 <t id="L_HEATING_BED" ver="1">Heating Bed</t>
 <t id="L_HEATING_EXTRUDER" ver="1">Heating Extruder</t>
 <t id="L_PRINT_JOB_KILLED" ver="1">Print Job Killed</t>
-<t id="L_PRINT_JOB_PAUSED" ver="1">Print Job Kaused</t>
+<t id="L_PRINT_JOB_PAUSED" ver="1">Print Job Paused</t>
 <t id="L_PRINT_JOB_FINISHED" ver="1">Print Job Finished</t>
 <t id="L_UPLOADING..." ver="1">Uploading ...</t>
 <t id="L_PRINTING_JOB_ETA" ver="1">Printing job ETA $1</t>
@@ -336,7 +336,7 @@ better results, if the layer height changes, which can happen in newer Skeinforg
 <t id="L_X_DIRECTION" ver="1">X Direction:</t>
 <t id="L_Y_DIRECTION" ver="1">Y Direction:</t>
 <t id="L_Z_DIRECTION" ver="1">Z Direction:</t>
-<t id="L_DISABLE_FILAMENT_VISUALIZATION" ver="1">Disbale Filament Visualization</t>
+<t id="L_DISABLE_FILAMENT_VISUALIZATION" ver="1">Disable Filament Visualization</t>
 <t id="L_ENABLE_LIGHT" ver="1">Enable Light</t>
 <t id="L_SHOW_EDGES" ver="1">Show Edges</t>
 <t id="L_SHOW_FACES" ver="1">Show Faces</t>
@@ -616,28 +616,32 @@ Reload objects?]]></t>
 <t id="L_OBJECT_IS_MANIFOLD" ver="9">Object is manifold.</t>
 <t id="L_OBJECT_IS_NON_MANIFOLD" ver="9">Object is non-manifold. Slicing may produce wrong results. Please repair object file first.</t>
 <t id="L_SHOW_COMPASS" ver="9">Show Compass</t>
-<t id="L_" ver="9"></t>
-<t id="L_CONFIRM_DELETE_JOB" ver="1">Are you sure you want to delete job $1?</t>
-<t id="L_PRINT_STATE_SAVED_SUCCESSFULLY" ver="1">State was saved successfully</t>
-<t id="M_POSPONED_JOBS" ver="1">Postponed Jobs</t>
-<t id="M_RESUME_JOB" ver="1">Resume</t>
-<t id="M_POSTPONE_JOB" ver="1">Postpone Current Job</t>
-<t id="W_POSTPONED_PRINT_JOBS" ver="1">Postponed Print Jobs</t>
-<t id="M_POSTPONED_JOB_SELECT_JOB" ver="1">Resume Job</t>
-<t id="M_POSTPONED_JOB_KILL_JOB" ver="1">Delete Job</t>
-<t id="M_POSTPONED_JOB_RENAME_JOB" ver="1">Rename Job</t>
-<t id="L_POSTPONED_JOB_NAME" ver="1">Job Name</t>
-<t id="L_NAME_POSTPONED_JOB" ver="1">Please name the Job</t>
-<t id="L_POSTPONED_JOB_DIALOG_DESCRIPTION" ver="1">The Job state will be saved once the current layer is completed. You can also force saving the job state now, or resume printing.</t>
-<t id="B_FORCE_SAVE_POSTPONED_JOB" ver="1">&amp;Force</t>
-<t id="B_RESUME_PRINTING_JOB" ver="1">&amp;Resume</t>
-<t id="W_POSTPONED_JOB_DIALOG" ver="1">Postpone Print Job</t>
-<t id="M_TOGGLE_PRINTER_ID" ver="1">Toggle Printer ID View</t>
-<t id="L_PRINTER_ID" ver="1">Printer ID</t>
-<t id="L_SET_PRINTER_ID" ver="1">Please set a Printer ID</t>
-<t id="L_SHOW_PRINTER_NAME_IN_PRINTER_ID_LABEL" ver="1">Show printer name in printer ID label</t>
-<t id="L_EDIT" ver="1">Edit</t>
-<t id="L_DIRECTORY_ALREADY_EXISTS" ver="1">There's already a directory with that name</t>
-<t id="L_FILE_EXISTS_WITH_NAME" ver="1">There's already a file with that name</t>
+<t id="L_CONFIRM_DELETE_JOB" ver="10">Are you sure you want to delete job $1?</t>
+<t id="L_PRINT_STATE_SAVED_SUCCESSFULLY" ver="10">State was saved successfully</t>
+<t id="M_POSPONED_JOBS" ver="10">Postponed Jobs</t>
+<t id="M_RESUME_JOB" ver="10">Resume</t>
+<t id="M_POSTPONE_JOB" ver="10">Postpone Current Job</t>
+<t id="W_POSTPONED_PRINT_JOBS" ver="10">Postponed Print Jobs</t>
+<t id="M_POSTPONED_JOB_SELECT_JOB" ver="10">Resume Job</t>
+<t id="M_POSTPONED_JOB_KILL_JOB" ver="10">Delete Job</t>
+<t id="M_POSTPONED_JOB_RENAME_JOB" ver="10">Rename Job</t>
+<t id="L_POSTPONED_JOB_NAME" ver="10">Job Name</t>
+<t id="L_NAME_POSTPONED_JOB" ver="10">Please name the Job</t>
+<t id="L_POSTPONED_JOB_DIALOG_DESCRIPTION" ver="10">The Job state will be saved once the current layer is completed. You can also force saving the job state now, or resume printing.</t>
+<t id="B_FORCE_SAVE_POSTPONED_JOB" ver="10">&amp;Force</t>
+<t id="B_RESUME_PRINTING_JOB" ver="10">&amp;Resume</t>
+<t id="W_POSTPONED_JOB_DIALOG" ver="10">Postpone Print Job</t>
+<t id="M_TOGGLE_PRINTER_ID" ver="10">Toggle Printer ID View</t>
+<t id="L_PRINTER_ID" ver="10">Printer ID</t>
+<t id="L_SET_PRINTER_ID" ver="10">Please set a Printer ID</t>
+<t id="L_SHOW_PRINTER_NAME_IN_PRINTER_ID_LABEL" ver="10">Show printer name in printer ID label</t>
+<t id="L_EDIT" ver="10">Edit</t>
+<t id="L_DIRECTORY_ALREADY_EXISTS" ver="10">There's already a directory with that name</t>
+<t id="L_FILE_EXISTS_WITH_NAME" ver="10">There's already a file with that name</t>
+<t id="L_BGCOLOR:" ver="10">Background Color:</t>
+<t id="L_EDIT_INSTANCE_NAME" ver="10">Edit Printer ID</t>
+<t id="L_ANAYLSING" ver="10">Analysing</t>
+<t id="L_NOT_TESTED" ver="10">Not tested</t>
+<t id="L_CONNECTOR:" ver="10">Connector:</t>
 </translation>
 

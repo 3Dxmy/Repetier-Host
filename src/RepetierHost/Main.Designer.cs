@@ -179,6 +179,7 @@
             this.tabGCode = new System.Windows.Forms.TabPage();
             this.tabPrint = new System.Windows.Forms.TabPage();
             this.tdSettings = new System.Windows.Forms.BindingSource(this.components);
+            this.bedHeightMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -923,7 +924,8 @@
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.beltCalculatorToolStripMenuItem,
-            this.leadscrewCalculatorToolStripMenuItem});
+            this.leadscrewCalculatorToolStripMenuItem,
+            this.bedHeightMapToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -1549,6 +1551,13 @@
             this.tdSettings.CurrentChanged += new System.EventHandler(this.tdSettings_CurrentChanged);
             this.tdSettings.CurrentItemChanged += new System.EventHandler(this.tdSettings_CurrentChanged);
             // 
+            // bedHeightMapToolStripMenuItem
+            // 
+            this.bedHeightMapToolStripMenuItem.Name = "bedHeightMapToolStripMenuItem";
+            this.bedHeightMapToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.bedHeightMapToolStripMenuItem.Text = "Bed height map";
+            this.bedHeightMapToolStripMenuItem.Click += new System.EventHandler(this.bedHeightMapToolStripMenuItem_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1747,6 +1756,7 @@
         private System.Windows.Forms.ToolStripMenuItem showCompassToolStripMenuItem;
         private System.Windows.Forms.Button buttonChangeId;
         public System.Windows.Forms.Label printerIdLabel;
+        private System.Windows.Forms.ToolStripMenuItem bedHeightMapToolStripMenuItem;
     }
 }
 

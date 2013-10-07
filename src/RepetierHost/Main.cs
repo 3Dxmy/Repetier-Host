@@ -33,6 +33,7 @@ using System.Diagnostics;
 using RepetierHost.model;
 using RepetierHost.connector;
 using System.Runtime.InteropServices;
+using RepetierHost.view.calibration;
 
 namespace RepetierHost
 {
@@ -1991,6 +1992,11 @@ namespace RepetierHost
         private void showCompassToolStripMenuItem_Click(object sender, EventArgs e)
         {
             threeDSettings.ShowCompass = !threeDSettings.ShowCompass;
+        }
+
+        private void bedHeightMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BedHeightMap.Execute();
         }
     }
 }

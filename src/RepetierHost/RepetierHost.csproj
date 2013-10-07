@@ -199,7 +199,6 @@
     <EmbeddedResource Include="view\calibration\BedHeightMap.resx">
       <DependentUpon>BedHeightMap.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\PendingPrintJobsDialog.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

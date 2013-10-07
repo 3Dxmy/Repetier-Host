@@ -79,11 +79,6 @@ namespace RepetierHost.view
             e.Cancel = true;
             this.Hide();
         }
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            e.Cancel = true;
-            this.Hide();
-        } 
         public bool WorkdirOK()
         {
             string wd = Workdir;

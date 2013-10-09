@@ -20,7 +20,8 @@ namespace RepetierHost.connector
         VirtualPrinterPanel panel = null;
         private RegistryKey key = null;
         public event PropertyChangedEventHandler PropertyChanged;
-        private string baudRate = "250000";
+        //private string baudRate = "250000";
+        private string baudRate = "115200";
         VirtualPrinter virtualPrinter;
         PrinterConnection con;
         int receiveCacheSize = 127;

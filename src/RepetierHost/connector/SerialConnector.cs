@@ -43,7 +43,8 @@ namespace RepetierHost.connector
         private RegistryKey key = null;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string baudRate = "250000";
+        //private string baudRate = "250000";
+        private string baudRate = "115200";
         private string port = "COM1";
         private bool pingPong = false;
         private int receiveCacheSize = 127;

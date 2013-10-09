@@ -73,7 +73,8 @@ namespace RepetierHost.model
       //  public string port = "COM10";
         public float travelFeedRate = 4800;
         public float printFeedRate = 2400;
-        public float maxZFeedRate = 100;
+        // public float maxZFeedRate = 100;
+        public float maxZFeedRate = 200;
         public float disposeX = 130;
         public float disposeY = 0;
         public float disposeZ = 0;

@@ -395,7 +395,8 @@
             this.textDefaultHeatedBedTemp.Name = "textDefaultHeatedBedTemp";
             this.textDefaultHeatedBedTemp.Size = new System.Drawing.Size(106, 20);
             this.textDefaultHeatedBedTemp.TabIndex = 22;
-            this.textDefaultHeatedBedTemp.Text = "55";
+            // this.textDefaultHeatedBedTemp.Text = "55";
+            this.textDefaultHeatedBedTemp.Text = "60";
             this.textDefaultHeatedBedTemp.Validating += new System.ComponentModel.CancelEventHandler(this.int_Validating);
             // 
             // textDefaultExtruderTemp
@@ -404,7 +405,8 @@
             this.textDefaultExtruderTemp.Name = "textDefaultExtruderTemp";
             this.textDefaultExtruderTemp.Size = new System.Drawing.Size(106, 20);
             this.textDefaultExtruderTemp.TabIndex = 21;
-            this.textDefaultExtruderTemp.Text = "200";
+            // this.textDefaultExtruderTemp.Text = "200";
+            this.textDefaultExtruderTemp.Text = "210";
             this.textDefaultExtruderTemp.Validating += new System.ComponentModel.CancelEventHandler(this.int_Validating);
             // 
             // labelDefHeatedBedTemp
@@ -608,7 +610,8 @@
             this.textZFeedrate.Name = "textZFeedrate";
             this.textZFeedrate.Size = new System.Drawing.Size(106, 20);
             this.textZFeedrate.TabIndex = 1;
-            this.textZFeedrate.Text = "70";
+            // this.textZFeedrate.Text = "70";
+            this.textZFeedrate.Text = "200";
             this.textZFeedrate.Validating += new System.ComponentModel.CancelEventHandler(this.float_Validating);
             // 
             // textTravelFeedrate
@@ -923,7 +926,8 @@
             this.textPrintAreaHeight.Name = "textPrintAreaHeight";
             this.textPrintAreaHeight.Size = new System.Drawing.Size(106, 20);
             this.textPrintAreaHeight.TabIndex = 2;
-            this.textPrintAreaHeight.Text = "100";
+            // this.textPrintAreaHeight.Text = "100";
+            this.textPrintAreaHeight.Text = "190";
             this.textPrintAreaHeight.Validating += new System.ComponentModel.CancelEventHandler(this.float_Validating);
             // 
             // labelXMin

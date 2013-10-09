@@ -77,11 +77,6 @@ namespace RepetierHost.view
             checkBoxCreateChkpntPerLayer.Text = Trans.T("L_ENABLE_CREATE_CHECKPOINT_ON_NEW_LAYER");
             checkBoxCreateChkpntEveryNSteps.Text = Trans.T("L_ENABLE_CREATE_CHECKPOINT_ON_NUMBER_OF_MOVEMENTS");
         }
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            e.Cancel = true;
-            this.Hide();
-        } 
         public bool WorkdirOK()
         {
             string wd = Workdir;

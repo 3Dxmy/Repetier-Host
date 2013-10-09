@@ -176,10 +176,11 @@
             this.tab = new System.Windows.Forms.TabControl();
             this.tabModel = new System.Windows.Forms.TabPage();
             this.tabSlicer = new System.Windows.Forms.TabPage();
+            this.slicerPanel = new RepetierHost.view.SlicerPanel();
             this.tabGCode = new System.Windows.Forms.TabPage();
             this.tabPrint = new System.Windows.Forms.TabPage();
-            this.slicerPanel = new RepetierHost.view.SlicerPanel();
             this.tdSettings = new System.Windows.Forms.BindingSource(this.components);
+            this.bedHeightMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -935,7 +936,8 @@
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.beltCalculatorToolStripMenuItem,
-            this.leadscrewCalculatorToolStripMenuItem});
+            this.leadscrewCalculatorToolStripMenuItem,
+            this.bedHeightMapToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -1355,7 +1357,8 @@
             // openGCode
             // 
             this.openGCode.DefaultExt = "gcode";
-            this.openGCode.Filter = "GCode/3D-Files|*.gcode;*.gco;*.g;*.nc;*.stl;*.STL;*.obj;*.OBJ|All files|*.*";
+            this.openGCode.Filter = "GCode/3D-Files|*.gcode;*.gco;*.g;*.nc;*.stl;*.STL;*.obj;*.OBJ;*.3ds;*.3DS|All fil" +
+    "es|*.*";
             this.openGCode.Title = "Import G-Code";
             // 
             // saveJobDialog
@@ -1521,6 +1524,15 @@
             this.tabSlicer.Text = "Slicer";
             this.tabSlicer.UseVisualStyleBackColor = true;
             // 
+            // slicerPanel
+            // 
+            this.slicerPanel.AutoScroll = true;
+            this.slicerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.slicerPanel.Location = new System.Drawing.Point(0, 0);
+            this.slicerPanel.Name = "slicerPanel";
+            this.slicerPanel.Size = new System.Drawing.Size(467, 270);
+            this.slicerPanel.TabIndex = 0;
+            // 
             // tabGCode
             // 
             this.tabGCode.AutoScroll = true;
@@ -1544,21 +1556,19 @@
             this.tabPrint.Text = "Manual control";
             this.tabPrint.UseVisualStyleBackColor = true;
             // 
-            // slicerPanel
-            // 
-            this.slicerPanel.AutoScroll = true;
-            this.slicerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.slicerPanel.Location = new System.Drawing.Point(0, 0);
-            this.slicerPanel.Name = "slicerPanel";
-            this.slicerPanel.Size = new System.Drawing.Size(467, 270);
-            this.slicerPanel.TabIndex = 0;
-            // 
             // tdSettings
             // 
             this.tdSettings.DataSource = typeof(RepetierHost.view.ThreeDSettings);
             this.tdSettings.DataMemberChanged += new System.EventHandler(this.tdSettings_DataMemberChanged);
             this.tdSettings.CurrentChanged += new System.EventHandler(this.tdSettings_CurrentChanged);
             this.tdSettings.CurrentItemChanged += new System.EventHandler(this.tdSettings_CurrentChanged);
+            // 
+            // bedHeightMapToolStripMenuItem
+            // 
+            this.bedHeightMapToolStripMenuItem.Name = "bedHeightMapToolStripMenuItem";
+            this.bedHeightMapToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.bedHeightMapToolStripMenuItem.Text = "Bed height map";
+            this.bedHeightMapToolStripMenuItem.Click += new System.EventHandler(this.bedHeightMapToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -1760,6 +1770,7 @@
         private System.Windows.Forms.ToolStripMenuItem checkpointsToolStripMenuItem;
         private System.Windows.Forms.Button buttonChangeId;
         public System.Windows.Forms.Label printerIdLabel;
+        private System.Windows.Forms.ToolStripMenuItem bedHeightMapToolStripMenuItem;
     }
 }
 

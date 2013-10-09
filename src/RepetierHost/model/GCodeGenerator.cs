@@ -273,7 +273,7 @@ namespace RepetierHost.model
             NewLine();
             E = e;
         } 
-         public void SetRetract(bool rt)
+        public void SetRetract(bool rt)
         {
             if (rt == IsRetract) return;
             if (RetractionDistance <= 0) return;

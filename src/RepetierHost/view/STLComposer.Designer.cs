@@ -41,6 +41,9 @@
             this.checkCutFaces = new System.Windows.Forms.CheckBox();
             this.panelAnalysis = new System.Windows.Forms.Panel();
             this.groupBoxObjectAnalysis = new System.Windows.Forms.GroupBox();
+            this.tableAnalysisButtons = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonToggleModified = new System.Windows.Forms.Button();
+            this.buttonAnalyse = new System.Windows.Forms.Button();
             this.tableAnalysisData = new System.Windows.Forms.TableLayoutPanel();
             this.textModied = new System.Windows.Forms.Label();
             this.labelModified = new System.Windows.Forms.Label();
@@ -62,8 +65,6 @@
             this.labelHighConnected = new System.Windows.Forms.Label();
             this.textNormals = new System.Windows.Forms.Label();
             this.labelNormals = new System.Windows.Forms.Label();
-            this.buttonToggleModified = new System.Windows.Forms.Button();
-            this.buttonAnalyse = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.labelTranslation = new System.Windows.Forms.Label();
             this.textTransX = new System.Windows.Forms.TextBox();
@@ -108,16 +109,15 @@
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.openFileSTL = new System.Windows.Forms.OpenFileDialog();
             this.saveSTL = new System.Windows.Forms.SaveFileDialog();
-            this.tableAnalysisButtons = new System.Windows.Forms.TableLayoutPanel();
             this.panelControls.SuspendLayout();
             this.panelCut.SuspendLayout();
             this.panelAnalysis.SuspendLayout();
             this.groupBoxObjectAnalysis.SuspendLayout();
+            this.tableAnalysisButtons.SuspendLayout();
             this.tableAnalysisData.SuspendLayout();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-            this.tableAnalysisButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelControls
@@ -278,6 +278,49 @@
             this.groupBoxObjectAnalysis.TabIndex = 0;
             this.groupBoxObjectAnalysis.TabStop = false;
             this.groupBoxObjectAnalysis.Text = "Object Analysis";
+            // 
+            // tableAnalysisButtons
+            // 
+            this.tableAnalysisButtons.ColumnCount = 2;
+            this.tableAnalysisButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableAnalysisButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableAnalysisButtons.Controls.Add(this.buttonToggleModified, 1, 0);
+            this.tableAnalysisButtons.Controls.Add(this.buttonAnalyse, 0, 0);
+            this.tableAnalysisButtons.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableAnalysisButtons.Location = new System.Drawing.Point(3, 16);
+            this.tableAnalysisButtons.Name = "tableAnalysisButtons";
+            this.tableAnalysisButtons.RowCount = 1;
+            this.tableAnalysisButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableAnalysisButtons.Size = new System.Drawing.Size(331, 43);
+            this.tableAnalysisButtons.TabIndex = 1;
+            // 
+            // buttonToggleModified
+            // 
+            this.buttonToggleModified.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonToggleModified.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonToggleModified.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonToggleModified.Location = new System.Drawing.Point(168, 3);
+            this.buttonToggleModified.Name = "buttonToggleModified";
+            this.buttonToggleModified.Size = new System.Drawing.Size(160, 23);
+            this.buttonToggleModified.TabIndex = 0;
+            this.buttonToggleModified.Text = "Original - Modified";
+            this.buttonToggleModified.UseVisualStyleBackColor = true;
+            this.buttonToggleModified.Click += new System.EventHandler(this.labelModified_Click);
+            // 
+            // buttonAnalyse
+            // 
+            this.buttonAnalyse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAnalyse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buttonAnalyse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAnalyse.Location = new System.Drawing.Point(3, 3);
+            this.buttonAnalyse.Name = "buttonAnalyse";
+            this.buttonAnalyse.Size = new System.Drawing.Size(159, 23);
+            this.buttonAnalyse.TabIndex = 0;
+            this.buttonAnalyse.Text = "Deep Analysis";
+            this.buttonAnalyse.UseVisualStyleBackColor = true;
+            this.buttonAnalyse.Click += new System.EventHandler(this.buttonAnalyse_Click);
             // 
             // tableAnalysisData
             // 
@@ -502,34 +545,6 @@
             this.labelNormals.Size = new System.Drawing.Size(45, 13);
             this.labelNormals.TabIndex = 17;
             this.labelNormals.Text = "oriented";
-            // 
-            // buttonToggleModified
-            // 
-            this.buttonToggleModified.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonToggleModified.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonToggleModified.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonToggleModified.Location = new System.Drawing.Point(168, 3);
-            this.buttonToggleModified.Name = "buttonToggleModified";
-            this.buttonToggleModified.Size = new System.Drawing.Size(160, 23);
-            this.buttonToggleModified.TabIndex = 0;
-            this.buttonToggleModified.Text = "Original - Modified";
-            this.buttonToggleModified.UseVisualStyleBackColor = true;
-            this.buttonToggleModified.Click += new System.EventHandler(this.labelModified_Click);
-            // 
-            // buttonAnalyse
-            // 
-            this.buttonAnalyse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAnalyse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.buttonAnalyse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAnalyse.Location = new System.Drawing.Point(3, 3);
-            this.buttonAnalyse.Name = "buttonAnalyse";
-            this.buttonAnalyse.Size = new System.Drawing.Size(159, 23);
-            this.buttonAnalyse.TabIndex = 0;
-            this.buttonAnalyse.Text = "Deep Analysis";
-            this.buttonAnalyse.UseVisualStyleBackColor = true;
-            this.buttonAnalyse.Click += new System.EventHandler(this.buttonAnalyse_Click);
             // 
             // panel1
             // 
@@ -966,8 +981,8 @@
             // openFileSTL
             // 
             this.openFileSTL.DefaultExt = "stl";
-            this.openFileSTL.Filter = "3D-Files|*.stl;*.STL;*.obj;*.OBJ|STL-Files|*.stl;*.STL|OBJ-Files|*.obj;*.OBJ|All " +
-    "files|*.*";
+            this.openFileSTL.Filter = "3D-Files|*.stl;*.STL;*.obj;*.OBJ;*.3ds;*.3DS|STL-Files|*.stl;*.STL|OBJ-Files|*.ob" +
+    "j;*.OBJ|3D-Studio|*.3ds;*.3DS|All files|*.*";
             this.openFileSTL.Multiselect = true;
             this.openFileSTL.Title = "Add STL file";
             // 
@@ -976,21 +991,6 @@
             this.saveSTL.DefaultExt = "stl";
             this.saveSTL.Filter = "STL-Files|*.stl;*.STL|OBJ-Files|*.obj;*.OBJ";
             this.saveSTL.Title = "Save composition";
-            // 
-            // tableAnalysisButtons
-            // 
-            this.tableAnalysisButtons.ColumnCount = 2;
-            this.tableAnalysisButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableAnalysisButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableAnalysisButtons.Controls.Add(this.buttonToggleModified, 1, 0);
-            this.tableAnalysisButtons.Controls.Add(this.buttonAnalyse, 0, 0);
-            this.tableAnalysisButtons.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableAnalysisButtons.Location = new System.Drawing.Point(3, 16);
-            this.tableAnalysisButtons.Name = "tableAnalysisButtons";
-            this.tableAnalysisButtons.RowCount = 1;
-            this.tableAnalysisButtons.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableAnalysisButtons.Size = new System.Drawing.Size(331, 43);
-            this.tableAnalysisButtons.TabIndex = 1;
             // 
             // STLComposer
             // 
@@ -1005,6 +1005,7 @@
             this.panelCut.PerformLayout();
             this.panelAnalysis.ResumeLayout(false);
             this.groupBoxObjectAnalysis.ResumeLayout(false);
+            this.tableAnalysisButtons.ResumeLayout(false);
             this.tableAnalysisData.ResumeLayout(false);
             this.tableAnalysisData.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -1012,7 +1013,6 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-            this.tableAnalysisButtons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

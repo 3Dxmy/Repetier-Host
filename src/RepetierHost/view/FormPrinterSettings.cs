@@ -120,7 +120,7 @@ namespace RepetierHost.view
             labelZFeedRate.Text = Trans.T("L_ZFEED_RATE");
             checkDisableExtruderAfterJob.Text = Trans.T("L_DISABLE_EXTRUDER_AFTER_JOB");
             checkDisableMotors.Text = Trans.T("L_DISABLE_MOTORS");
-            checkDisbaleHeatedBedAfterJob.Text = Trans.T("L_DISABLE_HEATED_BED_AFTER_JOB");
+            checkDisableHeatedBedAfterJob.Text = Trans.T("L_DISABLE_HEATED_BED_AFTER_JOB");
             checkGoDisposeAfterJob.Text = Trans.T("L_GO_PARK_POSITION");
             //checkHasDumpArea.Text = Trans.T("L_HAS_DUMP_AREA");
             checkRunFilterEverySlice.Text = Trans.T("L_RUN_FILTER_EVERY_SLICE");
@@ -186,7 +186,7 @@ namespace RepetierHost.view
             p.SetValue("disposeY", textDisposeY.Text);
             p.SetValue("disposeZ", textDisposeZ.Text);
             p.SetValue("goDisposeAfterJob", checkGoDisposeAfterJob.Checked ? 1 : 0);
-            p.SetValue("disableHeatedBetAfterJob", checkDisbaleHeatedBedAfterJob.Checked ? 1 : 0);
+            p.SetValue("disableHeatedBetAfterJob", checkDisableHeatedBedAfterJob.Checked ? 1 : 0);
             p.SetValue("disableExtruderAfterJob", checkDisableExtruderAfterJob.Checked ? 1 : 0);
             p.SetValue("disableMotorsAfterJob", checkDisableMotors.Checked ? 1 : 0);
             p.SetValue("printAreaWidth", textPrintAreaWidth.Text);
@@ -243,7 +243,7 @@ namespace RepetierHost.view
             textDisposeY.Text = (string)p.GetValue("disposeY", textDisposeY.Text);
             textDisposeZ.Text = (string)p.GetValue("disposeZ", textDisposeZ.Text);
             checkGoDisposeAfterJob.Checked = 1 == (int)p.GetValue("goDisposeAfterJob", checkGoDisposeAfterJob.Checked ? 1 : 0);
-            checkDisbaleHeatedBedAfterJob.Checked = 1 == (int)p.GetValue("disableHeatedBetAfterJob", checkDisbaleHeatedBedAfterJob.Checked ? 1 : 0);
+            checkDisableHeatedBedAfterJob.Checked = 1 == (int)p.GetValue("disableHeatedBetAfterJob", checkDisableHeatedBedAfterJob.Checked ? 1 : 0);
             checkDisableExtruderAfterJob.Checked = 1 == (int)p.GetValue("disableExtruderAfterJob", checkDisableExtruderAfterJob.Checked ? 1 : 0);
             checkDisableMotors.Checked = 1 == (int) p.GetValue("disableMotorsAfterJob", checkDisableMotors.Checked ? 1 : 0);
             labelCheckEveryX.Text = Trans.T1("L_CHECK_EVERY_X",trackTempPeriod.Value.ToString());
@@ -358,7 +358,7 @@ namespace RepetierHost.view
             float.TryParse(textDisposeZ.Text, NumberStyles.Float, GCode.format, out con.disposeZ);
             con.afterJobGoDispose = checkGoDisposeAfterJob.Checked;
             con.afterJobDisableExtruder = checkDisableExtruderAfterJob.Checked;
-            con.afterJobDisablePrintbed = checkDisbaleHeatedBedAfterJob.Checked;
+            con.afterJobDisablePrintbed = checkDisableHeatedBedAfterJob.Checked;
             con.afterJobDisableMotors = checkDisableMotors.Checked;
             con.logM105 = logM105Checkbox.Checked;
             con.runFilterEverySlice = checkRunFilterEverySlice.Checked;
@@ -424,7 +424,7 @@ namespace RepetierHost.view
             textDisposeZ.Text = con.disposeZ.ToString(GCode.format);
             checkGoDisposeAfterJob.Checked = con.afterJobGoDispose;
             checkDisableExtruderAfterJob.Checked = con.afterJobDisableExtruder;
-            checkDisbaleHeatedBedAfterJob.Checked = con.afterJobDisablePrintbed;
+            checkDisableHeatedBedAfterJob.Checked = con.afterJobDisablePrintbed;
             checkDisableMotors.Checked = con.afterJobDisableMotors;
             labelCheckEveryX.Text = Trans.T1("L_CHECK_EVERY_X", trackTempPeriod.Value.ToString());
             textFilterPath.Text = con.filterCommand;

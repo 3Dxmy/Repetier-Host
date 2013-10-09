@@ -115,7 +115,8 @@ namespace RepetierHost.view
                 Main.conn.eventResponse += f.analyzeEvent;
             }
             f.RefreshFilenames();
-            f.Show(Main.main);
+            if(!f.Visible)
+                f.Show(Main.main);
             f.BringToFront();
             f.updateButtons();
         }

@@ -191,6 +191,8 @@ namespace RepetierHost.model
                 originalModel.importSTL(filename);
             else if (lname.EndsWith(".obj"))
                 originalModel.importObj(filename);
+            else if (lname.EndsWith(".3ds"))
+                originalModel.import3Ds(filename);
             FileInfo info = new FileInfo(file);
             name = info.Name;
             originalModel.AnalyseFast();

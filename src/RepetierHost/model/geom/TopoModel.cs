@@ -1329,6 +1329,7 @@ namespace RepetierHost.model.geom
                 addTriangle(p1, p2, p3, normalVect);
             }
         }
+
         public void importSTL(string filename)
         {
             StartAction("L_LOADING...");
@@ -1379,5 +1380,32 @@ namespace RepetierHost.model.geom
                 MessageBox.Show(e.ToString(), "Error reading STL file", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        public bool import3Ds(string filename)
+        {
+            _3DSLoader loader = new _3DSLoader();
+            _3DSLoader._3DScene scene = loader.Load(filename);
+            if (scene.GetObjectCount() == 0) return false;
+            foreach (_3DSLoader._3DObject obj in scene.GetObjects())
+            {
+                for (int index = 0; index < obj.GetFaceCount(); index++)
+                {
+                    _3DSLoader._3DFace face = obj.GetFace(index);
+                    _3DSLoader._3DVertex vertex;
+
+                    vertex = obj.GetVertex(face.Vertex1);
+                    RHVector3 vert1 = new RHVector3(vertex.X, vertex.Y, vertex.Z);
+                    vertex = obj.GetVertex(face.Vertex2);
+                    RHVector3 vert2 = new RHVector3(vertex.X, vertex.Y, vertex.Z);
+                    vertex = obj.GetVertex(face.Vertex3);
+                    RHVector3 vert3 = new RHVector3(vertex.X, vertex.Y, vertex.Z);
+                    RHVector3 normal = new RHVector3(0, 0, 0);
+
+                    addTriangle(vert1, vert2, vert3, normal).RecomputeNormal();
+                }
+            }
+            return true;
+        }
+
     }
 }

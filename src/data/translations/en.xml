@@ -336,7 +336,7 @@ better results, if the layer height changes, which can happen in newer Skeinforg
 <t id="L_X_DIRECTION" ver="1">X Direction:</t>
 <t id="L_Y_DIRECTION" ver="1">Y Direction:</t>
 <t id="L_Z_DIRECTION" ver="1">Z Direction:</t>
-<t id="L_DISABLE_FILAMENT_VISUALIZATION" ver="1">Disbale Filament Visualization</t>
+<t id="L_DISABLE_FILAMENT_VISUALIZATION" ver="1">Disable Filament Visualization</t>
 <t id="L_ENABLE_LIGHT" ver="1">Enable Light</t>
 <t id="L_SHOW_EDGES" ver="1">Show Edges</t>
 <t id="L_SHOW_FACES" ver="1">Show Faces</t>
@@ -616,7 +616,6 @@ Reload objects?]]></t>
 <t id="L_OBJECT_IS_MANIFOLD" ver="9">Object is manifold.</t>
 <t id="L_OBJECT_IS_NON_MANIFOLD" ver="9">Object is non-manifold. Slicing may produce wrong results. Please repair object file first.</t>
 <t id="L_SHOW_COMPASS" ver="9">Show Compass</t>
-<t id="L_" ver="9"></t>
 <t id="L_CONFIRM_DELETE_JOB" ver="10">Are you sure you want to delete job $1?</t>
 <t id="L_PRINT_STATE_SAVED_SUCCESSFULLY" ver="10">State was saved successfully</t>
 <t id="M_POSPONED_JOBS" ver="10">Postponed Jobs</t>
@@ -634,15 +633,16 @@ Reload objects?]]></t>
 <t id="W_POSTPONED_JOB_DIALOG" ver="10">Postpone Print Job</t>
 <t id="M_TOGGLE_PRINTER_ID" ver="10">Toggle Printer ID View</t>
 <t id="L_PRINTER_ID" ver="10">Printer ID</t>
+<t id="L_SET_PRINTER_ID" ver="10">Please set a Printer ID</t>
+<t id="L_SHOW_PRINTER_NAME_IN_PRINTER_ID_LABEL" ver="10">Show printer name in printer ID label</t>
+<t id="L_EDIT" ver="10">Edit</t>
+<t id="L_DIRECTORY_ALREADY_EXISTS" ver="10">There's already a directory with that name</t>
+<t id="L_FILE_EXISTS_WITH_NAME" ver="10">There's already a file with that name</t>
 <t id="L_BGCOLOR:" ver="10">Background Color:</t>
 <t id="L_EDIT_INSTANCE_NAME" ver="10">Edit Printer ID</t>
 <t id="L_ANAYLSING" ver="10">Analysing</t>
 <t id="L_NOT_TESTED" ver="10">Not tested</t>
 <t id="L_CONNECTOR:" ver="10">Connector:</t>
-<t id="L_SET_PRINTER_ID" ver="10">Please set a Printer ID</t>
-<t id="L_SHOW_PRINTER_NAME_IN_PRINTER_ID_LABEL" ver="10">Show printer name in printer ID label</t>
-<t id="L_DIRECTORY_ALREADY_EXISTS" ver="10">There's already a directory with that name</t>
-<t id="L_FILE_EXISTS_WITH_NAME" ver="10">There's already a file with that name</t>
 <t id="W_CHECKPOINTS" ver="10">Checkpoints</t>
 <t id="M_CHECKPOINT_RESTORE_CHECKPOINT" ver="10">Restore Checkpoint</t>
 <t id="M_CHECKPOINT_GO_TO_POSITION" ver="10">Go to Checkpoint Position</t>

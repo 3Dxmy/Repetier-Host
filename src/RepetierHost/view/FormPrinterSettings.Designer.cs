@@ -56,7 +56,7 @@
             this.textDisposeZ = new System.Windows.Forms.TextBox();
             this.labelZMin = new System.Windows.Forms.Label();
             this.checkDisableMotors = new System.Windows.Forms.CheckBox();
-            this.checkDisbaleHeatedBedAfterJob = new System.Windows.Forms.CheckBox();
+            this.checkDisableHeatedBedAfterJob = new System.Windows.Forms.CheckBox();
             this.checkDisableExtruderAfterJob = new System.Windows.Forms.CheckBox();
             this.checkGoDisposeAfterJob = new System.Windows.Forms.CheckBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -281,7 +281,7 @@
             this.tabPagePrinter.Controls.Add(this.textDisposeZ);
             this.tabPagePrinter.Controls.Add(this.labelZMin);
             this.tabPagePrinter.Controls.Add(this.checkDisableMotors);
-            this.tabPagePrinter.Controls.Add(this.checkDisbaleHeatedBedAfterJob);
+            this.tabPagePrinter.Controls.Add(this.checkDisableHeatedBedAfterJob);
             this.tabPagePrinter.Controls.Add(this.checkDisableExtruderAfterJob);
             this.tabPagePrinter.Controls.Add(this.checkGoDisposeAfterJob);
             this.tabPagePrinter.Controls.Add(this.label15);
@@ -462,15 +462,15 @@
             this.checkDisableMotors.Text = "Disable motors after job/job kill";
             this.checkDisableMotors.UseVisualStyleBackColor = true;
             // 
-            // checkDisbaleHeatedBedAfterJob
+            // checkDisableHeatedBedAfterJob
             // 
-            this.checkDisbaleHeatedBedAfterJob.AutoSize = true;
-            this.checkDisbaleHeatedBedAfterJob.Location = new System.Drawing.Point(16, 286);
-            this.checkDisbaleHeatedBedAfterJob.Name = "checkDisbaleHeatedBedAfterJob";
-            this.checkDisbaleHeatedBedAfterJob.Size = new System.Drawing.Size(193, 17);
-            this.checkDisbaleHeatedBedAfterJob.TabIndex = 10;
-            this.checkDisbaleHeatedBedAfterJob.Text = "Disable heated bed after job/job kill";
-            this.checkDisbaleHeatedBedAfterJob.UseVisualStyleBackColor = true;
+            this.checkDisableHeatedBedAfterJob.AutoSize = true;
+            this.checkDisableHeatedBedAfterJob.Location = new System.Drawing.Point(16, 286);
+            this.checkDisableHeatedBedAfterJob.Name = "checkDisableHeatedBedAfterJob";
+            this.checkDisableHeatedBedAfterJob.Size = new System.Drawing.Size(193, 17);
+            this.checkDisableHeatedBedAfterJob.TabIndex = 10;
+            this.checkDisableHeatedBedAfterJob.Text = "Disable heated bed after job/job kill";
+            this.checkDisableHeatedBedAfterJob.UseVisualStyleBackColor = true;
             // 
             // checkDisableExtruderAfterJob
             // 
@@ -1408,7 +1408,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label labelParkPosition;
         private System.Windows.Forms.Button buttonDelete;
-        private System.Windows.Forms.CheckBox checkDisbaleHeatedBedAfterJob;
+        private System.Windows.Forms.CheckBox checkDisableHeatedBedAfterJob;
         private System.Windows.Forms.CheckBox checkDisableExtruderAfterJob;
         private System.Windows.Forms.Button buttonApply;
         private System.Windows.Forms.ErrorProvider errorProvider;

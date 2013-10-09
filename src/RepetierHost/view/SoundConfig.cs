@@ -70,6 +70,11 @@ namespace RepetierHost.view
             buttonBrowseSoundCommand.Text = Trans.T("B_BROWSE");
             buttonOK.Text = Trans.T("B_OK");
         }
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
         public void saveSettings()
         {
             RegMemory.SetString("soundPrintFinished", filePrintFinished);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<translation revision="9" language="Italiano" languageInEnglish="Italian" author="S. Camerino;info.dtxrobotics@gmail.com">
+<translation revision="10" language="Italiano" languageInEnglish="Italian" author="S. Camerino;info.dtxrobotics@gmail.com">
 <t id="M_FILE" ver="1">File</t>
 <t id="M_CONFIG" ver="1">Configurazione</t>
 <t id="M_SLICER" ver="1">Slicer</t>
@@ -554,7 +554,7 @@ Scrivere i cambiamenti in EEPROM?</t>
 <t id="L_ANA_ORIENTED" ver="9">Orientato</t>
 <t id="L_ANA_NOT_ORIENTED" ver="9">Non Orientato</t>
 <t id="M_TOOLS" ver="9">Strumenti</t>
-<t id="M_BELT_CALCULATOR" ver="9">Calcolatrice cinghia</t>
+<t id="M_BELT_CALCULATOR" ver="9">Calcolatrice Cinghia</t>
 <t id="M_LEADSCREW_CALCULATOR" ver="9">Calcolatrice Leadscrew</t>
 <t id="L_MOTOR_STEP_ANGLE" ver="9">Angolo motor step</t>
 <t id="L_DRIVER_MICROSTEPPING" ver="9">Driver Microstepping</t>
@@ -598,7 +598,38 @@ Scrivere i cambiamenti in EEPROM?</t>
 <t id="L_DIMENSIONS:" ver="9">Dimensione:</t>
 <t id="L_SPLIT_OBJECT" ver="9">Dividi oggetto</t>
 <t id="L_FIX_NORMALS" ver="9">Ripara Normale</t>
+<t id="L_REPAIR" ver="9">Ripara</t>
 <t id="M_FIT_PRINTER" ver="9">Ottimizza stampante</t>
 <t id="M_FIT_OBJECTS" ver="9">Ottimizza oggetti</t>
-<t id="L_" ver="9"></t>
+<t id="IMPORTING_1" ver="9">Importazione $1</t>
+<t id="L_LOADING..." ver="9">Loading ...</t>
+<t id="L_INTERSECTION_TESTS" ver="9">Test di intersezione</t>
+<t id="L_FIXING_NORMALS" ver="9">Ripara(normale)</t>
+<t id="L_ANA_FIXED_COLLINEAR_TRIANGLES" ver="9">Triangoli sulla retta riparati:</t>
+<t id="L_ANA_CORRECTED_NORMAL_ORIENTATIONS" ver="9">Orientamento normale corretto:</t>
+<t id="L_OBJECT_IS_MANIFOLD" ver="9">L'oggetto e' manifold.</t>
+<t id="L_OBJECT_IS_NON_MANIFOLD" ver="9">L'oggetto è non-manifold. Lo slicing puo' produrre risultati errati. Prima ripara l'oggetto.</t>
+<t id="L_SHOW_COMPASS" ver="9">Mostra compasso</t>
+<t id="L_CONFIRM_DELETE_JOB" ver="10">Sei sicuro di voler cancellare il lavoro $1?</t>
+<t id="L_PRINT_STATE_SAVED_SUCCESSFULLY" ver="10">Stato di stampa salvato con successo</t>
+<t id="M_POSPONED_JOBS" ver="10">Posponi stampa</t>
+<t id="M_RESUME_JOB" ver="10">Riprendi</t>
+<t id="M_POSTPONE_JOB" ver="10">Posponi Stampa Corrente</t>
+<t id="W_POSTPONED_PRINT_JOBS" ver="10">Posponi lavori di stampa</t>
+<t id="M_POSTPONED_JOB_SELECT_JOB" ver="10">Riprendi lavoro</t>
+<t id="M_POSTPONED_JOB_KILL_JOB" ver="10">Cancella lavoro</t>
+<t id="M_POSTPONED_JOB_RENAME_JOB" ver="10">Rinomina lavoro</t>
+<t id="L_POSTPONED_JOB_NAME" ver="10">Nome lavoro</t>
+<t id="L_NAME_POSTPONED_JOB" ver="10">Per favore dai un nome al tuo lavoro</t>
+<t id="L_POSTPONED_JOB_DIALOG_DESCRIPTION" ver="10">Lo stato di lavoro sara' salvato una volta che il layer sara' completato. Puoi anche forzare il salvataggio ora, o riprendere la stampa.</t>
+<t id="B_FORCE_SAVE_POSTPONED_JOB" ver="10">&amp;Forza</t>
+<t id="B_RESUME_PRINTING_JOB" ver="10">&amp;Riprendi</t>
+<t id="W_POSTPONED_JOB_DIALOG" ver="10">Posponi lavoro di stampa</t>
+<t id="M_TOGGLE_PRINTER_ID" ver="10">Toggle Printer ID View</t>
+<t id="L_PRINTER_ID" ver="10">ID Stampante</t>
+<t id="L_BGCOLOR:" ver="10">Colore Background:</t>
+<t id="L_EDIT_INSTANCE_NAME" ver="10">Modifica ID stampante</t>
+<t id="L_ANAYLSING" ver="10">Analisi in corso</t>
+<t id="L_NOT_TESTED" ver="10">Non testato</t>
+<t id="L_CONNECTOR:" ver="10">Connettore:</t>
 </translation>

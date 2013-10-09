@@ -32,6 +32,7 @@ using System.Threading;
 using System.Diagnostics;
 using RepetierHost.connector;
 using System.Runtime.InteropServices;
+using RepetierHost.view.calibration;
 
 namespace RepetierHost
 {
@@ -838,7 +839,7 @@ namespace RepetierHost
             fileHistory.Save(file);
             UpdateHistory();
             string fileLow = file.ToLower();
-            if (fileLow.EndsWith(".stl") || fileLow.EndsWith(".obj"))
+            if (fileLow.EndsWith(".stl") || fileLow.EndsWith(".obj") || fileLow.EndsWith(".3ds"))
             {
               /*  if (MessageBox.Show("Do you want to slice the STL-File? No adds it to the object grid.", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
@@ -1855,8 +1856,6 @@ namespace RepetierHost
             }
         }
 
-
-
         private bool ValidatePreconditionsToSaveStateSnapshot(PrinterConnection conn)
         {
             return conn.connector.IsJobRunning();
@@ -2034,6 +2033,11 @@ namespace RepetierHost
         private void togglePrinterIdToolStripMenuItem_Click(object sender, EventArgs e)
         {
             splitPrinterId.Panel1Collapsed = !splitPrinterId.Panel1Collapsed;
+		}
+
+        private void bedHeightMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BedHeightMap.Execute();
         }
     }
 }

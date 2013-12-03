@@ -4,6 +4,7 @@ Version 0.91
   Fixed several small bugs, many mono/linux related.
 	Name repetier instance in case you started it several times.
 	Support for 3d-Studio files, written by J.F. van Leur
+	More dynamic camera manipulation from Tomáš Chládek
 	
 Version 0.90C 07-07-2013
   Faster connect with reset

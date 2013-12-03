@@ -1,4 +1,4 @@
-﻿/*
+/*
    Copyright 2011 repetier repetierdev@gmail.com
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,6 +29,12 @@ using System.Diagnostics;
 using System.Globalization;
 using RepetierHost.model;
 using RepetierHost.model.geom;
+using System.Reflection;
+using System.Security;
+using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
+using RepetierHost.view.utils;
+using System.Threading;
 
 namespace RepetierHost.view
 {
@@ -40,12 +46,8 @@ namespace RepetierHost.view
         float bedRadius;
         FormPrinterSettings ps = Main.printerSettings;
         bool loaded = false;
-        float xDown, yDown;
-        float xPos, yPos;
-        float speedX, speedY;
-        double normX = 0, normY = 0;
-        float lastX, lastY;
-        Stopwatch sw = new Stopwatch();
+        int xPos, yPos, lastXpos, lastYpos;
+        float rotateX, rotateY;
         Stopwatch fpsTimer = new Stopwatch();
         int mode = 0;
         int slowCounter = 0; // Indicates slow framerates
@@ -54,6 +56,15 @@ namespace RepetierHost.view
         public Matrix4 lookAt, persp, modelView;
         public float nearDist, farDist, aspectRatio, nearHeight, midHeight;
         Coordinate coord;
+        bool render;
+
+        float lastMoveBodyX, lastMoveBodyY;
+        float lastMoveViewpointX, lastMoveViewpointY;
+        float zoomSpeed, lastZoomSpeed;
+        float lastRotateX, lastRotateY;
+
+        float filter = 0.7f; // filter of moves/rotation
+        float moveFilter = 0.35f; // filter for movements of objects
 
         public ThreeDView view = null;
 
@@ -64,9 +75,12 @@ namespace RepetierHost.view
             SetCameraDefaults();
             cam.OrientIsometric();
             gl.MouseWheel += gl_MouseWheel;
+            timer.Interval = (int)(1000 / 60.0); // for 60fps
             timer.Start();
             translate();
             Main.main.languageChanged += translate;
+
+            toolStrip1.Location = new Point(-toolStrip1.Width, 0);
         }
         private void translate()
         {
@@ -139,7 +153,7 @@ namespace RepetierHost.view
         }
         public void UpdateChanges()
         {
-            gl.Invalidate();
+            render = true;
         }
         protected override void OnPaint(PaintEventArgs pe)
         {
@@ -664,6 +678,7 @@ namespace RepetierHost.view
         public RHVector3 cutPos = new RHVector3(0, 0, 0);
         public RHVector3 cutDirection = new RHVector3(0, 0, 1);
         RHBoundingBox cutBBox = new RHBoundingBox();
+
         void UpdateCutData()
         {
             updateCuts = true;
@@ -880,22 +895,20 @@ namespace RepetierHost.view
             return result;
         }
         public uint lastDepth = 0;
-        public Geom3DLine pickLine = null; // Last pick up line ray
         public Geom3DLine viewLine = null; // Direction of view
-        public Geom3DVector pickPoint = new Geom3DVector(0, 0, 0); // Koordinates of last pick
+        public Geom3DVector pickPoint = new Geom3DVector(0, 0, 0); // Coordinates of last pick
 
-        public void UpdatePickLine(int x, int y)
+        public Geom3DLine GetPickLine(int x, int y)
         {
-            if (view == null) return;
+            if (view == null)
+                return null;
             // Intersection on bottom plane
-
             int window_y = (Height - y) - Height / 2;
             double norm_y = (double)window_y / (double)(Height / 2);
             int window_x = x - Width / 2;
             double norm_x = (double)window_x / (double)(Width / 2);
             float fpy = (float)(nearHeight * 0.5 * norm_y) * (toolParallelProjection.Checked ? 1f : 1f);
             float fpx = (float)(nearHeight * 0.5 * aspectRatio * norm_x) * (toolParallelProjection.Checked ? 1f : 1f);
-
 
             Vector4 frontPointN = (toolParallelProjection.Checked ? new Vector4(fpx, fpy, 0, 1) : new Vector4(0, 0, 0, 1));
             Vector4 dirN = (toolParallelProjection.Checked ? new Vector4(0, 0, -nearDist, 0) : new Vector4(fpx, fpy, -nearDist, 0));
@@ -906,17 +919,19 @@ namespace RepetierHost.view
             Vector4 frontPoint = (toolParallelProjection.Checked ? Vector4.Transform(frontPointN, ntrans) : ntrans.Row3);
             //Vector4 frontPoint = (toolParallelProjection.Checked ? frontPointN : ntrans.Row3);
             Vector4 dirVec = Vector4.Transform(dirN, ntrans);
-            pickLine = new Geom3DLine(new Geom3DVector(frontPoint.X / frontPoint.W, frontPoint.Y / frontPoint.W, frontPoint.Z / frontPoint.W),
+            Geom3DLine pickLine = new Geom3DLine(new Geom3DVector(frontPoint.X / frontPoint.W, frontPoint.Y / frontPoint.W, frontPoint.Z / frontPoint.W),
                 new Geom3DVector(dirVec.X, dirVec.Y, dirVec.Z), true);
             pickLine.dir.normalize();
+            return pickLine;
             /*Geom3DPlane plane = new Geom3DPlane(new Geom3DVector(0, 0, 0), new Geom3DVector(0, 0, 1));
             Geom3DVector cross = new Geom3DVector(0, 0, 0);
             plane.intersectLine(pickLine, cross);
             */
         }
-        private ThreeDModel Picktest(int x, int y)
+        private ThreeDModel Picktest(Geom3DLine pickLine, int x, int y)
         {
-            if (view == null) return null;
+            if (view == null)
+                return null;
             // int x = Mouse.X;
             // int y = Mouse.Y;
             // Console.WriteLine("X:" + x + " Y:" + y);
@@ -966,14 +981,12 @@ namespace RepetierHost.view
             ntrans = Matrix4.Invert(ntrans);
             Vector4 frontPoint = (toolParallelProjection.Checked ? Vector4.Transform(frontPointN, ntrans) : ntrans.Row3);
             Vector4 dirVec = Vector4.Transform(dirN, ntrans);
-            pickLine = new Geom3DLine(new Geom3DVector(frontPoint.X / frontPoint.W, frontPoint.Y / frontPoint.W, frontPoint.Z / frontPoint.W),
-                new Geom3DVector(dirVec.X, dirVec.Y, dirVec.Z), true);
+
             dirN = new Vector4(0, 0, -nearDist, 0);
             dirVec = Vector4.Transform(dirN, ntrans);
             viewLine = new Geom3DLine(new Geom3DVector(frontPoint.X / frontPoint.W, frontPoint.Y / frontPoint.W, frontPoint.Z / frontPoint.W),
                 new Geom3DVector(dirVec.X, dirVec.Y, dirVec.Z), true);
             viewLine.dir.normalize();
-            pickLine.dir.normalize();
             /* Geom3DPlane plane = new Geom3DPlane(new Geom3DVector(0, 0, 0), new Geom3DVector(0, 0, 1));
              Geom3DVector cross = new Geom3DVector(0, 0, 0);
              plane.intersectLine(pickLine, cross);
@@ -983,8 +996,6 @@ namespace RepetierHost.view
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref lookAt);
             //GL.Translate(-ps.BedLeft - ps.PrintAreaWidth * 0.5f, -ps.BedFront - ps.PrintAreaDepth * 0.5f, -0.5f * ps.PrintAreaHeight);
-
-
 
             GL.InitNames();
             int pos = 0;
@@ -1035,22 +1046,30 @@ namespace RepetierHost.view
         private void gl_Resize(object sender, EventArgs e)
         {
             SetupViewport();
-            gl.Invalidate();
+            toolStrip1.Size = new Size(toolStrip1.Width, gl.Height);
+            render = true;
         }
+
         Geom3DPlane movePlane = new Geom3DPlane(new Geom3DVector(0, 0, 0), new Geom3DVector(0, 0, 1)); // Plane where object movement occurs
         Geom3DVector moveStart = new Geom3DVector(0, 0, 0), moveLast = new Geom3DVector(0, 0, 0), movePos = new Geom3DVector(0, 0, 0);
+
+        private void ThreeDControl_MouseEnter(object sender, EventArgs e)
+        {
+            // Focus();
+        }
+
         private void gl_MouseDown(object sender, MouseEventArgs e)
         {
-            cam.PreparePanZoomRot();
-            lastX = xDown = e.X;
-            lastY = yDown = e.Y;
+            lastXpos = xPos = e.X;
+            lastYpos = yPos = e.Y;
+            lastRotateX = lastRotateY = 0;
             movePlane = new Geom3DPlane(new Geom3DVector(0, 0, 0), new Geom3DVector(0, 0, 1));
             moveStart = moveLast = new Geom3DVector(0, 0, 0);
-            UpdatePickLine(e.X, e.Y);
+            Geom3DLine pickLine = GetPickLine(e.X, e.Y);
             movePlane.intersectLine(pickLine, moveStart);
             if (e.Button == MouseButtons.Right)
             {
-                ThreeDModel sel = Picktest(e.X, e.Y);
+                ThreeDModel sel = Picktest(pickLine, e.X, e.Y);
                 if (sel != null)
                 {
                     movePlane = new Geom3DPlane(pickPoint, new Geom3DVector(0, 0, 1));
@@ -1060,120 +1079,156 @@ namespace RepetierHost.view
                     view.eventObjectSelected(sel);
                 //computeRay();
             }
-            gl.Invalidate();
         }
 
         private void gl_MouseMove(object sender, MouseEventArgs e)
         {
-            double window_y = (gl.Height - e.Y) - gl.Height / 2;
+            if (Control.MouseButtons != MouseButtons.None)
+            {
+                xPos = e.X;
+                yPos = e.Y;
+            }
+
+            ShowPanel(toolStrip1, gl, gl);
+
+            /*double window_y = (gl.Height - e.Y) - gl.Height / 2;
             normY = window_y * 2.0 / (double)(gl.Height);
             double window_x = e.X - gl.Width / 2;
-            normX = window_x * 2.0 / (double)(gl.Width);
-            if (e.Button == MouseButtons.None)
-            {
-                speedX = speedY = 0;
-                return;
-            }
-            xPos = e.X;
-            yPos = e.Y;
-            UpdatePickLine(e.X, e.Y);
-            movePos = new Geom3DVector(0, 0, 0);
-            movePlane.intersectLine(pickLine, movePos);
-            float d = Math.Min(gl.Width, gl.Height) / 3;
-            speedX = Math.Max(-1, Math.Min(1, (xPos - xDown) / d));
-            speedY = Math.Max(-1, Math.Min(1, (yPos - yDown) / d));
+            normX = window_x * 2.0 / (double)(gl.Width);*/
+
+            //UpdatePickLine(e.X, e.Y);
+            //movePos = new Geom3DVector(0, 0, 0);
+            //movePlane.intersectLine(pickLine, movePos);
+            //float d = Math.Min(gl.Width, gl.Height) / 3;
+            //speedX = Math.Max(-1, Math.Min(1, (xPos - xDown) / d));
+            //speedY = Math.Max(-1, Math.Min(1, (yPos - yDown) / d));
         }
 
-        private void gl_MouseUp(object sender, MouseEventArgs e)
-        {
-            speedX = speedY = 0;
-            gl.Invalidate();
-        }
         private void gl_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (e.Delta != 0)
-            {
-                cam.PreparePanZoomRot();
-                cam.Zoom(1f - e.Delta / 6000f);
-                if (toolParallelProjection.Checked)
-                    zoom *= 1f - e.Delta / 4000f;
-                else
-                    zoom *= 1f - e.Delta / 2000f;
-                if (zoom < 0.002) zoom = 0.002f;
-                if (zoom > 5.9) zoom = 5.9f;
-                //userPosition.Y += e.Delta;
-                gl.Invalidate();
-            }
+            zoomSpeed = -e.Delta;
+            lastZoomSpeed = 0;
         }
+
         void Application_Idle(object sender, EventArgs e)
         {
-            if (!loaded || (speedX == 0 && speedY == 0)) return;
+            if (!loaded || !Main.ApplicationIsActivated())
+                return;
             // no guard needed -- we hooked into the event in Load handler
 
-            sw.Stop(); // we've measured everything since last Idle run
-            double milliseconds = sw.Elapsed.TotalMilliseconds;
-            sw.Reset(); // reset stopwatch
-            sw.Start(); // restart stopwatch
-            Keys k = Control.ModifierKeys;
-            int emode = mode;
-            if (k == Keys.Shift || Control.MouseButtons == MouseButtons.Middle) emode = 2;
-            if (k == Keys.Control) emode = 0;
-            if (k == Keys.Alt || Control.MouseButtons == MouseButtons.Right) emode = 4;
-            if (emode == 0) // Rotate
+            float d = Math.Min(gl.Width, gl.Height) / 3;
+
+            // rotate
+            if (mode == 0 && ((Control.ModifierKeys != Keys.Shift && Control.MouseButtons == MouseButtons.Left) || Control.ModifierKeys == Keys.Control))
             {
-                float d = Math.Min(gl.Width, gl.Height) / 3;
-                speedX = (xPos - xDown) / d;
-                speedY = (yPos - yDown) / d;
-                cam.Rotate(-speedX * 0.9, speedY * 0.9);
-                gl.Invalidate();
+                rotateX = ((lastXpos - xPos) / d) * (1 - filter) + filter * lastRotateX;
+                rotateY = ((lastYpos - yPos) / d) * (1 - filter) + filter * lastRotateY;
+                Rotate();
             }
-            else if (emode == 1) // Pan
+            else if (rotateX != 0 || rotateY != 0)
             {
-                speedX = (xPos - xDown) / gl.Width;
-                speedY = (yPos - yDown) / gl.Height;
-                Vector3 planeVec = Vector3.Subtract(new Vector3(moveStart.x,moveStart.y,moveStart.z), cam.CameraPosition);
-                float dot = Vector3.Dot(planeVec, cam.ViewDirection());
-                double len = (dot>0 ? planeVec.Length : -1);                
-                cam.Pan(speedX * 200, speedY * 200,len);
-                gl.Invalidate();
+                rotateX = rotateX * (1 - filter) + filter * lastRotateX;
+                rotateY = rotateY * (1 - filter) + filter * lastRotateY;
+                Rotate();
             }
-            else if (emode == 2)
+            else if (checkMovements(lastRotateX) || checkMovements(lastRotateY))
             {
-                speedX = (xPos - xDown) / gl.Width;
-                speedY = (yPos - yDown) / gl.Height;
-                Vector3 planeVec = Vector3.Subtract(new Vector3(moveStart.x, moveStart.y, moveStart.z), cam.CameraPosition);
-                float dot = Vector3.Dot(planeVec, cam.ViewDirection());
-                double len = (dot > 0 ? planeVec.Length : -1);
-                cam.Pan(-speedX, -speedY,len);
-                gl.Invalidate();
+                rotateX = filter * lastRotateX;
+                rotateY = filter * lastRotateY;
+                Rotate();
             }
-            else if (emode == 3)
+
+            //zoom
+            if (mode == 3 && Control.MouseButtons == MouseButtons.Left)
+                zoomSpeed = 120 * (yPos - lastYpos) / d;
+            if (zoomSpeed != 0 || checkMovements(lastZoomSpeed))
             {
-                cam.Zoom(1 - speedY / 3f);
-                gl.Invalidate();
+                zoomSpeed = zoomSpeed * (1 - filter) + filter * lastZoomSpeed;
+                lastZoomSpeed = zoomSpeed;
+                cam.Zoom(zoomSpeed * (cam.distance - cam.minDistance) / (cam.defaultDistance - cam.minDistance));
+                zoomSpeed = 0;
+                render = true;
             }
-            else if (emode == 4)
+
+            // MoveViewpoint
+            if (mode == 2 || Control.ModifierKeys == Keys.Shift || Control.MouseButtons == MouseButtons.Middle)
             {
+                float moveViewpointX = ((xPos - lastXpos) / (float)gl.Width) * (1 - filter) + filter * lastMoveViewpointX;
+                float moveViewpointY = ((yPos - lastYpos) / (float)gl.Height) * (1 - filter) + filter * lastMoveViewpointY;
+                MoveViewpoint(moveViewpointX, moveViewpointY);
+            }
+            else if (checkMovements(lastMoveViewpointX) || checkMovements(lastMoveViewpointY))
+            {
+                float moveViewpointX = filter * lastMoveViewpointX;
+                float moveViewpointY = filter * lastMoveViewpointY;
+                MoveViewpoint(moveViewpointX, moveViewpointY);
+            }
+
+            // MoveObject
+            if (view.eventObjectMoved != null && (mode == 4 || Control.ModifierKeys == Keys.Alt || Control.MouseButtons == MouseButtons.Right))
+            {
+                Geom3DLine pickLine = GetPickLine(xPos, yPos);
+                movePos = new Geom3DVector(0, 0, 0);
+                movePlane.intersectLine(pickLine, movePos);
                 Geom3DVector diff = movePos.sub(moveLast);
-                moveLast = movePos;
-                speedX = (xPos - lastX) * 200 * zoom / gl.Width;
-                speedY = (yPos - lastY) * 200 * zoom / gl.Height;
-                if (view.eventObjectMoved != null)
-                    view.eventObjectMoved(diff.x, diff.y);
-                //               view.eventObjectMoved(speedX, -speedY);
-                //eventObjectMoved((float)milliseconds * speedX * Math.Abs(speedX) / 10.0f,
-                //   -(float)milliseconds * speedY * Math.Abs(speedY) / 10.0f);
-                lastX = xPos;
-                lastY = yPos;
-                gl.Invalidate();
+                float moveBodyX = diff.x * (1 - moveFilter) + moveFilter * lastMoveBodyX;
+                float moveBodyY = diff.y * (1 - moveFilter) + moveFilter * lastMoveBodyY;
+                MoveObject(moveBodyX, moveBodyY);
             }
+            else if (checkMovements(lastMoveBodyX) || checkMovements(lastMoveBodyY))
+            {
+                float moveBodyX = moveFilter * lastMoveBodyX;
+                float moveBodyY = moveFilter * lastMoveBodyY;
+                MoveObject(moveBodyX, moveBodyY);
+            }
+
+            if (render)
+            {
+                gl.Invalidate();
+                lastXpos = xPos;
+                lastYpos = yPos;
+                render = false;
+            }
+        }
+
+        private void Rotate()
+        {
+            lastRotateX = rotateX;
+            lastRotateY = rotateY;
+            cam.Rotate(rotateX, rotateY);
+            rotateX = rotateY = 0;
+            render = true;
+        }
+
+        private void MoveViewpoint(float moveViewpointX, float moveViewpointY)
+        {
+            lastMoveViewpointX = moveViewpointX;
+            lastMoveViewpointY = moveViewpointY;
+            Vector3 planeVec = Vector3.Subtract(new Vector3(moveStart.x, moveStart.y, moveStart.z), cam.CameraPosition);
+            float dot = Vector3.Dot(planeVec, cam.ViewDirection());
+            double len = (dot > 0 ? planeVec.Length : -1);
+            cam.Pan(-moveViewpointX, -moveViewpointY, len);
+            render = true;
+        }
+
+        private void MoveObject(float moveBodyX, float moveBodyY)
+        {
+            lastMoveBodyX = moveBodyX;
+            lastMoveBodyY = moveBodyY;
+            view.eventObjectMoved(moveBodyX, moveBodyY);
+            moveLast = movePos;
+            render = true;
+        }
+
+        private bool checkMovements(float val)
+        {
+            return (val < 0 ? -val : val) > 1e-4;
         }
 
         public void SetMode(int _mode)
         {
             mode = _mode;
             toolRotate.Checked = mode == 0;
-            // toolMove.Checked = mode == 1;
             toolMoveViewpoint.Checked = mode == 2;
             toolZoom.Checked = mode == 3;
             toolMoveObject.Checked = mode == 4;
@@ -1183,10 +1238,6 @@ namespace RepetierHost.view
             SetMode(0);
         }
 
-        private void toolMove_Click(object sender, EventArgs e)
-        {
-            SetMode(1);
-        }
         private void SetCameraDefaults()
         {
             cam.viewCenter = new Vector3(0, 0, 0);
@@ -1197,25 +1248,25 @@ namespace RepetierHost.view
         {
             SetCameraDefaults();
             cam.OrientFront();
-            gl.Invalidate();
+            render = true;
         }
         public void backView()
         {
             SetCameraDefaults();
             cam.OrientBack();
-            gl.Invalidate();
+            render = true;
         }
         public void leftView()
         {
             SetCameraDefaults();
             cam.OrientLeft();
-            gl.Invalidate();
+            render = true;
         }
         public void rightView()
         {
             SetCameraDefaults();
             cam.OrientRight();
-            gl.Invalidate();
+            render = true;
         }
         public void topView()
         {
@@ -1223,35 +1274,35 @@ namespace RepetierHost.view
             cam.OrientTop();
             if (Main.threeDSettings.checkAutoenableParallelInTopView.Checked)
                 toolParallelProjection.Checked = true;
-            gl.Invalidate();
+            render = true;
         }
         public void bottomView()
         {
             SetCameraDefaults();
             cam.OrientBottom();
-            gl.Invalidate();
+            render = true;
         }
         public void isometricView()
         {
             SetCameraDefaults();
             cam.OrientIsometric();
-            gl.Invalidate();
+            render = true;
         }
         public void FitPrinter()
         {
             cam.FitPrinter();
-            gl.Invalidate();
+            render = true;
         }
         public void FitObjects()
         {
             cam.FitObjects();
-            gl.Invalidate();
+            render = true;
         }
         private void toolResetView_Click(object sender, EventArgs e)
         {
             SetCameraDefaults();
             cam.OrientFront();
-            gl.Invalidate();
+            render = true;
         }
 
         private void toolMoveViewpoint_Click(object sender, EventArgs e)
@@ -1274,39 +1325,39 @@ namespace RepetierHost.view
             /*if (e.KeyChar == Keys.Left)
             {
                 view.rotZ -= 5;
-                gl.Invalidate();
+                render = true;
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Right)
             {
                 view.rotZ += 5;
-                gl.Invalidate();
+                render = true;
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Up)
             {
                 view.rotX -= 5;
-                gl.Invalidate();
+                render = true;
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Down)
             {
                 view.rotX += 5;
-                gl.Invalidate();
+                render = true;
                 e.Handled = true;
             }*/
             if (e.KeyChar == '-')
             {
                 zoom *= 1.05f;
                 if (zoom > 10) zoom = 10;
-                gl.Invalidate();
+                render = true;
                 e.Handled = true;
             }
             if (e.KeyChar == '+')
             {
                 zoom *= 0.95f;
                 if (zoom < 0.01) zoom = 0.01f;
-                gl.Invalidate();
+                render = true;
                 e.Handled = true;
             }
         }
@@ -1322,9 +1373,9 @@ namespace RepetierHost.view
                     if ((Main.threeDSettings.drawMethod == 0 && (timeCall % 9) != 0))
                         return;
                     if (m.hasAnimations && Main.threeDSettings.drawMethod != 0)
-                        gl.Invalidate();
+                        render = true;
                     else if ((timeCall % 3) == 0)
-                        gl.Invalidate();
+                        render = true;
                     return;
                 }
             }
@@ -1337,15 +1388,9 @@ namespace RepetierHost.view
                 Main.main.objectPlacement.buttonRemoveSTL_Click(null, null);
             }
             foreach (ThreeDModel m in view.models)
-            {
                 m.Clear();
-            }
+            render = true;
             gl.Invalidate();
-        }
-
-        private void ThreeDControl_MouseEnter(object sender, EventArgs e)
-        {
-            // Focus();
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -1373,42 +1418,42 @@ namespace RepetierHost.view
         {
             if (e.KeyCode == Keys.Left)
             {
-                cam.RotateDegrees( 5,0);
+                cam.RotateDegrees(5, 0);
                 gl.Invalidate();
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Right)
             {
-                cam.RotateDegrees(-5,0);
+                cam.RotateDegrees(-5, 0);
                 gl.Invalidate();
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Up)
             {
-                cam.RotateDegrees(0,5);
+                cam.RotateDegrees(0, 5);
                 gl.Invalidate();
                 e.Handled = true;
             }
             if (e.KeyCode == Keys.Down)
             {
-                cam.RotateDegrees(0,-5);
+                cam.RotateDegrees(0, -5);
                 gl.Invalidate();
                 e.Handled = true;
             }
-            if (e.KeyValue == '-')
-            {
-                cam.PreparePanZoomRot();
-                cam.Zoom(1.05);
-                gl.Invalidate();
-                e.Handled = true;
-            }
-            if (e.KeyValue == '+')
-            {
-                cam.PreparePanZoomRot();
-                cam.Zoom(0.95);
-                gl.Invalidate();
-                e.Handled = true;
-            }
+            /*  if (e.KeyValue == '-')
+              {
+                  cam.PreparePanZoomRot();
+                  cam.Zoom(1.05);
+                  gl.Invalidate();
+                  e.Handled = true;
+              }
+              if (e.KeyValue == '+')
+              {
+                  cam.PreparePanZoomRot();
+                  cam.Zoom(0.95);
+                  gl.Invalidate();
+                  e.Handled = true;
+              }*/
             if (Main.main.tab.SelectedTab == Main.main.tabModel && e.Handled == false)
             {
                 Main.main.objectPlacement.listSTLObjects_KeyDown(sender, e);
@@ -1418,7 +1463,7 @@ namespace RepetierHost.view
         private void toolParallelProjection_Click(object sender, EventArgs e)
         {
             toolParallelProjection.Checked = !toolParallelProjection.Checked;
-            gl.Invalidate();
+            render = true;
         }
 
         private void toolIsometric_Click(object sender, EventArgs e)
@@ -1438,14 +1483,43 @@ namespace RepetierHost.view
                     firstchance = true;
                 }
 
-                coord.Draw(gl.Width, gl.Height, cam.phi, cam.theta);
+                coord.Draw(gl.Width, gl.Height, cam.phi, cam.theta, toolStrip1.Location.X + toolStrip1.Width);
 
-                if (firstchance) gl.Invalidate();
+                if (firstchance)
+                    render = true;
             }
             else
-            {
                 coord = null;
+        }
+
+        private void ShowPanel(Control panel, Control parent, Control child)
+        {
+            SlidePanel slidePanel = SlidePanelControler.GetInstance().Add(panel, SlidePanel.DIRECTION_RIGHT, 0.12, -1, false);
+            if (slidePanel != null)
+            {
+                slidePanel.OnUpdate += slidePanel_OnUpdate;
+                Point loc = parent.PointToScreen(child.Location);
+                Size size = child.Size;
+                new Thread(delegate()
+                {
+                    do
+                    {
+                        Thread.Sleep(50);
+                        if (Cursor.Position.X < loc.X || Cursor.Position.Y < loc.Y || Cursor.Position.X > loc.X + size.Width || Cursor.Position.Y > loc.Y + size.Height)
+                        {
+                            //slidePanel.show = false; // hide immediately
+                            slidePanel.delay = 1500; // hide after 2.5 sec
+                            return;
+                        }
+                    }
+                    while (true);
+                }).Start();
             }
+        }
+
+        void slidePanel_OnUpdate(Control panel, double phase)
+        {
+            render = true;
         }
     }
 }

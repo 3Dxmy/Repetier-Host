@@ -18,8 +18,6 @@ namespace RepetierHost.view
         public double theta = 0;
         public double phi = 0;
         public double angle = 15.0 * Math.PI / 180;
-        public Vector3 viewCenterStart = new Vector3();
-        public double startTheta, startPhi,startDistance;
         FormPrinterSettings ps = Main.printerSettings;
         ThreeDControl control;
         public ThreeDCamera(ThreeDControl ctl)
@@ -110,7 +108,7 @@ namespace RepetierHost.view
             viewCenter.Y = defaultCenter.Y;
             viewCenter.Z = defaultCenter.Z;
             theta = -Math.PI / 2;
-            phi = Math.PI -1e-5;
+            phi = Math.PI - 1e-5;
             distance = defaultDistance;
             FitPrinter();
         }
@@ -124,18 +122,9 @@ namespace RepetierHost.view
             distance = defaultDistance;
             FitPrinter();
         }
-        public void PreparePanZoomRot()
-        {
-            viewCenterStart.X = viewCenter.X;
-            viewCenterStart.Y = viewCenter.Y;
-            viewCenterStart.Z = viewCenter.Z;
-            startDistance = distance;
-            startPhi = phi;
-            startTheta = theta;
-        }
-        public void Zoom(double factor)
-        {
-            distance = startDistance * factor;
+
+        public void Zoom(double dis) {
+            distance += dis;
             if (distance < minDistance)
                 distance = minDistance;
             if (distance > 6 * defaultDistance)
@@ -151,24 +140,8 @@ namespace RepetierHost.view
         }
         public void Rotate(double side, double updown)
         {
-            theta = startTheta + side;
-            phi = startPhi - updown;
-            while (theta > Math.PI)
-                theta -= 2 * Math.PI;
-            while (theta < -Math.PI)
-                theta += 2 * Math.PI;
-            while (phi > Math.PI)
-                phi = Math.PI-1e-5;
-            while (phi < 0)
-                phi = 1e-5;
-            //Console.WriteLine("Phi:" + phi);
-            //if (Math.Abs(phi) < 1e-5) phi = 1e-5;
-
-        }
-        public void RotateDegrees(double rotX, double rotZ)
-        {
-            theta += rotX*Math.PI/180.0;
-            phi += rotZ * Math.PI / 180.0;
+            theta += side;
+            phi += updown;
             while (theta > Math.PI)
                 theta -= 2 * Math.PI;
             while (theta < -Math.PI)
@@ -176,6 +149,21 @@ namespace RepetierHost.view
             while (phi > Math.PI)
                 phi = Math.PI - 1e-5;
             while (phi < 0)
+                phi = 1e-5;
+            //Console.WriteLine("Phi:" + phi);
+            //if (Math.Abs(phi) < 1e-5) phi = 1e-5;
+
+        }
+        public void RotateDegrees(double rotX, double rotZ) {
+            theta += rotX * Math.PI / 180.0;
+            phi += rotZ * Math.PI / 180.0;
+            while (theta > Math.PI)
+                theta -= 2 * Math.PI;
+            while (theta < -Math.PI)
+                theta += 2 * Math.PI;
+            while (phi > Math.PI)
+                phi = Math.PI - 1e-5;
+            if (phi < 0)
                 phi = 1e-5;
             //Console.WriteLine("Phi:" + phi);
             //if (Math.Abs(phi) < 1e-5) phi = 1e-5;
@@ -191,13 +179,13 @@ namespace RepetierHost.view
             Vector3 cp = CameraPosition;
             Vector3.Subtract(ref viewCenter, ref cp, out camCenter);
             Vector3 lr = new Vector3();
-            Vector3.Cross(ref camCenter,ref ud, out lr);
+            Vector3.Cross(ref camCenter, ref ud, out lr);
             Vector3.Cross(ref lr, ref camCenter, out ud);
             lr.Normalize();
             ud.Normalize();
-            viewCenter.X = (float)(viewCenterStart.X + leftRight * lr.X + upDown * ud.X);
-            viewCenter.Y = (float)(viewCenterStart.Y + leftRight * lr.Y + upDown * ud.Y);
-            viewCenter.Z = (float)(viewCenterStart.Z + leftRight * lr.Z + upDown * ud.Z);
+            viewCenter.X += (float)(leftRight * lr.X + upDown * ud.X);
+            viewCenter.Y += (float)(leftRight * lr.Y + upDown * ud.Y);
+            viewCenter.Z += (float)(leftRight * lr.Z + upDown * ud.Z);
         }
         public RHBoundingBox PrinterBoundingBox()
         {

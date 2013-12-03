@@ -48,6 +48,7 @@ namespace RepetierHost.model
                     else
                         trans.Add(id, value);
                 }
+                reader.Close();
             }
             catch(Exception e) { 
                 MessageBox.Show("Error reading translation "+_file+":\n"+e.ToString(),"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);

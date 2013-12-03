@@ -84,6 +84,7 @@ namespace RepetierHost
         public double gcodePrintingTime = 0;
         public PrintingCheckpoints checkpoints;
         public string lastFileLoadedName = null;
+        public double importScaleFactor = 1;
 
         public class JobUpdater
         {
@@ -405,6 +406,7 @@ namespace RepetierHost
             ProcessCommandLine();
 
             checkpoints = new PrintingCheckpoints(conn);
+            //snapshotToolStripMenuItem.Visible = false;
         }
         internal static class NativeMethods
         {
@@ -439,6 +441,26 @@ namespace RepetierHost
             }
             catch { }
         }
+        public static bool ApplicationIsActivated()
+        {
+            if (IsMono) return true;
+            var activatedHandle = GetForegroundWindow();
+            if (activatedHandle == IntPtr.Zero)
+                return false;
+
+            var procId = Process.GetCurrentProcess().Id;
+            int activeProcId;
+            GetWindowThreadProcessId(activatedHandle, out activeProcId);
+
+            return activeProcId == procId;
+        }
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern int GetWindowThreadProcessId(IntPtr handle, out int processId);
+
         void ProcessCommandLine()
         {
             string[] args = Environment.GetCommandLineArgs();
@@ -602,6 +624,12 @@ namespace RepetierHost
             checkpointsToolStripMenuItem.Text = Trans.T("M_VIEW_CHECKPOINTS");
             updateTravelMoves();
             updateShowFilament();
+            bedHeightMapToolStripMenuItem.Text = Trans.T("M_MED_HEIGHT_MAP");
+            unitsOfImportedObjectsToolStripMenuItem.Text = Trans.T("UNITS_OF_IMPORTED_OBJECTS");
+            objectsAreInMmToolStripMenuItem.Text = Trans.T("OBJECTS_ARE_IN_MILLIMETER");
+            objectsAreInInchesToolStripMenuItem.Text = Trans.T("OBJECTS_ARE_IN_INCHES");
+            objectsAreInFootToolStripMenuItem.Text = Trans.T("OBJECTS_ARE_IN_FOOT");
+            objectsAreInMeterToolStripMenuItem.Text = Trans.T("OBJECTS_ARE_IN_METER");
             foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
             {
                 item.Checked = item.Tag == trans.active;
@@ -1045,6 +1073,12 @@ namespace RepetierHost
             if (conn.isRepetier)
             {
                 Main.main.continuousMonitoringMenuItem.Enabled = true;
+                Main.main.bedHeightMapToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                Main.main.continuousMonitoringMenuItem.Enabled = false;
+                Main.main.bedHeightMapToolStripMenuItem.Enabled = false;
             }
         };
         public MethodInvoker UpdateJobButtons = delegate
@@ -1164,7 +1198,7 @@ namespace RepetierHost
                     StringBuilder s = new StringBuilder();
                     if (hours > 0)
                         s.Append(Trans.T1("L_TIME_H:", hours.ToString())); //"h:");
-                    if (min > 0)
+                    if (min > 0 || hours > 0)
                         s.Append(Trans.T1("L_TIME_M:", min.ToString()));
                     s.Append(Trans.T1("L_TIME_S", sec.ToString()));
                     Main.main.editor.toolPrintingTime.Text = Trans.T1("L_PRINTING_TIME:", s.ToString());
@@ -2038,6 +2072,22 @@ namespace RepetierHost
         private void bedHeightMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BedHeightMap.Execute();
+        }
+        public void setImportUnits(double units)
+        {
+            importScaleFactor = units;
+            objectsAreInMmToolStripMenuItem.Checked = units == 1;
+            objectsAreInInchesToolStripMenuItem.Checked = units == 25.4;
+            objectsAreInFootToolStripMenuItem.Checked = units == 304.8;
+            objectsAreInMeterToolStripMenuItem.Checked = units == 1000;
+            RegMemory.SetDouble("importScaleFactor", importScaleFactor);
+
+        }
+        private void objectsAreInMmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            double units;
+            double.TryParse(((ToolStripMenuItem)sender).Tag.ToString(), System.Globalization.NumberStyles.Float, GCode.format, out units);
+            setImportUnits(units);
         }
     }
 }

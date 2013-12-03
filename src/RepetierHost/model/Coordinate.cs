@@ -47,7 +47,7 @@ namespace RepetierHost.model
             {
                 // import mesh from STL.
                 model[i] = new TopoModel();
-                model[i].importSTL(Application.StartupPath + Path.DirectorySeparatorChar + names[i]);
+                model[i].importSTL(Application.StartupPath + Path.DirectorySeparatorChar + names[i],1);
                 submesh[i] = new Submesh();
                 model[i].FillMeshTrianglesOnly(submesh[i], 0);
                 submesh[i].Compress(true, coordinate_colors[i]);
@@ -60,7 +60,7 @@ namespace RepetierHost.model
             font.Options.DropShadowActive = false;*/
         }
 
-        internal void Draw(int viewport_x, int viewport_y, double rotX, double rotZ)
+        internal void Draw(int viewport_x, int viewport_y, double rotX, double rotZ, int offset)
         {
             GL.Clear(ClearBufferMask.DepthBufferBit);
             GL.MatrixMode(MatrixMode.Projection);
@@ -71,7 +71,7 @@ namespace RepetierHost.model
             GL.PushMatrix(); // push modelview
             GL.LoadIdentity();
 
-            GL.Viewport(0, 0, area_size, area_size); // change viewport
+            GL.Viewport(offset, 0, area_size, area_size); // change viewport
             float length = area_size * 0.5f + margin * 2.0f;
             GL.Ortho(-length, length, -length, length, -length, length);
 

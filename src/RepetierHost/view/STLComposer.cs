@@ -102,6 +102,10 @@ namespace RepetierHost.view
             textEdges.Text = Trans.T("L_ANA_EDGES");
             textFaces.Text = Trans.T("L_ANA_FACES");
             textShells.Text = Trans.T("L_ANA_SHELLS");
+            checkCutFaces.Text = Trans.T("L_CUT_FACES");
+            labelCutPosition.Text = Trans.T("L_CUT_POSITION");
+            labelInclination.Text = Trans.T("L_CUT_INCLINATION");
+            labelAzimuth.Text = Trans.T("L_CUT_AZIMUTH");
             //buttonLockAspect.Text = Trans.T("L_LOCK_ASPECT_RATIO");
             //if (Main.slicer != null)
             //    buttonSlice.Text = Trans.T1("L_SLICE_WITH", Main.slicer.SlicerName);

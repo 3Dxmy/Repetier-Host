@@ -32,8 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(STLComposer));
             this.panelControls = new System.Windows.Forms.Panel();
             this.panelCut = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelAzimuth = new System.Windows.Forms.Label();
+            this.labelInclination = new System.Windows.Forms.Label();
             this.labelCutPosition = new System.Windows.Forms.Label();
             this.cutAzimuthSlider = new MB.Controls.ColorSlider();
             this.cutInclinationSlider = new MB.Controls.ColorSlider();
@@ -136,8 +136,8 @@
             // 
             // panelCut
             // 
-            this.panelCut.Controls.Add(this.label5);
-            this.panelCut.Controls.Add(this.label1);
+            this.panelCut.Controls.Add(this.labelAzimuth);
+            this.panelCut.Controls.Add(this.labelInclination);
             this.panelCut.Controls.Add(this.labelCutPosition);
             this.panelCut.Controls.Add(this.cutAzimuthSlider);
             this.panelCut.Controls.Add(this.cutInclinationSlider);
@@ -149,23 +149,23 @@
             this.panelCut.Size = new System.Drawing.Size(343, 115);
             this.panelCut.TabIndex = 24;
             // 
-            // label5
+            // labelAzimuth
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 87);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 13);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Azimuth";
+            this.labelAzimuth.AutoSize = true;
+            this.labelAzimuth.Location = new System.Drawing.Point(12, 87);
+            this.labelAzimuth.Name = "labelAzimuth";
+            this.labelAzimuth.Size = new System.Drawing.Size(44, 13);
+            this.labelAzimuth.TabIndex = 2;
+            this.labelAzimuth.Text = "Azimuth";
             // 
-            // label1
+            // labelInclination
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 59);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Inclination";
+            this.labelInclination.AutoSize = true;
+            this.labelInclination.Location = new System.Drawing.Point(12, 59);
+            this.labelInclination.Name = "labelInclination";
+            this.labelInclination.Size = new System.Drawing.Size(55, 13);
+            this.labelInclination.TabIndex = 2;
+            this.labelInclination.Text = "Inclination";
             // 
             // labelCutPosition
             // 
@@ -1087,8 +1087,8 @@
         private System.Windows.Forms.ToolStripButton toolFixNormals;
         private System.Windows.Forms.Panel panelCut;
         private System.Windows.Forms.Label labelCutPosition;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelAzimuth;
+        private System.Windows.Forms.Label labelInclination;
         public MB.Controls.ColorSlider cutPositionSlider;
         public System.Windows.Forms.CheckBox checkCutFaces;
         public MB.Controls.ColorSlider cutAzimuthSlider;

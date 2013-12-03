@@ -289,8 +289,8 @@ namespace RepetierHost.view
                 rend = row;
             }
             int i;
-            rend = Math.Min(rend, lines.Count - 1);
-            rstart = Math.Min(rstart, lines.Count - 1);
+            rend = Math.Max(0,Math.Min(rend, lines.Count - 1));
+            rstart = Math.Max(0,Math.Min(rstart, lines.Count - 1));
             StringBuilder sb = new StringBuilder();
             for (i = rstart; i <= rend; i++)
             {

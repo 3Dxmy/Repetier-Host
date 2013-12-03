@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<translation revision="4" language="Čeština" languageInEnglish="Czech" author="Josef Průša">
+<translation revision="9" language="Čeština" languageInEnglish="Czech" author="Josef Průša, Tomáš Chládek">
 <t id="M_FILE" ver="1">Soubor</t>
 <t id="M_CONFIG" ver="1">Nastavení</t>
 <t id="M_SLICER" ver="1">Slicer</t>
@@ -21,7 +21,7 @@
 <t id="M_SHOW_AVERAGE_TEMPERATURES" ver="1">Zobrazit průměrné teploty</t>
 <t id="M_SHOW_HEATER_POWER" ver="1">Zobrazit výkon topení</t>
 <t id="M_AUTOSCROLL_TEMPERATURE_VIEW" ver="1">Autoposuv zobrazení teploty</t>
-<t id="M_TIMEPERIOD" ver="1">ČASOVÝ ÚSEK</t>
+<t id="M_TIMEPERIOD" ver="1">Časový úsek</t>
 <t id="M_TEMPERATURE_ZOOM" ver="1">Zoom</t>
 <t id="M_BUILD_AVERAGE_OVER" ver="1">Build Average over ...</t>
 <t id="M_30_SECONDS" ver="1">30 Sekund</t>
@@ -85,15 +85,13 @@
 <t id="L_IMPORT_G_CODE" ver="1">Nahrát G-code</t>
 <t id="L_SAVE_G_CODE" ver="1">Uložit G-code</t>
 <t id="L_ERROR" ver="1">Chyba</t>
-<t id="L_PAUSE_MSG" ver="1">Stiskněte OK pro pokračování.
-Přidáním @pause do kódu
-múžete vyvolat pauzy.</t>
+<t id="L_PAUSE_MSG" ver="1">Stiskněte OK pro pokračování. Přidáním @pause do kódu múžete vyvolat pauzy.</t>
 <t id="L_DISCONNECTED" ver="1">Odpojeno </t>
 <t id="L_UPDATING..." ver="1">Akutalizování ...</t>
 <t id="L_SLICE_WITH" ver="1">Zpracovat se $1</t>
 <t id="L_EMERGENCY_STOP_MSG" ver="1">Nouzově přerušit tisk. Možná budete muset restartovat vaší tiskárnu pro opětovný tisk.</t>
-<t id="L_TRANSLATION:" ver="1">Posun objektu</t>
-<t id="L_SCALE:" ver="1">Zvětšit v poměru</t>
+<t id="L_TRANSLATION:" ver="1">Posun</t>
+<t id="L_SCALE:" ver="1">Zvětšení</t>
 <t id="L_ROTATE:" ver="1">Natočení</t>
 <t id="L_STL_OBJECTS" ver="1">STL objekt</t>
 <t id="B_SAVE_AS_STL" ver="1">Uložit jako STL</t>
@@ -197,22 +195,18 @@ múžete vyvolat pauzy.</t>
 <t id="L_LAST_LAYER" ver="1">Poslední vrstva:</t>
 <t id="L_REALLY_DELETE_PRINTER" ver="1">Chcete opravdu smazat všechny nastavení pro $1?</t>
 <t id="L_SECURITY_QUESTION" ver="1">Bezpečnostní otázky</t>
-<t id="L_ADD_PRINTING_TIME" ver="1">Přidat k vypočtenému času tisku</t>
+<t id="L_ADD_PRINTING_TIME" ver="1">Přidat k času tisku</t>
 <t id="L_BAUD_RATE" ver="1">Baudy:</t>
 <t id="L_CACHE_SIZE_HINT" ver="1">From Arduino 1 on the receiving cache was reduced from 127 to 63 bytes!</t>
 <t id="L_CHECK_EVERY_X" ver="1">Zkontrolovat každých $1 sekund.</t>
-<t id="L_CONNECTION_INFO" ver="1">Nastavení tisku vždy odpovídají tiskárně vybrané nahoře.
-Nastavení je uloženo s každým stiskem OK nebo Použít. Pro zadání nové tiskárny,
-vložte nahoře nové jméno a stiskněte OK nebo Použít. Nová tiskárna začíná se stejným
-nastavením jako předchozí.</t>
+<t id="L_CONNECTION_INFO" ver="1">Nastavení tisku vždy odpovídají tiskárně vybrané nahoře. Nastavení je uloženo s každým stiskem OK nebo Použít. Pro zadání nové tiskárny, vložte nahoře nové jméno a stiskněte OK nebo Použít. Nová tiskárna začíná se stejným nastavením jako předchozí.</t>
 <t id="L_DEFAULT_EXTRUDER_TEMPERATURE" ver="1">Výchozí teplota extruderu:</t>
 <t id="L_DEFAULT_HEATED_BED_TEMPERATURE" ver="1">Výchozí teplota vyhřívané podložky:</t>
 <t id="L_DUMP_AREA_DEPTH" ver="1">Hloubka:</t>
 <t id="L_DUMP_AREA_FRONT" ver="1">Vzdálenost od předu:</t>
 <t id="L_DUMP_AREA_LEFT" ver="1">Vzdálenost od leva:</t>
 <t id="L_DUMP_AREA_WIDTH" ver="1">Šířka:</t>
-<t id="L_FILTER_INFO" ver="1">Po každém zpracování STL na G-code může být spuštěn filtr.
-Použijte #in a #out pro vložení názvu souborů jako parametrů.</t>
+<t id="L_FILTER_INFO" ver="1">Po každém zpracování STL na G-code může být spuštěn filtr. Použijte #in a #out pro vložení názvu souborů jako parametrů.</t>
 <t id="L_FILTER_PATH_PARAM" ver="1">Cesta k filtrua a parametry:</t>
 <t id="L_PARITY" ver="1">Parita:</t>
 <t id="L_PARK_POSITION" ver="1">Parkovací pozice:</t>
@@ -221,14 +215,14 @@ Použijte #in a #out pro vložení názvu souborů jako parametrů.</t>
 <t id="L_PRINT_AREA_HEIGHT" ver="1">Výška tiskové plochy:</t>
 <t id="L_PRINT_AREA_WIDTH" ver="1">Šířka tiskové plochy:</t>
 <t id="L_PRINTER" ver="1">Tiskárna:</t>
-<t id="L_RECEIVE_CACHE_SIZE" ver="1">Velikost příchozí vyrovnávací paměti:</t>
+<t id="L_RECEIVE_CACHE_SIZE" ver="1">Vyrovnávací paměť:</t>
 <t id="L_STOPBITS" ver="1">Stop Bity:</t>
 <t id="L_TRANSFER_PROTOCOL" ver="1">Protokol přenosu:</t>
 <t id="L_TRAVEL_FEED_RATE" ver="1">Rychlost přejezdů:</t>
 <t id="L_ZFEED_RATE" ver="1">Rychlost osy Z:</t>
 <t id="L_DISABLE_EXTRUDER_AFTER_JOB" ver="1">Vypnout extruder po dokončení/přerušení tisku</t>
 <t id="L_DISABLE_MOTORS" ver="1">Vypnout motory po dokončení/přerušení tisku</t>
-<t id="L_DISABLE_HEATED_BED_AFTER_JOB" ver="1">Vypnout vyhř. podložku po dokončení/přerušení tisku</t>
+<t id="L_DISABLE_HEATED_BED_AFTER_JOB" ver="1">Vypnout vyhřívanou podložku po dokončení/přerušení tisku</t>
 <t id="L_GO_PARK_POSITION" ver="1">Zaparkovat extruder po dokončení/přerušení tisku</t>
 <t id="L_HAS_DUMP_AREA" ver="1">Má očištovací plochu:</t>
 <t id="L_HOME_X_MAX" ver="1">Parkovat na konci X</t>
@@ -250,8 +244,7 @@ Použijte #in a #out pro vložení názvu souborů jako parametrů.</t>
 <t id="L_POST_SLICE_FILTER" ver="1">Post Slice Filter</t>
 <t id="L_Z_MIN" ver="1">Z-Min</t>
 <t id="W_PRINT_PAUSED" ver="1">Tisk pozastaven</t>
-<t id="L_PAUSE_HINT" ver="1">Nápověda: Během pauzy můžete s extruderem pohybovat. Předchozí pozice bude automaticky obnovena.
-</t>
+<t id="L_PAUSE_HINT" ver="1">Nápověda: Během pauzy můžete s extruderem pohybovat. Předchozí pozice bude automaticky obnovena.</t>
 <t id="B_CONTINUE_PRINTING" ver="1">Pokračovat v tisku</t>
 <t id="W_REPETIER_HOST_UPDATE_CHECK" ver="1">Repetier-Host zjištění aktualizací</t>
 <t id="B_DOWNLOAD" ver="1">Stáhnout</t>
@@ -260,18 +253,16 @@ Použijte #in a #out pro vložení názvu souborů jako parametrů.</t>
 <t id="L_AVAILABLE_VERSION" ver="1">Dostupná verze:</t>
 <t id="L_INSTALLED_VERSION" ver="1">Používaná verze:</t>
 <t id="L_INFORMATION_ON_UPDATE" ver="1">Informace o aktualizaci</t>
-<t id="L_NO_NEW_UPDATES" ver="1">Nejsou dostupné žádné aktualizace.
-Používáte nejnovější verzi.</t>
+<t id="L_NO_NEW_UPDATES" ver="1">Nejsou dostupné žádné aktualizace. Používáte nejnovější verzi.</t>
 <t id="L_UPDATE_STATUS" ver="1">Status aktualizace</t>
 <t id="W_SLICING_INFO" ver="1">Informace o slicování</t>
 <t id="L_ACTION:" ver="1">Akce:</t>
 <t id="L_DURATION:" ver="1">Trvání:</t>
 <t id="L_SLICER:" ver="1">Slicer:</t>
-<t id="L_START_JOB_AFTER_SLICING" ver="1">Začít tisk po zpracování souboru</t>
+<t id="L_START_JOB_AFTER_SLICING" ver="1">Tisknout po zpracování</t>
 <t id="W_ABOUT_REPETIER_HOST" ver="1">O programu Repetier-Host</t>
 <t id="L_LICENCE_AND_LIBRARIES" ver="1">Licence a knihovny</t>
-<t id="L_REPETIER_INFO" ver="1">Tento software byl vyvinut pro ovládání RepRap a podobných 3D tiskáren. Nejlépe používat s Repetier-Firmwarem, který podporuje všechny funkce. Ostatní firmwary 
-by měli se správným nastavením také fungovat.</t>
+<t id="L_REPETIER_INFO" ver="1">Tento software byl vyvinut pro ovládání RepRap a podobných 3D tiskáren. Nejlépe používat s Repetier-Firmwarem, který podporuje všechny funkce. Ostatní firmwary by měli se správným nastavením také fungovat.</t>
 <t id="W_COPY_MARKED_OBJECTS" ver="1">Zkopírovat označené objekty</t>
 <t id="L_NUMBER_OF_COPIES:" ver="1">Počet kopií:</t>
 <t id="L_AUTO_POSITION_AFTER_COPY" ver="1">Automaticky umístit po přidání objektu</t>
@@ -299,9 +290,7 @@ Možné příčiny:
 <t id="L_BEHAVIOUR" ver="1">Chování</t>
 <t id="L_FILES_AND_DIRECTORIES" ver="1">Soubory a složky</t>
 <t id="L_GUI" ver="1">Grafické rozhraní</t>
-<t id="L_INFO_WORKDIR" ver="1">Soubory logu a dočasné soubory pro slicování jsou uloženy v pracovní složce. Pokud je
-logování povoleno, po uzavření programu bude vytvořen repetier.log soubor. Znovuspuštění programu tento soubor
-smaže!Soubor obsahuje veškerou komunikaci s tiskárnou.</t>
+<t id="L_INFO_WORKDIR" ver="1">Soubory logu a dočasné soubory pro slicování jsou uloženy v pracovní složce. Pokud je logování povoleno, po uzavření programu bude vytvořen repetier.log soubor. Znovuspuštění programu tento soubor smaže! Soubor obsahuje veškerou komunikaci s tiskárnou.</t>
 <t id="L_LOG_SESSION" ver="1">Relace logu</t>
 <t id="REDUCE_TOOLBAR_SIZE" ver="1">Zmenšit lištu nástrojů</t>
 <t id="L_DISABLE_QUALITY_REDUCTION" ver="1">Vypnout snížení kvality</t>
@@ -321,9 +310,7 @@ smaže!Soubor obsahuje veškerou komunikaci s tiskárnou.</t>
 <t id="L_EDGES" ver="1">Hrany:</t>
 <t id="L_EXTRUDER_X:" ver="1">Extruder $1:</t>
 <t id="L_FACES" ver="1">Plochy:</t>
-<t id="L_FILAMENT_VISUALIZATION_INFO" ver="1">Tvar vlákna je buďto spočítán na základě výšky vrstvy a poměru šířky k tlouštce, nebo z průměru 
-materiálového vlákna, poměru šířky vůči tlouštce a E hodnotám z G-codu. Druhá verze podává
-lepší výsledky, když se výška vrstvy mění, což se může stát u nových verzí Skeinforge.</t>
+<t id="L_FILAMENT_VISUALIZATION_INFO" ver="1">Tvar vlákna je buďto spočítán na základě výšky vrstvy a poměru šířky k tlouštce, nebo z průměru materiálového vlákna, poměru šířky vůči tlouštce a E hodnotám z G-codu. Druhá verze podává lepší výsledky, když se výška vrstvy mění, což se může stát u nových verzí Skeinforge.</t>
 <t id="L_FILAMENT_VISUALIZATION" ver="1">Zobrazení vlákna:</t>
 <t id="L_HOT_FILAMENT" ver="1">Horké vlákno:</t>
 <t id="L_HOT_FILAMENT_LENGTH" ver="1">Délka horkého vlákna:</t>
@@ -383,8 +370,7 @@ lepší výsledky, když se výška vrstvy mění, což se může stát u novýc
 <t id="L_UPLOAD_CURRENG_GCODE" ver="1">Nahrát aktuální G-code</t>
 <t id="L_FILE:" ver="1">Soubor:</t>
 <t id="W_SAVE_GCODE_DIRECT_PRINT" ver="1">Uložit G-code pro přímý tisk</t>
-<t id="L_SAVE_DIRECT_INFO" ver="1">Tato ukládací funkce je zamýšlená pro generování G-code souborů určených pro tisk z SD karty. Z tohoto důvodu může přidat startovací a ukončovací kód s normálními koncovými příkazy jako při tisku z
-počítačového prostředí. Všechny komentáře a příkazy pro spolupráci s počítačem budou z kódu smazány. Pokud pouze chcete uložit G-code z editoru, použijte ukládání přímo v prostředí editoru.</t>
+<t id="L_SAVE_DIRECT_INFO" ver="1">Tato ukládací funkce je zamýšlená pro generování G-code souborů určených pro tisk z SD karty. Z tohoto důvodu může přidat startovací a ukončovací kód s normálními koncovými příkazy jako při tisku z počítačového prostředí. Všechny komentáře a příkazy pro spolupráci s počítačem budou z kódu smazány. Pokud pouze chcete uložit G-code z editoru, použijte ukládání přímo v prostředí editoru.</t>
 <t id="L_SAVE_AS_BINARY" ver="1">Uložit v binárním formátu (pro Repetier-Firmware)</t>
 <t id="B_SAVE" ver="1">Uložit</t>
 <t id="W_SD_CARD_MANAGER" ver="1">Správce SD karty</t>
@@ -441,8 +427,7 @@ počítačového prostředí. Všechny komentáře a příkazy pro spolupráci s
 <t id="B_M_LOAD" ver="1">Znovu načíst nastavení</t>
 <t id="B_M_RESTORE" ver="1">Restartovat do původního nastavení</t>
 <t id="B_M_SAVE" ver="1">Uložit do EEPROM</t>
-<t id="L_M_CONFIRM_WRITE" ver="1">Nastavení uloženo do běžící konfigurace.
-Uložit změny i do EEPROM?</t>
+<t id="L_M_CONFIRM_WRITE" ver="1">Nastavení uloženo do běžící konfigurace. Uložit změny i do EEPROM?</t>
 <t id="L_M_SETTINGS_STORED" ver="1">Nastavení uloženo</t>
 <t id="L_M_SAVE_RETIEVED" ver="1">Uložit získané nastavení do EEPROM?</t>
 <t id="L_M_FACTORY_RETRIEVED" ver="1">Factory Settings Retrieved</t>
@@ -466,23 +451,23 @@ Uložit změny i do EEPROM?</t>
 <t id="L_SKEIN_SELECT_PROFILE_FOLDER" ver="1">Vybrat složku profilů</t>
 <t id="L_SKEIN_SELECT_WORKING_FOLDER" ver="1">Vybrat pracovní složku</t>
 <t id="L_FEEDRATE:" ver="1">Pohyb:</t>
-<t id="L_FLOWRATE:" ver="1">Frůtok plastu:</t>
+<t id="L_FLOWRATE:" ver="1">Průtok plastu:</t>
 <t id="L_UPDATE_NO_CONNECTION" ver="1">Spojení s aktualizačním serverem nenavázáno!</t>
 <t id="L_MOVE_CAMERA" ver="1">Pohyb kamerou</t>
 <t id="L_MOVE_OBJECT" ver="1">Pohyb objektem</t>
 <t id="L_MOVE_VIEWPOINT" ver="1">Přesunout výhledové okno</t>
 <t id="L_RESET_VIEW" ver="1">Restartovat zobrazení</t>
 <t id="L_ROTATE" ver="1">Otočit</t>
-<t id="L_TOP_VIEW" ver="1">Půdorys</t>
+<t id="L_TOP_VIEW" ver="1">Pohled shora</t>
 <t id="T_ZOOM_VIEW" ver="1">Zoom</t>
 <t id="T_CLEAR_OBJECTS" ver="1">Smazat objekty</t>
 <t id="L_DEBUG_OPTIONS" ver="2">Nastavení Debugu</t>
-<t id="L_X_MIN:" ver="3">X začátek</t>
-<t id="L_X_MAX:" ver="3">X konec</t>
-<t id="L_Y_MIN:" ver="3">Y začátek</t>
-<t id="L_Y_MAX:" ver="3">Y konec</t>
-<t id="L_BED_LEFT:" ver="3">Podložka zleva:</t>
-<t id="L_BED_FRONT:" ver="3">Podložka zepředu:</t>
+<t id="L_X_MIN:" ver="3">X min:</t>
+<t id="L_X_MAX:" ver="3">X max:</t>
+<t id="L_Y_MIN:" ver="3">Y min:</t>
+<t id="L_Y_MAX:" ver="3">Y max:</t>
+<t id="L_BED_LEFT:" ver="3">Podložka L:</t>
+<t id="L_BED_FRONT:" ver="3">Podložka P:</t>
 <t id="L_SHAPE_INFO" ver="3">Hodnoty začátek označují možný rozsah pohybu extruderu. Tyto nastavení mohou být záporná a mimo tiskovou podložku. Podložka zleva/zepředu označují začátek tiskové plochy. Těmito nastaveními můžete přesunout počátek do středu plochy, pokud to firmware podporuje.</t>
 <t id="L_SELECTION_BOX" ver="3">Selection Box:</t>
 <t id="L_FILAMENT_NONE" ver="3">Žádný nebo jako extruder 1</t>
@@ -492,8 +477,8 @@ Uložit změny i do EEPROM?</t>
 <t id="L_HOME_X:" ver="4">Výchozí X:</t>
 <t id="L_HOME_Y:" ver="4">Výchozí Y:</t>
 <t id="L_HOME_Z:" ver="4">Výchozí Z:</t>
-<t id="L_MIN" ver="4">začátek</t>
-<t id="L_MAX" ver="4">konec</t>
+<t id="L_MIN" ver="4">min</t>
+<t id="L_MAX" ver="4">max</t>
 <t id="L_PAUSED_FIRMWARE" ver="4">Tiskárna si vyžádala pauzu.</t>
 <t id="L_CREATE_FOLDER" ver="4">Vytvořit novou složku</t>
 <t id="L_CREATE_FOLDER_INFO" ver="4">Vložte název složky podle 8.3 pravidel:</t>
@@ -504,6 +489,121 @@ Uložit změny i do EEPROM?</t>
 <t id="L_TRAVEL_VISUALIZATION_ENABLED" ver="4">Zobrazení pohybu zapnuté</t>
 <t id="M_SHOW_TRAVEL" ver="4">Zobrazit pohyby</t>
 <t id="L_TRAVEL_MOVES:" ver="4">Přesunovací pohyby:</t>
-<t id="L_DISABLE_TRAVEL_MOVES_VIS">Vypntou zobrazení pohybů tiskárny</t>
-</translation>
+<t id="L_DISABLE_TRAVEL_MOVES_VIS" ver="4">Vypntou zobrazení pohybů tiskárny</t>
 
+<t id="L_NUMBER_OF_EXTRUDER:" ver="5">Počet extruderů:</t>
+<t id="L_NEW_FOLDER" ver="5">Nová složka</t>
+<t id="L_USE_PARALLEL_PROJECTION" ver="5">Použít rovnoběžnou projekci</t>
+<t id="L_USE_RED_GREEN_SWITCH" ver="5">Použít červené/zelené přepínací tlačítka (vyžaduje restart)</t>
+<t id="L_SLIC3R_NOT_FOUND" ver="6">Slic3r nebyl nalezen.</t>
+<t id="L_ANALYSING_STL" ver="6">Analýza souboru...</t>
+<t id="L_SLICING_STL" ver="6">Slicování souboru...</t>
+<t id="L_PYPY_NOT_FOUND" ver="6">Pypy nebo Python překladač nebyl nalezen.</t>
+<t id="L_SKEINCRAFT_NOT_FOUND" ver="6">Skeinforge craft nebyl nalezen.</t>
+<t id="L_PYTHON_NOT_FOUND" ver="6">Python překladač nebyl nalezen.</t>
+<t id="L_SKEINFORGE_NOT_FOUND" ver="6">Skeinforge nebyl nalezen.</t>
+<t id="L_SKEINCRAFT_PROFILES_NOT_FOUND" ver="6">Složka profilů pro Skeinforge/SFACT nebyla nalezena.</t>
+<t id="B_REFRESH_PORTS" ver="6">Obnovit porty</t>
+<t id="L_ROS_PRINTABLE_HEIGHT:" ver="6">Tisknutelná výška:</t>
+<t id="L_ROS_PRINTABLE_RADIUS:" ver="6">Tisknutelný rádius:</t>
+<t id="L_CARTESIAN_PRINTER" ver="6">Classic Printer</t>
+<t id="L_CARTESIAN_PRINTER_DUMP" ver="6">Classic Printer (s odkládací plochou)</t>
+<t id="L_ROSTOCK_CIRCLE" ver="6">Rostock Printer (kruhový tvar tisku)</t>
+<t id="L_CORRECT_NORMALS" ver="7">Použít korekní normály (vypadá lépe, ale vyžaduje více paměti)</t>
+<t id="L_WARNING" ver="8">Varování</t>
+<t id="L_HEATERS_ON_QUEST" ver="8">Některé z topných hlav jsou pořád spuštěny. Mají být vypnuty?</t>
+<t id="L_OBJECTS_OUTSIDE_SLICE_QUEST" ver="8">Alespoň jeden objekt je mimo tisknutelnou plochu. Zrušit slicování?</t>
+<t id="L_CNC_ROUTER" ver="8">CNC Router</t>
+<t id="L_SLIC3R_VERSION" ver="8">Slic3r verze</t>
+<t id="L_MODEL_ERRORS" ver="9">Chyba modelu:</t>
+<t id="L_REPAIR" ver="9">Opravit</t>
+<t id="L_SPLIT" ver="9">Rozdělit</t>
+<t id="L_YES" ver="9">Ano</t>
+<t id="L_NO" ver="9">Ne</t>
+<t id="L_MODEL_CHANGED_RELOAD" ver="9">Jeden nebo více souborů s objekty byl změněn.\r\nPřejete si je znovu nahrát?</t>
+<t id="L_FILES_CHANGED" ver="9">Soubory změněny</t>
+<t id="L_INNER_FACES" ver="9">Vnitřní plochy:</t>
+<t id="L_BACKGROUND_TOP" ver="9">Vrch pozadí:</t>
+<t id="L_BACKGROUND_BOTTOM" ver="9">Spodek pozadí:</t>
+<t id="L_PRINTER_FRAME" ver="9">Rám tiskárny:</t>
+<t id="L_ISOMETRIC_VIEW" ver="9">Izometrický pohled</t>
+<t id="L_BOTTOM_VIEW" ver="9">Pohled zdola</t>
+<t id="L_LEFT_VIEW" ver="9">Pohled zleva</t>
+<t id="L_RIGHT_VIEW" ver="9">Pohled zprava</t>
+<t id="L_FRONT_VIEW" ver="9">Pohled zepředu</t>
+<t id="L_BACK_VIEW" ver="9">Pohled zezadu</t>
+<t id="M_VIEW" ver="9">Pohled</t>
+<t id="M_SHOW_EDGES" ver="9">Zobrazit hrany</t>
+<t id="M_SHOW_FACES" ver="9">Zobrazit plochy</t>
+<t id="L_ANA_MODIFIED" ver="9">Změněno:</t>
+<t id="L_ANA_MANIFOLD" ver="9">Manifold:</t>
+<t id="L_ANA_INTERSECTING_TRIANGLES" ver="9">Protínajících se trojúhelníků:</t>
+<t id="L_ANA_NORMALS" ver="9">Normály:</t>
+<t id="L_ANA_LOOP_EDGES" ver="9">Hranových smyček:</t>
+<t id="L_ANA_HIGHLY_CONNECTED" ver="9">Pevně spojených hran:</t>
+<t id="L_ANA_VERTICES" ver="9">Vrcholů:</t>
+<t id="L_ANA_EDGES" ver="9">Hran:</t>
+<t id="L_ANA_FACES" ver="9">Ploch:</t>
+<t id="L_ANA_SHELLS" ver="9">Podobjektů:</t>
+<t id="L_ANA_ORIENTED" ver="9">Orientovány</t>
+<t id="L_ANA_NOT_ORIENTED" ver="9">Neorientovány</t>
+<t id="M_TOOLS" ver="9">Nástroje</t>
+<t id="M_BELT_CALCULATOR" ver="9">Výpočet řemene</t>
+<t id="M_LEADSCREW_CALCULATOR" ver="9">Výpočet vodícího závitu</t>
+<t id="L_MOTOR_STEP_ANGLE" ver="9">Úhlový krok motoru</t>
+<t id="L_DRIVER_MICROSTEPPING" ver="9">Mikro kroky ovladače</t>
+<t id="L_BELT_PITCH" ver="9">Rozteč pásu</t>
+<t id="L_TOOTH_COUNT" ver="9">Počet zubů</t>
+<t id="B_CALCULATE" ver="9">Vypočítat</t>
+<t id="L_STEPS_PER_MM" ver="9">Počet kroků na mm</t>
+<t id="L_TOOTH_COUNT_MUST_INT" ver="9">Počet kroků musí být celé číslo</t>
+<t id="L_LEADSCREW_PITCH" ver="9">Rozteč vodících závitů</t>
+<t id="L_GEAR_RATIO" ver="9">Převodový poměr</t>
+<t id="L_SERIAL_CONNECTION" ver="9">Sériové spojení</t>
+<t id="L_VIRTUAL_CONNECTION" ver="9">Virtuální tiskárna</t>
+<t id="L_REPETIER_SERVER_CONNECTION" ver="9">Repetier-Server</t>
+<t id="L_CONNECTOR" ver="9">Spojení</t>
+<t id="L_DISABLED" ver="9">Vypnuto</t>
+<t id="L_DTR_LOW_HIGH" ver="9">DTR high->low</t>
+<t id="L_DTR_LOW_HIGH_LOW" ver="9">DTR low->high->low</t>
+<t id="L_DTR_TOGGLE" ver="9">DTR přepínač</t>
+<t id="L_RESET_ON_CONNECT" ver="9">Reset při připojení:</t>
+<t id="L_RESET_ON_EMERGENCY" ver="9">Reset při pohotovosti:</t>
+<t id="L_SEND_EMERGENCY_CMD" ver="9">Odeslat pohotovostní příkaz</t>
+<t id="L_SEND_EMERGENCY_CMD_DTR_TOGGLE" ver="9">Odeslat pohotovostní příkaz + DTR high->low</t>
+<t id="L_SEND_EMERGENCY_CMD_RECONNECT" ver="9">Odeslat pohotovostní příkaz a znovu připojit</t>
+<t id="L_FILE_ASSOCIATIONS" ver="9">Asociace souborů</t>
+<t id="L_ASSOCIATE_EXTENSIONS" ver="9">Asociovat soubory</t>
+<t id="L_CONNECTION_FAILED" ver="9">Připojení selhalo s následující chybou: $1. Ujistěte se, že je tiskárna připojená, zapnutá a správně nastavená. Přejete si otevřít nastavení tiskárny?</t>
+<t id="L_AUTOENABLE_PARALLEL_TOPVIEW" ver="9">Povolit rovnoběžný pohled při pohledu shora</t>
+<t id="L_RESET_DEFAULTS" ver="9">Obnovyt výchozí</t>
+<t id="L_REMOVED_DEGENERATED" ver="9">Odebráno degenerovaných trojúhelníků:</t>
+<t id="L_REMOVED_ISOLATED" ver="9">Odebráno izolovaných trojúhelníků:</t>
+<t id="L_REMOVED_DOUBLE" ver="9">Odebráno zdvojených trojúhelníků:</t>
+<t id="L_STARTING_ANALYSER" ver="9">Spuštěn analyzátor objektu...</t>
+<t id="L_ANALYSER_FINISHED" ver="9">Analýza dokončena.</t>
+<t id="L_LOADING_3D_FAILED" ver="9">Načtení 3D souboru $1 selhalo.</t>
+<t id="L_OBJECT_INFORMATIONS" ver="9">Informace o objektu</t>
+<t id="L_MINIMUM:" ver="9">Minimum:</t>
+<t id="L_MAXIMUM:" ver="9">Maximum:</t>
+<t id="L_SIZE:" ver="9">Velikost:</t>
+<t id="L_VOLUME:" ver="9">Objem:</t>
+<t id="L_SURFACE:" ver="9">Povrch:</t>
+<t id="L_DIMENSIONS:" ver="9">Rozměry:</t>
+<t id="L_SPLIT_OBJECT" ver="9">Rozdělit objekt</t>
+<t id="L_FIX_NORMALS" ver="9">Opravit normály</t>
+<t id="M_FIT_PRINTER" ver="9">Opravit tiskárnu</t>
+<t id="M_FIT_OBJECTS" ver="9">Opravit objekty</t>
+<t id="IMPORTING_1" ver="9">Importování $1</t>
+<t id="L_LOADING..." ver="9">Načítání...</t>
+<t id="L_INTERSECTION_TESTS" ver="9">Testy vzájemného protnutí</t>
+<t id="L_FIXING_NORMALS" ver="9">Oprava normál</t>
+<t id="L_ANA_FIXED_COLLINEAR_TRIANGLES" ver="9">Opraveno kolineárních trojúhelníků:</t>
+<t id="L_ANA_CORRECTED_NORMAL_ORIENTATIONS" ver="9">Opraveno orientací normál:</t>
+<t id="L_OBJECT_IS_MANIFOLD" ver="9">Objekt je manifold.</t>
+<t id="L_OBJECT_IS_NON_MANIFOLD" ver="9">Objekt není manifold. Slicování může vést ke špatnému výsledku. Opravte prosím objekt.</t>
+<t id="L_SHOW_COMPASS" ver="1">Zobrazit kompas</t>
+<t id="M_TOGGLE_PRINTER_ID" ver="9">Zobrazit název tiskárny</t>
+<t id="L_CONNECTOR:" ver="9">Spojení:</t>
+<t id="L_NOT_TESTED" ver="9">netestováno</t>
+</translation>

@@ -641,6 +641,8 @@
     <Compile Include="view\utils\SlicingInfo.Designer.cs">
       <DependentUpon>SlicingInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="view\utils\SlidePanel.cs" />
+    <Compile Include="view\utils\SlidePanelControler.cs" />
     <Compile Include="view\utils\SnapshotDialog.cs">
       <SubType>Form</SubType>
     </Compile>

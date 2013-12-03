@@ -188,11 +188,11 @@ namespace RepetierHost.model
             originalModel.ipp = ipp;
             string lname = filename.ToLower();
             if (lname.EndsWith(".stl"))
-                originalModel.importSTL(filename);
+                originalModel.importSTL(filename, Main.main.importScaleFactor);
             else if (lname.EndsWith(".obj"))
-                originalModel.importObj(filename);
+                originalModel.importObj(filename, Main.main.importScaleFactor);
             else if (lname.EndsWith(".3ds"))
-                originalModel.import3Ds(filename);
+                originalModel.import3Ds(filename, Main.main.importScaleFactor);
             FileInfo info = new FileInfo(file);
             name = info.Name;
             originalModel.AnalyseFast();

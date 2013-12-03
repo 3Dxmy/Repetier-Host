@@ -845,6 +845,7 @@ namespace RepetierHost.model
             if ((h = extract(res, "Fanspeed:")) != null)
             {
                 int.TryParse(h, out analyzer.fanVoltage);
+                analyzer.fanOn = analyzer.fanVoltage > 0;
                 analyzer.fireChanged();
             }
             if (res.Contains("RequestPause:"))
@@ -899,6 +900,11 @@ namespace RepetierHost.model
                 //if (h.IndexOf('.') > 0) h = h.Substring(0, h.IndexOf('.'));
                 float.TryParse(h, NumberStyles.Float, GCode.format, out bedTemp);
                 tempChange = true;
+            }
+            h = extract(res, "RAW0:");
+            if (h != null)
+            {
+                level = 3; // don't log, we see result in status
             }
             if (isRepetier)
             { // Repetier specific answers

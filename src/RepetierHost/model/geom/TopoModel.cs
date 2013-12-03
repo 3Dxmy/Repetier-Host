@@ -264,6 +264,12 @@ namespace RepetierHost.model.geom
         {
             CountShells();
             StartAction("L_FIXING_NORMALS");
+            UpdateEdgeTypes();
+            if (manyShardEdges > 0)
+            {
+                RLog.info(Trans.T("L_NORMAL_CORRECTION_IMPOSSIBLE"));
+                return;
+            }
             ResetTriangleMarker();
             updatedNormals = 0;
             int count = 0;
@@ -276,7 +282,10 @@ namespace RepetierHost.model.geom
                 if (triangle.algHelper == 0)
                 {
                     int testShell = triangle.shell;
-                    /*triangle.RecomputeNormal();
+                    FloodFillNormals(triangle); // All triangles oriented the same now
+                    // Old
+                    bool fliper = false;
+                    triangle.RecomputeNormal();
                     RHVector3 lineStart = triangle.Center;
                     RHVector3 lineDirection = triangle.normal;
                     int hits = 0;
@@ -292,16 +301,25 @@ namespace RepetierHost.model.geom
                     }
                     if ((hits & 1) == 1)
                     {
-                        triangle.FlipDirection();
+                        fliper = true;
+                        //triangle.FlipDirection();
                         updatedNormals++;
-                    }*/
-                    FloodFillNormals(triangle);
-                    if (SignedShellVolume(testShell) < 0)
+                    }
+                    // End old
+                    double volume = SignedShellVolume(testShell);
+                    //if ((volume < 0 && !fliper) || (volume > 0 && fliper))
+                    if(fliper)
                     {
                         foreach (TopoTriangle flip in triangles)
                         {
-                            triangle.FlipDirection();
+                            if (flip.shell == testShell)
+                            {
+                                flip.FlipDirection();
+                                flip.RecomputeNormal();
+                            }
                         }
+                        //RLog.info("Volume after correction");
+                        //volume = SignedShellVolume(testShell);
                     }
                 }
                 else
@@ -351,12 +369,20 @@ namespace RepetierHost.model.geom
             CountShells();
             ResetTriangleMarker();
             normalsOriented = true;
+            if (manyShardEdges > 0)
+            {
+                normalsOriented = false;
+                return false;
+            }
+
             foreach (TopoTriangle triangle in triangles)
             {
                 if (triangle.algHelper == 0)
                 {
                     int testShell = triangle.shell;
-                    /*triangle.RecomputeNormal();
+                    bool fliper = false;
+                    // old
+                    triangle.RecomputeNormal();
                     RHVector3 lineStart = triangle.Center;
                     RHVector3 lineDirection = triangle.normal;
                     int hits = 0;
@@ -370,10 +396,12 @@ namespace RepetierHost.model.geom
                     }
                     if ((hits & 1) == 1)
                     {
-                        normalsOriented = false;
-                        return false;
-                    }*/
-                    if (SignedShellVolume(testShell) < 0)
+                        fliper = true;  
+                    }
+                    double volume = SignedShellVolume(testShell);
+                    //if ((volume < 0 && !fliper) || (volume > 0 && fliper))
+                    //if (SignedShellVolume(testShell) < 0)
+                    if(fliper)
                     {
                         normalsOriented = false;
                         return false;
@@ -409,11 +437,16 @@ namespace RepetierHost.model.geom
         public double SignedShellVolume(int shell)
         {
             double volume = 0;
+            int cnt = 0;
             foreach (TopoTriangle t in triangles)
             {
-                if(t.shell == shell)
+                if (t.shell == shell)
+                {
+                    cnt++;
                     volume += t.SignedVolume();
+                }
             }
+            //RLog.info("Shell " + shell.ToString() + " triangles " + cnt.ToString() + " volume " + volume.ToString());
             return volume;
         }
 
@@ -675,21 +708,25 @@ namespace RepetierHost.model.geom
             RemoveUnusedDatastructures();
             UpdateNormals();
         }
+        public void UpdateEdgeTypes()
+        {
+            manyShardEdges = 0;
+            loopEdges = 0;
+            foreach (TopoEdge edge in edges)
+            {
+                if (edge.connectedFaces < 2)
+                    loopEdges++;
+                else if (edge.connectedFaces > 2)
+                    manyShardEdges++;
+            }
+        }
         public void Analyse()
         {
             RLog.info(Trans.T("L_STARTING_ANALYSER"));
             //RepairUnobtrusive();
             UpdateIntersectingTriangles();
+            UpdateEdgeTypes();
             CheckNormals();
-            manyShardEdges = 0;
-            loopEdges = 0;
-            foreach (TopoEdge edge in edges)
-            {
-                if (edge.connectedFaces < 2) 
-                    loopEdges++;
-                else if (edge.connectedFaces > 2) 
-                    manyShardEdges++;
-            }
             if (loopEdges > 0)
                 RLog.info(Trans.T("L_ANA_LOOP_EDGES") + loopEdges);
             if (manyShardEdges > 0)
@@ -724,16 +761,8 @@ namespace RepetierHost.model.geom
             RLog.info(Trans.T("L_STARTING_ANALYSER"));
             //RepairUnobtrusive();
             //UpdateIntersectingTriangles();
+            UpdateEdgeTypes();
             CheckNormals();
-            manyShardEdges = 0;
-            loopEdges = 0;
-            foreach (TopoEdge edge in edges)
-            {
-                if (edge.connectedFaces < 2)
-                    loopEdges++;
-                else if (edge.connectedFaces > 2)
-                    manyShardEdges++;
-            }
             if (loopEdges > 0)
                 RLog.info(Trans.T("L_ANA_LOOP_EDGES") + loopEdges);
             if (manyShardEdges > 0)
@@ -1204,7 +1233,7 @@ namespace RepetierHost.model.geom
                 offset += read;
             }
         }
-        public bool importObj(string filename)
+        public bool importObj(string filename,double scale=1)
         {
             clear();
             bool error = false;
@@ -1233,6 +1262,7 @@ namespace RepetierHost.model.geom
                     if (cmd == "v")
                     {
                         RHVector3 vert = extractVector(line.Substring(p + 1));
+                        vert.Scale(scale);
                         vList.Add(addVertex(vert));
                         vPos++;
                     }
@@ -1295,7 +1325,7 @@ namespace RepetierHost.model.geom
             }
             return error;
         }
-        private void importSTLAscii(string filename)
+        private void importSTLAscii(string filename,double scale)
         {
             string text = System.IO.File.ReadAllText(filename);
             int lastP = 0, p, pend, normal, outer, vertex, vertex2;
@@ -1326,11 +1356,14 @@ namespace RepetierHost.model.geom
                 vertex2 = text.IndexOf("endloop", vertex);
                 RHVector3 p3 = extractVector(text.Substring(vertex, vertex2 - vertex));
                 lastP = pend + 8;
+                p1.Scale(scale);
+                p2.Scale(scale);
+                p3.Scale(scale);
                 addTriangle(p1, p2, p3, normalVect);
             }
         }
 
-        public void importSTL(string filename)
+        public void importSTL(string filename,double scale=1)
         {
             StartAction("L_LOADING...");
             clear();
@@ -1351,7 +1384,7 @@ namespace RepetierHost.model.geom
                 if (f.Length != 84 + nTri * 50)
                 {
                     f.Close();
-                    importSTLAscii(filename);
+                    importSTLAscii(filename,scale);
                 }
                 else
                 {
@@ -1367,6 +1400,9 @@ namespace RepetierHost.model.geom
                         RHVector3 p1 = new RHVector3(r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
                         RHVector3 p2 = new RHVector3(r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
                         RHVector3 p3 = new RHVector3(r.ReadSingle(), r.ReadSingle(), r.ReadSingle());
+                        p1.Scale(scale);
+                        p2.Scale(scale);
+                        p3.Scale(scale);
                         normal.NormalizeSafe();
                         addTriangle(p1, p2, p3, normal);
                         r.ReadUInt16();
@@ -1381,7 +1417,7 @@ namespace RepetierHost.model.geom
             }
         }
 
-        public bool import3Ds(string filename)
+        public bool import3Ds(string filename,double scale=1)
         {
             _3DSLoader loader = new _3DSLoader();
             _3DSLoader._3DScene scene = loader.Load(filename);
@@ -1400,6 +1436,9 @@ namespace RepetierHost.model.geom
                     vertex = obj.GetVertex(face.Vertex3);
                     RHVector3 vert3 = new RHVector3(vertex.X, vertex.Y, vertex.Z);
                     RHVector3 normal = new RHVector3(0, 0, 0);
+                    vert1.Scale(scale);
+                    vert2.Scale(scale);
+                    vert3.Scale(scale);
 
                     addTriangle(vert1, vert2, vert3, normal).RecomputeNormal();
                 }

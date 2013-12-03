@@ -629,5 +629,31 @@ Mögliche Gründe:
 <t id="L_ANAYLSING" ver="10">Analysiere</t>
 <t id="L_NOT_TESTED" ver="10">Nicht geprüft</t>
 <t id="L_CONNECTOR:" ver="10">Verbindungsart:</t>
+<t id="L_NORMAL_CORRECTION_IMPOSSIBLE" ver="10">Normalenreperatur nicht möglich für nicht-manigfaltige Netze.</t>
+<t id="M_MED_HEIGHT_MAP" var="10">Höhenkarte des Betts</t>
+<t id="M_CREATE_HEIGHT_MAP" var="10">Erzeuge Höhenkarte</t>
+<t id="B_MEASURE_HEIGHTS" ver="10">Messe Höhen</t>
+<t id="B_RESULT_TO_CLIPBOARD" ver="10">Ergebnis ins Clipboard</t>
+<t id="L_SCAN_AREA" ver="10">Scan Bereich</t>
+<t id="L_SCAN_RESULTS" ver="10">Scan Ergebnis</t>
+<t id="L_X_MIN:" ver="10">X min:</t>
+<t id="L_Y_MIN:" ver="10">Y max:</t>
+<t id="L_X_MAX:" ver="10">X min:</t>
+<t id="L_Y_MAX:" ver="10">Y max:</t>
+<t id="L_X_POINTS:" ver="10">X Punkte:</t>
+<t id="L_Y_POINTS:" ver="10">Y Punkte:</t>
+<t id="L_Z_MIN:" ver="10">Z min:</t>
+<t id="L_Z_MAX:" ver="10">Z max:</t>
+<t id="L_Z_AVG:" ver="10">Z Durchsch.:</t>
+<t id="L_Z_CENTER:" ver="10">Z Mitte</t>
+<t id="L_CUT_FACES" ver="10">Schneide Objekte</t>
+<t id="L_CUT_POSITION" ver="10">Position</t>
+<t id="L_CUT_INCLINATION" ver="10">Neigung</t>
+<t id="L_CUT_AZIMUTH" ver="10">Azimut</t>
+<t id="UNITS_OF_IMPORTED_OBJECTS" ver="10">Einheiten importierte Objekte</t>
+<t id="OBJECTS_ARE_IN_MILLIMETER" ver="10">Objekte sind in Millimeter</t>
+<t id="OBJECTS_ARE_IN_INCHES" ver="10">Objekte sind in Zoll</t>
+<t id="OBJECTS_ARE_IN_FOOT" ver="10">Objekte sind in Fuß</t>
+<t id="OBJECTS_ARE_IN_METER" ver="10">Objekte sind in Meter</t>
 </translation>
 

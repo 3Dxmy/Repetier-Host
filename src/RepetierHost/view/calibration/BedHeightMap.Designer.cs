@@ -29,23 +29,23 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BedHeightMap));
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupScanArea = new System.Windows.Forms.GroupBox();
             this.buttonMeasureHeights = new System.Windows.Forms.Button();
             this.textYPoints = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.labelYPoints = new System.Windows.Forms.Label();
             this.textXPoints = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.labelXPoints = new System.Windows.Forms.Label();
             this.textYMax = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelYMax = new System.Windows.Forms.Label();
             this.textXMax = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelXMax = new System.Windows.Forms.Label();
             this.textYMin = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelYMin = new System.Windows.Forms.Label();
             this.textXMin = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelXMin = new System.Windows.Forms.Label();
             this.buttonResultToClipboard = new System.Windows.Forms.Button();
             this.map = new System.Windows.Forms.PictureBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupScanResults = new System.Windows.Forms.GroupBox();
             this.labelZCenterValue = new System.Windows.Forms.Label();
             this.labelZAvgValue = new System.Windows.Forms.Label();
             this.labelZMaxValue = new System.Windows.Forms.Label();
@@ -54,32 +54,32 @@
             this.labelZMax = new System.Windows.Forms.Label();
             this.labelZMinValue = new System.Windows.Forms.Label();
             this.labelZMin = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
+            this.groupScanArea.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.map)).BeginInit();
-            this.groupBox2.SuspendLayout();
+            this.groupScanResults.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // groupScanArea
             // 
-            this.groupBox1.Controls.Add(this.buttonMeasureHeights);
-            this.groupBox1.Controls.Add(this.textYPoints);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.textXPoints);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.textYMax);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.textXMax);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textYMin);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.textXMin);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(13, 13);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(194, 217);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Scan Area";
+            this.groupScanArea.Controls.Add(this.buttonMeasureHeights);
+            this.groupScanArea.Controls.Add(this.textYPoints);
+            this.groupScanArea.Controls.Add(this.labelYPoints);
+            this.groupScanArea.Controls.Add(this.textXPoints);
+            this.groupScanArea.Controls.Add(this.labelXPoints);
+            this.groupScanArea.Controls.Add(this.textYMax);
+            this.groupScanArea.Controls.Add(this.labelYMax);
+            this.groupScanArea.Controls.Add(this.textXMax);
+            this.groupScanArea.Controls.Add(this.labelXMax);
+            this.groupScanArea.Controls.Add(this.textYMin);
+            this.groupScanArea.Controls.Add(this.labelYMin);
+            this.groupScanArea.Controls.Add(this.textXMin);
+            this.groupScanArea.Controls.Add(this.labelXMin);
+            this.groupScanArea.Location = new System.Drawing.Point(13, 13);
+            this.groupScanArea.Name = "groupScanArea";
+            this.groupScanArea.Size = new System.Drawing.Size(194, 217);
+            this.groupScanArea.TabIndex = 0;
+            this.groupScanArea.TabStop = false;
+            this.groupScanArea.Text = "Scan Area";
             // 
             // buttonMeasureHeights
             // 
@@ -99,14 +99,14 @@
             this.textYPoints.TabIndex = 5;
             this.textYPoints.Text = "8";
             // 
-            // label6
+            // labelYPoints
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(7, 153);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(49, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "X-Points:";
+            this.labelYPoints.AutoSize = true;
+            this.labelYPoints.Location = new System.Drawing.Point(7, 153);
+            this.labelYPoints.Name = "labelYPoints";
+            this.labelYPoints.Size = new System.Drawing.Size(49, 13);
+            this.labelYPoints.TabIndex = 0;
+            this.labelYPoints.Text = "Y-Points:";
             // 
             // textXPoints
             // 
@@ -116,14 +116,14 @@
             this.textXPoints.TabIndex = 4;
             this.textXPoints.Text = "8";
             // 
-            // label5
+            // labelXPoints
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 127);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(49, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "X-Points:";
+            this.labelXPoints.AutoSize = true;
+            this.labelXPoints.Location = new System.Drawing.Point(7, 127);
+            this.labelXPoints.Name = "labelXPoints";
+            this.labelXPoints.Size = new System.Drawing.Size(49, 13);
+            this.labelXPoints.TabIndex = 0;
+            this.labelXPoints.Text = "X-Points:";
             // 
             // textYMax
             // 
@@ -134,14 +134,14 @@
             this.textYMax.Tag = "";
             this.textYMax.Text = "80";
             // 
-            // label4
+            // labelYMax
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(7, 101);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(39, 13);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Y-max:";
+            this.labelYMax.AutoSize = true;
+            this.labelYMax.Location = new System.Drawing.Point(7, 101);
+            this.labelYMax.Name = "labelYMax";
+            this.labelYMax.Size = new System.Drawing.Size(39, 13);
+            this.labelYMax.TabIndex = 0;
+            this.labelYMax.Text = "Y-max:";
             // 
             // textXMax
             // 
@@ -152,14 +152,14 @@
             this.textXMax.Tag = "";
             this.textXMax.Text = "80";
             // 
-            // label3
+            // labelXMax
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 75);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(39, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "X-max:";
+            this.labelXMax.AutoSize = true;
+            this.labelXMax.Location = new System.Drawing.Point(7, 75);
+            this.labelXMax.Name = "labelXMax";
+            this.labelXMax.Size = new System.Drawing.Size(39, 13);
+            this.labelXMax.TabIndex = 0;
+            this.labelXMax.Text = "X-max:";
             // 
             // textYMin
             // 
@@ -169,14 +169,14 @@
             this.textYMin.TabIndex = 1;
             this.textYMin.Text = "-80";
             // 
-            // label2
+            // labelYMin
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 49);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(36, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Y-min:";
+            this.labelYMin.AutoSize = true;
+            this.labelYMin.Location = new System.Drawing.Point(7, 49);
+            this.labelYMin.Name = "labelYMin";
+            this.labelYMin.Size = new System.Drawing.Size(36, 13);
+            this.labelYMin.TabIndex = 0;
+            this.labelYMin.Text = "Y-min:";
             // 
             // textXMin
             // 
@@ -186,14 +186,14 @@
             this.textXMin.TabIndex = 0;
             this.textXMin.Text = "-80";
             // 
-            // label1
+            // labelXMin
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "X-min:";
+            this.labelXMin.AutoSize = true;
+            this.labelXMin.Location = new System.Drawing.Point(7, 23);
+            this.labelXMin.Name = "labelXMin";
+            this.labelXMin.Size = new System.Drawing.Size(36, 13);
+            this.labelXMin.TabIndex = 0;
+            this.labelXMin.Text = "X-min:";
             // 
             // buttonResultToClipboard
             // 
@@ -218,23 +218,23 @@
             this.map.TabIndex = 1;
             this.map.TabStop = false;
             // 
-            // groupBox2
+            // groupScanResults
             // 
-            this.groupBox2.Controls.Add(this.labelZCenterValue);
-            this.groupBox2.Controls.Add(this.labelZAvgValue);
-            this.groupBox2.Controls.Add(this.labelZMaxValue);
-            this.groupBox2.Controls.Add(this.labelZCenter);
-            this.groupBox2.Controls.Add(this.labelZAvg);
-            this.groupBox2.Controls.Add(this.labelZMax);
-            this.groupBox2.Controls.Add(this.labelZMinValue);
-            this.groupBox2.Controls.Add(this.labelZMin);
-            this.groupBox2.Controls.Add(this.buttonResultToClipboard);
-            this.groupBox2.Location = new System.Drawing.Point(12, 236);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(194, 174);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Scan results";
+            this.groupScanResults.Controls.Add(this.labelZCenterValue);
+            this.groupScanResults.Controls.Add(this.labelZAvgValue);
+            this.groupScanResults.Controls.Add(this.labelZMaxValue);
+            this.groupScanResults.Controls.Add(this.labelZCenter);
+            this.groupScanResults.Controls.Add(this.labelZAvg);
+            this.groupScanResults.Controls.Add(this.labelZMax);
+            this.groupScanResults.Controls.Add(this.labelZMinValue);
+            this.groupScanResults.Controls.Add(this.labelZMin);
+            this.groupScanResults.Controls.Add(this.buttonResultToClipboard);
+            this.groupScanResults.Location = new System.Drawing.Point(12, 236);
+            this.groupScanResults.Name = "groupScanResults";
+            this.groupScanResults.Size = new System.Drawing.Size(194, 174);
+            this.groupScanResults.TabIndex = 2;
+            this.groupScanResults.TabStop = false;
+            this.groupScanResults.Text = "Scan results";
             // 
             // labelZCenterValue
             // 
@@ -313,40 +313,40 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(745, 526);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupScanResults);
             this.Controls.Add(this.map);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupScanArea);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "BedHeightMap";
             this.Text = "Create height map";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupScanArea.ResumeLayout(false);
+            this.groupScanArea.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.map)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.groupScanResults.ResumeLayout(false);
+            this.groupScanResults.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupScanArea;
         private System.Windows.Forms.Button buttonResultToClipboard;
         private System.Windows.Forms.Button buttonMeasureHeights;
         private System.Windows.Forms.TextBox textYPoints;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label labelYPoints;
         private System.Windows.Forms.TextBox textXPoints;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelXPoints;
         private System.Windows.Forms.TextBox textYMax;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelYMax;
         private System.Windows.Forms.TextBox textXMax;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelXMax;
         private System.Windows.Forms.TextBox textYMin;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelYMin;
         private System.Windows.Forms.TextBox textXMin;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelXMin;
         private System.Windows.Forms.PictureBox map;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupScanResults;
         private System.Windows.Forms.Label labelZCenterValue;
         private System.Windows.Forms.Label labelZAvgValue;
         private System.Windows.Forms.Label labelZMaxValue;

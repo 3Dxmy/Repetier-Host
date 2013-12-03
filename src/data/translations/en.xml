@@ -666,5 +666,31 @@ Reload objects?]]></t>
 <t id="L_ENABLE_CREATE_CHECKPOINT_ON_NEW_LAYER" ver="10">Create Checkpoint on new layer</t>
 <t id="L_ENABLE_CREATE_CHECKPOINT_ON_NUMBER_OF_MOVEMENTS" ver="10">Create Checkpoint on number of movements</t>
 <t id="M_CHECKPOINT_LOCK_Z" ver="10">Lock Z</t>
+<t id="L_NORMAL_CORRECTION_IMPOSSIBLE" ver="10">Normal correction not possible for non-manifold meshes.</t>
+<t id="M_MED_HEIGHT_MAP" var="10">Bed height map</t>
+<t id="M_CREATE_HEIGHT_MAP" var="10">Create Height Map</t>
+<t id="B_MEASURE_HEIGHTS" ver="10">Measure Heights</t>
+<t id="B_RESULT_TO_CLIPBOARD" ver="10">Result to Clipboard</t>
+<t id="L_SCAN_AREA" ver="10">Scan Area</t>
+<t id="L_SCAN_RESULTS" ver="10">Scan Results</t>
+<t id="L_X_MIN:" ver="10">X min:</t>
+<t id="L_Y_MIN:" ver="10">Y max:</t>
+<t id="L_X_MAX:" ver="10">X min:</t>
+<t id="L_Y_MAX:" ver="10">Y max:</t>
+<t id="L_X_POINTS:" ver="10">X points:</t>
+<t id="L_Y_POINTS:" ver="10">Y points:</t>
+<t id="L_Z_MIN:" ver="10">Z min:</t>
+<t id="L_Z_MAX:" ver="10">Z max:</t>
+<t id="L_Z_AVG:" ver="10">Z avg:</t>
+<t id="L_Z_CENTER:" ver="10">Z center</t>
+<t id="L_CUT_FACES" ver="10">Cut Objects</t>
+<t id="L_CUT_POSITION" ver="10">Position</t>
+<t id="L_CUT_INCLINATION" ver="10">Inclination</t>
+<t id="L_CUT_AZIMUTH" ver="10">Azimuth</t>
+<t id="UNITS_OF_IMPORTED_OBJECTS" ver="10">Units of imported Objects</t>
+<t id="OBJECTS_ARE_IN_MILLIMETER" ver="10">Objects are in millimeter</t>
+<t id="OBJECTS_ARE_IN_INCHES" ver="10">Objects are in inches</t>
+<t id="OBJECTS_ARE_IN_FOOT" ver="10">Objects are in feet</t>
+<t id="OBJECTS_ARE_IN_METER" ver="10">Objects are in meter</t>
 </translation>
 

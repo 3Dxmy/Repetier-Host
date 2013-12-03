@@ -1535,7 +1535,7 @@ namespace RepetierHost.view
                 StringBuilder s = new StringBuilder();
                 if (hours > 0)
                     s.Append(Trans.T1("L_TIME_H:", hours.ToString())); //"h:");
-                if (min > 0)
+                if (min > 0 || hours>0)
                     s.Append(Trans.T1("L_TIME_M:", min.ToString()));
                 s.Append(Trans.T1("L_TIME_S", sec.ToString()));
                 toolPrintingTime.Text = Trans.T1("L_PRINTING_TIME:",s.ToString());

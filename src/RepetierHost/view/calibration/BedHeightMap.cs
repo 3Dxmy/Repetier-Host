@@ -28,12 +28,36 @@ namespace RepetierHost.view.calibration
         {
             if (form == null)
                 form = new BedHeightMap();
-            form.Show(null);
+            if(!form.Visible)
+                form.Show(null);
             form.BringToFront();
         }
         public BedHeightMap()
         {
             InitializeComponent();
+            if (Main.main != null)
+            {
+                translate();
+                Main.main.languageChanged += translate;
+            }
+        }
+        public void translate()
+        {
+            this.Text = Trans.T("M_CREATE_HEIGHT_MAP");
+            buttonMeasureHeights.Text = Trans.T("B_MEASURE_HEIGHTS");
+            buttonResultToClipboard.Text = Trans.T("B_RESULT_TO_CLIPBOARD");
+            groupScanArea.Text = Trans.T("L_SCAN_AREA");
+            groupScanResults.Text = Trans.T("L_SCAN_RESULTS");
+            labelXMin.Text = Trans.T("L_X_MIN:");
+            labelYMin.Text = Trans.T("L_Y_MIN:");
+            labelXMax.Text = Trans.T("L_X_MAX:");
+            labelYMax.Text = Trans.T("L_Y_MAX:");
+            labelXPoints.Text = Trans.T("L_X_POINTS:");
+            labelYPoints.Text = Trans.T("L_Y_POINTS:");
+            labelZMin.Text = Trans.T("L_Z_MIN:");
+            labelZMax.Text = Trans.T("L_Z_MAX:");
+            labelZAvg.Text = Trans.T("L_Z_AVG:");
+            labelZCenter.Text = Trans.T("L_Z_CENTER:");
         }
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -70,6 +94,14 @@ namespace RepetierHost.view.calibration
                 Main.conn.injectManualCommand("G1 X" + act.x.ToString("0.00", GCode.format) + " Y" + act.y.ToString("0.00", GCode.format) + " F" + Main.conn.travelFeedRate.ToString(GCode.format));
                 Main.conn.injectManualCommand("G30");
             }
+         /*   string text = "";
+            for (int i = 0; i < n; i++)
+            {
+                RHVector3 act = points[i];
+                text += "G1 X" + act.x.ToString("0.00", GCode.format) + " Y" + act.y.ToString("0.00", GCode.format) + " F" + Main.conn.travelFeedRate.ToString(GCode.format)+"\n";
+                text += "G30\n";
+            }
+            Clipboard.SetText(text);*/
         }
         public RHVector3 findNearest(double x, double y)
         {
